@@ -1,5 +1,9 @@
 <?php
 session_start();
+if(isset($_SESSION['id_user'])) {
+    header("Location: user/dashboard.php");
+    exit();
+  }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -8,7 +12,7 @@ session_start();
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Bootstrap 101 Template</title>
+    <title>Job Portal</title>
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -40,9 +44,17 @@ session_start();
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">     
             <ul class="nav navbar-nav navbar-right">
+            <?php
+            if(isset($_SESSION['id_user'])) {
+              ?>
+              <li><a href="user/dashboard.php">Dashboard</a></li>
+              <li><a href="logout.php">Logout</a></li>
+            <?php
+            } else { ?>
               <li><a href="company.php">Company</a></li>
-              <li class="active"><a href="register.php">Register</a></li>
+              <li><a href="register.php">Register</a></li>
               <li><a href="login.php">Login</a></li>
+            <?php } ?>
             </ul>
           </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
