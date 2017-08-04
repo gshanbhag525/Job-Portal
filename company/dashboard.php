@@ -1,9 +1,9 @@
 <?php
 session_start();
-if(isset($_SESSION['id_user'])) {
-    header("Location: user/dashboard.php");
-    exit();
-  }
+if(empty($_SESSION['id_user'])) {
+	header("Location: ../index.php");
+	exit();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -44,53 +44,29 @@ if(isset($_SESSION['id_user'])) {
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">     
             <ul class="nav navbar-nav navbar-right">
-            <?php
-            if(isset($_SESSION['id_user'])) {
-              ?>
-              <li><a href="user/dashboard.php">Dashboard</a></li>
-              <li><a href="logout.php">Logout</a></li>
-            <?php
-            } else { ?>
-              <li><a href="company.php">Company</a></li>
-              <li><a href="register.php">Register</a></li>
-              <li><a href="login.php">Login</a></li>
-            <?php } ?>
+              <li><a href="profile.php">Profile</a></li>
+              <li><a href="../logout.php">Logout</a></li>
             </ul>
           </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
       </nav>
     </header>
 
-    <section>
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="jumbotron text-center">
-              <h1>Job Portal</h1>
-              <p>Find Your Dream Job</p>
-              <p><a class="btn btn-primary btn-lg" href="register.php" role="button">Register</a></p>
-            </div>
-          </div>
+    <div class="container">
+    <?php if(isset($_SESSION['jobPostSuccess'])) { ?>
+      <div class="row">
+        <div class="alert alert-success">
+          Job Post Creased Successfully!
         </div>
       </div>
-    </section>
-
-    <section>
-      <div class="container">
-        <div class="row">
-          <div class="col-md-4 col-md-offset-4 well">
-            <h2 class="text-center">Company</h2>
-            <p class="text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis, rerum.</p>
-            <div class="pull-left">
-              <a href="company-register.php" class="btn btn-default">Company Register</a>
-            </div>
-            <div class="pull-right">
-              <a href="company-login.php" class="btn btn-default">Company Login</a>
-            </div>
-          </div>
+    <?php unset($_SESSION['jobPostSuccess']); } ?>
+      <div class="row">
+        <h2 class="text-center">Dashboard</h2>
+        <div class="col-md-2">
+          <a href="create-job-post.php" class="btn btn-success btn-block btn-lg">Create Job Post</a>
         </div>
       </div>
-    </section>
+    </div>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>

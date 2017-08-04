@@ -1,6 +1,6 @@
 <?php
-session_start();
-if(isset($_SESSION['id_user'])) {
+  session_start(); 
+  if(isset($_SESSION['id_user'])) {
     header("Location: user/dashboard.php");
     exit();
   }
@@ -62,31 +62,41 @@ if(isset($_SESSION['id_user'])) {
     </header>
 
     <section>
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="jumbotron text-center">
-              <h1>Job Portal</h1>
-              <p>Find Your Dream Job</p>
-              <p><a class="btn btn-primary btn-lg" href="register.php" role="button">Register</a></p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section>
       <div class="container">
         <div class="row">
           <div class="col-md-4 col-md-offset-4 well">
-            <h2 class="text-center">Company</h2>
-            <p class="text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis, rerum.</p>
-            <div class="pull-left">
-              <a href="company-register.php" class="btn btn-default">Company Register</a>
-            </div>
-            <div class="pull-right">
-              <a href="company-login.php" class="btn btn-default">Company Login</a>
-            </div>
+          <h2 class="text-center">Company Login</h2>
+            <form method="post" action="checkcompanylogin.php">
+              <div class="form-group">
+                <label for="email">Email address</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Email" required="">
+              </div>
+              <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Password" required="">
+              </div>
+              <div class="text-center">
+                <button type="submit" class="btn btn-success">Submit</button>
+              </div>
+              <?php 
+              if(isset($_SESSION['registerCompleted'])) {
+                ?>
+                <div>
+                  <p class="text-center">You Have Registered Successfully!</p>
+                </div>
+              <?php
+               unset($_SESSION['registerCompleted']); }
+              ?>   
+              <?php 
+              if(isset($_SESSION['loginError'])) {
+                ?>
+                <div>
+                  <p class="text-center">Invalid Email/Password! Try Again!</p>
+                </div>
+              <?php
+               unset($_SESSION['loginError']); }
+              ?>              
+            </form>
           </div>
         </div>
       </div>

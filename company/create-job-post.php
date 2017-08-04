@@ -1,6 +1,6 @@
 <?php
 session_start();
-if(isset($_SESSION['id_user'])) {
+if(empty($_SESSION['id_user'])) {
     header("Location: user/dashboard.php");
     exit();
   }
@@ -62,31 +62,48 @@ if(isset($_SESSION['id_user'])) {
     </header>
 
     <section>
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="jumbotron text-center">
-              <h1>Job Portal</h1>
-              <p>Find Your Dream Job</p>
-              <p><a class="btn btn-primary btn-lg" href="register.php" role="button">Register</a></p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section>
       <div class="container">
         <div class="row">
           <div class="col-md-4 col-md-offset-4 well">
-            <h2 class="text-center">Company</h2>
-            <p class="text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis, rerum.</p>
-            <div class="pull-left">
-              <a href="company-register.php" class="btn btn-default">Company Register</a>
-            </div>
-            <div class="pull-right">
-              <a href="company-login.php" class="btn btn-default">Company Login</a>
-            </div>
+          <h2 class="text-center">Create Job Post</h2>
+            <form method="post" action="addpost.php">
+              <div class="form-group">
+                <label for="jobtitle">Job Title</label>
+                <input type="text" class="form-control" id="jobtitle" name="jobtitle" placeholder="Job Title" required="">
+              </div>
+              <div class="form-group">
+                <label for="description">Job Description</label>
+                <textarea class="form-control" id="description" name="description" placeholder="Job Description" required=""></textarea>
+              </div>
+              <div class="form-group">
+                <label for="minimumsalary">Minimum Salary</label>
+                <input type="text" class="form-control" id="minimumsalary" name="minimumsalary" placeholder="Minimum Salary" required="">
+              </div>
+              <div class="form-group">
+                <label for="maximumsalary">Maximum Salary</label>
+                <input type="text" class="form-control" id="maximumsalary" name="maximumsalary" placeholder="Maximum Salary" required="">
+              </div>
+              <div class="form-group">
+                <label for="experience">Experience Required</label>
+                <input type="text" class="form-control" id="experience" name="experience" placeholder="Experience Required" required="">
+              </div>
+              <div class="form-group">
+                <label for="qualification">Qualification Required</label>
+                <input type="text" class="form-control" id="qualification" name="qualification" placeholder="Qualification Required" required="">
+              </div>
+              <div class="text-center">
+                <button type="submit" class="btn btn-success">Submit</button>
+              </div>
+              <?php 
+              if(isset($_SESSION['registerError'])) {
+                ?>
+                <div>
+                  <p class="text-center">Email Already Exists! Choose A Different Email!</p>
+                </div>
+              <?php
+               unset($_SESSION['registerError']); }
+              ?>     
+            </form>
           </div>
         </div>
       </div>

@@ -62,31 +62,52 @@ if(isset($_SESSION['id_user'])) {
     </header>
 
     <section>
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="jumbotron text-center">
-              <h1>Job Portal</h1>
-              <p>Find Your Dream Job</p>
-              <p><a class="btn btn-primary btn-lg" href="register.php" role="button">Register</a></p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section>
       <div class="container">
         <div class="row">
           <div class="col-md-4 col-md-offset-4 well">
-            <h2 class="text-center">Company</h2>
-            <p class="text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis, rerum.</p>
-            <div class="pull-left">
-              <a href="company-register.php" class="btn btn-default">Company Register</a>
-            </div>
-            <div class="pull-right">
-              <a href="company-login.php" class="btn btn-default">Company Login</a>
-            </div>
+          <h2 class="text-center">Company Register</h2>
+            <form method="post" action="addcompany.php">
+              <div class="form-group">
+                <label for="companyname">Company Name</label>
+                <input type="text" class="form-control" id="companyname" name="companyname" placeholder="Company Name" required="">
+              </div>
+              <div class="form-group">
+                <label for="headofficecity">Head Office City</label>
+                <input type="text" class="form-control" id="headofficecity" name="headofficecity" placeholder="Head Office City" required="">
+              </div>              
+              <div class="form-group">
+                <label for="contactno">Contact Number</label>
+                <input type="text" class="form-control" id="contactno" name="contactno" placeholder="Contact Number" required="">
+              </div>
+              <div class="form-group">
+                <label for="website">Website</label>
+                <input type="text" class="form-control" id="website" name="website" placeholder="Website">
+              </div>
+              <div class="form-group">
+                <label for="companytype">Company Type</label>
+                <input type="text" class="form-control" id="companytype" name="companytype" placeholder="Company Type">
+              </div>
+              <div class="form-group">
+                <label for="email">Company Email Address</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Email" required="">
+              </div>
+              <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Password" required="">
+              </div>
+              <div class="text-center">
+                <button type="submit" class="btn btn-success">Submit</button>
+              </div>
+              <?php 
+              if(isset($_SESSION['registerError'])) {
+                ?>
+                <div>
+                  <p class="text-center">Email Already Exists! Choose A Different Email!</p>
+                </div>
+              <?php
+               unset($_SESSION['registerError']); }
+              ?>     
+            </form>
           </div>
         </div>
       </div>
