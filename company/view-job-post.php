@@ -4,6 +4,7 @@ if(empty($_SESSION['id_user'])) {
 	header("Location: ../index.php");
 	exit();
 }
+require_once("../db.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -53,37 +54,47 @@ if(empty($_SESSION['id_user'])) {
     </header>
 
     <div class="container">
-    <?php if(isset($_SESSION['jobPostSuccess'])) { ?>
       <div class="row">
-        <div class="alert alert-success">
-          Job Post Creased Successfully!
-        </div>
-      </div>
-    <?php unset($_SESSION['jobPostSuccess']); } ?>
-
-    <?php if(isset($_SESSION['jobPostUpdateSuccess'])) { ?>
-      <div class="row">
-        <div class="alert alert-success">
-          Job Post Updated Successfully!
-        </div>
-      </div>
-    <?php unset($_SESSION['jobPostUpdateSuccess']); } ?>
-
-    <?php if(isset($_SESSION['jobPostDeleteSuccess'])) { ?>
-      <div class="row">
-        <div class="alert alert-success">
-          Job Post Deleted Successfully!
-        </div>
-      </div>
-    <?php unset($_SESSION['jobPostDeleteSuccess']); } ?>
-
-      <div class="row">
-        <h2 class="text-center">Dashboard</h2>
-        <div class="col-md-2">
-          <a href="create-job-post.php" class="btn btn-success btn-block btn-lg">Create Job Post</a>
-        </div>
-        <div class="col-md-2">
-          <a href="view-job-post.php" class="btn btn-success btn-block btn-lg">View Job Post</a>
+        <div class="col-md-12">
+          <div class="table-responsive">
+            <h2 class="text-center">All Job Posts</h2>
+            <table class="table table-striped">
+              <thead>
+                <th>Job Name</th>
+                <th>Job Description</th>
+                <th>Minimum Salary</th>
+                <th>Maximum Salary</th>
+                <th>Experience</th>
+                <th>Qualification</th>
+                <th>Created At</th>
+                <th>Action</th>
+              </thead>
+              <tbody>
+                <?php 
+                  $sql = "SELECT * FROM job_post WHERE id_company='$_SESSION[id_user]'";
+                  $result = $conn->query($sql);
+                  if($result->num_rows > 0) {
+                    while($row = $result->fetch_assoc()) 
+                    {
+                     ?>
+                      <tr>
+                        <td><?php echo $row['jobtitle']; ?></td>
+                        <td><?php echo $row['description']; ?></td>
+                        <td><?php echo $row['minimumsalary']; ?></td>
+                        <td><?php echo $row['maximumsalary']; ?></td>
+                        <td><?php echo $row['experience']; ?></td>
+                        <td><?php echo $row['qualification']; ?></td>
+                        <td><?php echo date("d-M-Y", strtotime($row['createdat'])); ?></td>
+                        <td><a href="edit-job-post.php?id=<?php echo $row['id_jobpost']; ?>">Edit</a> <a href="delete-job-post.php?id=<?php echo $row['id_jobpost']; ?>">Delete</a></td>
+                      </tr>
+                     <?php
+                    }
+                  }
+                  $conn->close();
+                ?>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
