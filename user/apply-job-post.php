@@ -1,6 +1,10 @@
 <?php
 session_start();
-require_once("db.php");
+if(empty($_SESSION['id_user'])) {
+	header("Location: ../index.php");
+	exit();
+}
+require_once("../db.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -41,90 +45,36 @@ require_once("db.php");
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">     
             <ul class="nav navbar-nav navbar-right">
-            <?php
-            if(isset($_SESSION['id_user'])) {
-              ?>
-              <li><a href="user/dashboard.php">Dashboard</a></li>
-              <li><a href="logout.php">Logout</a></li>
-            <?php
-            } else { ?>
-              <li><a href="company.php">Company</a></li>
-              <li><a href="register.php">Register</a></li>
-              <li><a href="login.php">Login</a></li>
-            <?php } ?>
+              <li><a href="profile.php">Profile</a></li>
+              <li><a href="../logout.php">Logout</a></li>
             </ul>
           </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
       </nav>
     </header>
 
-    <section>
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="jumbotron text-center">
-              <h1>Job Portal</h1>
-              <p>Find Your Dream Job</p>
-              <p><a class="btn btn-primary btn-lg" href="register.php" role="button">Register</a></p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <div class="container">
 
-    <!-- LATEST JOB POSTS -->
-    <section>
-      <div class="container">
-        <div class="row">
-          <h2 class="text-center">Latest Job Posts</h2>
-          <?php 
-          $sql = "SELECT * FROM job_post Order By Rand() Limit 4";
+    <div class="row">
+      <div class="col-md-12">
+        <?php 
+          $sql = "SELECT * FROM job_post WHERE id_jobpost='$_GET[id]'";
           $result = $conn->query($sql);
           if($result->num_rows > 0) {
             while($row = $result->fetch_assoc()) 
             {
              ?>
-            <div class="col-md-6">             
-              <h3><?php echo $row['jobtitle']; ?></h3>
-              <p><?php echo $row['description']; ?></p>
-              <button class="btn btn-default">View</button>
-            </div>
-          <?php
+                    <h2 class="text-center"><?php echo $row['jobtitle']; ?></h2>
+                    <p><?php echo $row['description']; ?></p>
+                    <a href="apply.php?id=<?php echo $row['id_jobpost']; ?>" class="btn btn-primary">Apply</a>
+              <?php
             }
           }
           ?>
-        </div>
       </div>
-    </section>
-
-    <!-- COMPANIES LIST -->
-    <section>
-      <div class="container">
-        <div class="row">
-          <h2 class="text-center">Companies List</h2>
-          <div class="col-xs-6 col-md-3">
-            <a href="#" class="thumbnail">
-              <img src="..." alt="...">
-            </a>
-          </div>
-          <div class="col-xs-6 col-md-3">
-            <a href="#" class="thumbnail">
-              <img src="..." alt="...">
-            </a>
-          </div>
-          <div class="col-xs-6 col-md-3">
-            <a href="#" class="thumbnail">
-              <img src="..." alt="...">
-            </a>
-          </div>
-          <div class="col-xs-6 col-md-3">
-            <a href="#" class="thumbnail">
-              <img src="..." alt="...">
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
+    </div>
+      
+      
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>

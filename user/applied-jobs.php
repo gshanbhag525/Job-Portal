@@ -55,32 +55,12 @@ require_once("../db.php");
 
     <div class="container">
 
-      <?php if(isset($_SESSION['jobApplySuccess'])) { ?>
-      <div class="row">
-        <div class="col-md-12">
-          <div class="alert alert-success">
-            You Have Successfully Applied!
-          </div>
-        </div>
-      </div>
-      <?php unset($_SESSION['jobApplySuccess']); } ?>
       
-      <!-- Other Dashboard Functions -->
-      <div class="row">
-        <h2 class="text-center">My Dashboard</h2>
-        <div class="col-md-2">
-          <a href="applied-jobs.php" class="btn btn-success">Applied Jobs</a>
-        </div>
-        <div class="col-md-2">
-          <a href="" class="btn btn-success">My Resume</a>
-        </div>
-      </div>
-
       <!-- Search and Apply To Job Posts -->
       <div class="row">
         <div class="col-md-12">
           <div class="table-responsive">
-            <h2 class="text-center">Active Jobs</h2>
+            <h2 class="text-center">Applied Jobs</h2>
             <table class="table table-striped">
               <thead>
                 <th>Job Name</th>
@@ -90,17 +70,14 @@ require_once("../db.php");
                 <th>Experience</th>
                 <th>Qualification</th>
                 <th>Created At</th>
-                <th>Action</th>
               </thead>
               <tbody>
                 <?php 
-                  $sql = "SELECT * FROM job_post";
+                  $sql = "SELECT * FROM job_post INNER JOIN apply_job_post ON job_post.id_jobpost=apply_job_post.id_jobpost WHERE apply_job_post.id_user='$_SESSION[id_user]'";
                   $result = $conn->query($sql);
                   if($result->num_rows > 0) {
                     while($row = $result->fetch_assoc()) 
-                    {
-                      $sql1 = "SELECT * FROM apply_job_post WHERE id_user='$_SESSION[id_user]' AND id_jobpost='$row[id_jobpost]'";
-                      $result1 = $conn->query($sql1);
+                    {                     
                       
                      ?>
                       <tr>
@@ -110,16 +87,7 @@ require_once("../db.php");
                         <td><?php echo $row['maximumsalary']; ?></td>
                         <td><?php echo $row['experience']; ?></td>
                         <td><?php echo $row['qualification']; ?></td>
-                        <td><?php echo date("d-M-Y", strtotime($row['createdat'])); ?></td>
-                        <?php
-                        if($result1->num_rows > 0) { 
-                          ?>
-                           <td><strong>Applied</strong></td>
-                          <?php
-                        } else {
-                        ?>
-                        <td><a href="apply-job-post.php?id=<?php echo $row['id_jobpost']; ?>">Apply</a></td>
-                        <?php } ?>                        
+                        <td><?php echo date("d-M-Y", strtotime($row['createdat'])); ?></td>                                              
                       </tr>
                      <?php
                     }
