@@ -1,9 +1,16 @@
 <?php
+
+//To Handle Session Variables on This Page
 session_start();
+
+//If user Not logged in then redirect them back to homepage. 
+//This is required if user tries to manually enter applied-jobs.php in URL.
 if(empty($_SESSION['id_user'])) {
 	header("Location: ../index.php");
 	exit();
 }
+
+//Including Database Connection From db.php file to avoid rewriting in all files
 require_once("../db.php");
 ?>
 <!DOCTYPE html>
@@ -39,10 +46,9 @@ require_once("../db.php");
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Job Portal</a>
+            <a class="navbar-brand" href="../index.php">Job Portal</a>
           </div>
 
-          <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">     
             <ul class="nav navbar-nav navbar-right">
               <li><a href="profile.php">Profile</a></li>
@@ -56,7 +62,7 @@ require_once("../db.php");
     <div class="container">
 
       
-      <!-- Search and Apply To Job Posts -->
+      <!-- All Job Posts that we applied to. -->
       <div class="row">
         <div class="col-md-12">
           <div class="table-responsive">
@@ -72,9 +78,14 @@ require_once("../db.php");
                 <th>Created At</th>
               </thead>
               <tbody>
-                <?php 
+                <?php
+                //Sql Query for showing all applied job posts. 
+                //
+                //So basically - Select all *job post id* from *apply_job_post table* that match with *job_post table* where user matches currect logged in user in *apply_job post table*.
                   $sql = "SELECT * FROM job_post INNER JOIN apply_job_post ON job_post.id_jobpost=apply_job_post.id_jobpost WHERE apply_job_post.id_user='$_SESSION[id_user]'";
                   $result = $conn->query($sql);
+
+                  //If user applied to job then display that post information.
                   if($result->num_rows > 0) {
                     while($row = $result->fetch_assoc()) 
                     {                     

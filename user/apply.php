@@ -1,8 +1,13 @@
 <?php
+
+//To Handle Session Variables on This Page
 session_start();
+
+//Including Database Connection From db.php file to avoid rewriting in all files
 require_once("../db.php");
 
-//If user clicked register button
+//If user Actually clicked apply button
+//Todo: Fix This. Use Post For Safety.
 if(isset($_POST)) {
 
 	$sql = "SELECT * FROM job_post WHERE id_jobpost='$_GET[id]'";

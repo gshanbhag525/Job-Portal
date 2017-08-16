@@ -1,9 +1,16 @@
 <?php
+
+//To Handle Session Variables on This Page
 session_start();
+
+//If user Not logged in then redirect them back to homepage. 
+//This is required if user tries to manually enter apply-job-post.php in URL.
 if(empty($_SESSION['id_user'])) {
 	header("Location: ../index.php");
 	exit();
 }
+
+//Including Database Connection From db.php file to avoid rewriting in all files
 require_once("../db.php");
 ?>
 <!DOCTYPE html>
@@ -39,7 +46,7 @@ require_once("../db.php");
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Job Portal</a>
+            <a class="navbar-brand" href="../index.php">Job Portal</a>
           </div>
 
           <!-- Collect the nav links, forms, and other content for toggling -->
@@ -58,8 +65,11 @@ require_once("../db.php");
     <div class="row">
       <div class="col-md-12">
         <?php 
+          //Get Job Post details From id passed through url.
           $sql = "SELECT * FROM job_post WHERE id_jobpost='$_GET[id]'";
           $result = $conn->query($sql);
+          
+          //If job post with Url Id exists then show details about the post.
           if($result->num_rows > 0) {
             while($row = $result->fetch_assoc()) 
             {

@@ -1,9 +1,16 @@
 <?php
+
+//To Handle Session Variables on This Page
 session_start();
+
+//If user Not logged in then redirect them back to homepage. 
+//This is required if user tries to manually enter profile.php in URL.
 if(empty($_SESSION['id_user'])) {
   header("Location: ../index.php");
   exit();
 }
+
+//Including Database Connection From db.php file to avoid rewriting in all files
 require_once("../db.php");
 ?>
 <!DOCTYPE html>
@@ -39,10 +46,9 @@ require_once("../db.php");
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Job Portal</a>
+            <a class="navbar-brand" href="../index.php">Job Portal</a>
           </div>
 
-          <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">     
             <ul class="nav navbar-nav navbar-right">
               <li><a href="profile.php">Profile</a></li>
@@ -60,10 +66,12 @@ require_once("../db.php");
           <h2 class="text-center">Profile</h2>
             <form method="post" action="updateprofile.php">
             <?php
-
+            //Sql to get logged in user details.
             $sql = "SELECT * FROM users WHERE id_user='$_SESSION[id_user]'";
             $result = $conn->query($sql);
 
+            //If user exists then show his details.
+            //Todo: Create Seprate Page For Password Change.
             if($result->num_rows > 0) {
               while($row = $result->fetch_assoc()) {
             ?>

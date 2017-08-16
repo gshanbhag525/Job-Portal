@@ -1,9 +1,16 @@
 <?php
+
+//To Handle Session Variables on This Page
 session_start();
+
+//If user Not logged in then redirect them back to homepage. 
+//This is required if user tries to manually enter dashboard.php in URL.
 if(empty($_SESSION['id_user'])) {
 	header("Location: ../index.php");
 	exit();
 }
+
+//Including Database Connection From db.php file to avoid rewriting in all files
 require_once("../db.php");
 ?>
 <!DOCTYPE html>
@@ -39,7 +46,7 @@ require_once("../db.php");
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Job Portal</a>
+            <a class="navbar-brand" href="../index.php">Job Portal</a>
           </div>
 
           <!-- Collect the nav links, forms, and other content for toggling -->
@@ -55,9 +62,11 @@ require_once("../db.php");
 
     <div class="container">
 
+      <!-- Applied To Job Success Message. -->
+      <!-- Todo: Remove Success Message Without Reload. -->
       <?php if(isset($_SESSION['jobApplySuccess'])) { ?>
       <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12 successMessage">
           <div class="alert alert-success">
             You Have Successfully Applied!
           </div>
@@ -94,11 +103,15 @@ require_once("../db.php");
               </thead>
               <tbody>
                 <?php 
+                  //Sql for showing all job posts
                   $sql = "SELECT * FROM job_post";
                   $result = $conn->query($sql);
+
+                  //if there are job posts then display them.
                   if($result->num_rows > 0) {
                     while($row = $result->fetch_assoc()) 
                     {
+                      //Check if user has applied to job or not. If applied dont show apply link.
                       $sql1 = "SELECT * FROM apply_job_post WHERE id_user='$_SESSION[id_user]' AND id_jobpost='$row[id_jobpost]'";
                       $result1 = $conn->query($sql1);
                       
@@ -112,6 +125,7 @@ require_once("../db.php");
                         <td><?php echo $row['qualification']; ?></td>
                         <td><?php echo date("d-M-Y", strtotime($row['createdat'])); ?></td>
                         <?php
+                        // If User already applied to job post then don't show apply link.
                         if($result1->num_rows > 0) { 
                           ?>
                            <td><strong>Applied</strong></td>
@@ -137,5 +151,11 @@ require_once("../db.php");
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <script type="text/javascript">
+      $(function() {
+        $(".successMessage:visible").fadeOut(2000);
+      });
+    </script>
   </body>
 </html>

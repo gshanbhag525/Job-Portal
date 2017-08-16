@@ -1,11 +1,12 @@
 <?php
 
+//Your Mysql Config
 $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "jobportal";
 
-//Create Connection
+//Create New Database Connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 
 //Check Connection

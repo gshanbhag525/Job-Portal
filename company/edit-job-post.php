@@ -1,9 +1,16 @@
 <?php
+
+//To Handle Session Variables on This Page
 session_start();
+
+//If user Not logged in then redirect them back to homepage. 
+//This is required if user tries to manually enter edit-job-post.php in URL.
 if(empty($_SESSION['id_user'])) {
-    header("Location: user/dashboard.php");
+    header("Location: ../index.php");
     exit();
   }
+
+//Including Database Connection From db.php file to avoid rewriting in all files  
 require_once("../db.php");
 ?>
 <!DOCTYPE html>
@@ -39,23 +46,14 @@ require_once("../db.php");
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Job Portal</a>
+            <a class="navbar-brand" href="../index.php">Job Portal</a>
           </div>
 
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">     
             <ul class="nav navbar-nav navbar-right">
-            <?php
-            if(isset($_SESSION['id_user'])) {
-              ?>
-              <li><a href="user/dashboard.php">Dashboard</a></li>
-              <li><a href="logout.php">Logout</a></li>
-            <?php
-            } else { ?>
-              <li><a href="company.php">Company</a></li>
-              <li><a href="register.php">Register</a></li>
-              <li><a href="login.php">Login</a></li>
-            <?php } ?>
+              <li><a href="dashboard.php">Dashboard</a></li>
+              <li><a href="../logout.php">Logout</a></li>
             </ul>
           </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
@@ -69,11 +67,14 @@ require_once("../db.php");
           <h2 class="text-center">Update Job Post</h2>
             <form method="post" action="editpost.php">
             <?php
+            //Sql Query for show job post to edit if it is created with logged in company.
             $sql = "SELECT * FROM job_post WHERE id_jobpost='$_GET[id]' AND id_company='$_SESSION[id_user]'";
-              $result = $conn->query($sql);
-              if($result->num_rows > 0) {
-                while($row = $result->fetch_assoc()) 
-                {
+            $result = $conn->query($sql);
+
+            //If job post is created by logged in company then show job post details to edit.
+            if($result->num_rows > 0) {
+              while($row = $result->fetch_assoc()) 
+              {
             ?>
               <div class="form-group">
                 <label for="jobtitle">Job Title</label>
@@ -106,6 +107,7 @@ require_once("../db.php");
               <?php 
                 }
               } else {
+                //If job post not created by logged in company then redirect to dashboard.
                 header("Location: dashboard.php");
                 exit();
               }

@@ -1,7 +1,12 @@
 <?php
+
+//To Handle Session Variables on This Page
 session_start();
+
+//If user Not logged in then redirect them back to homepage. 
+//This is required if user tries to manually enter create-job-post.php in URL.
 if(empty($_SESSION['id_user'])) {
-    header("Location: user/dashboard.php");
+    header("Location: ../index.php");
     exit();
   }
 ?>
@@ -38,23 +43,13 @@ if(empty($_SESSION['id_user'])) {
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Job Portal</a>
+            <a class="navbar-brand" href="../index.php">Job Portal</a>
           </div>
 
-          <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">     
             <ul class="nav navbar-nav navbar-right">
-            <?php
-            if(isset($_SESSION['id_user'])) {
-              ?>
-              <li><a href="user/dashboard.php">Dashboard</a></li>
+              <li><a href="dashboard.php">Dashboard</a></li>
               <li><a href="logout.php">Logout</a></li>
-            <?php
-            } else { ?>
-              <li><a href="company.php">Company</a></li>
-              <li><a href="register.php">Register</a></li>
-              <li><a href="login.php">Login</a></li>
-            <?php } ?>
             </ul>
           </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
@@ -93,16 +88,7 @@ if(empty($_SESSION['id_user'])) {
               </div>
               <div class="text-center">
                 <button type="submit" class="btn btn-success">Submit</button>
-              </div>
-              <?php 
-              if(isset($_SESSION['registerError'])) {
-                ?>
-                <div>
-                  <p class="text-center">Email Already Exists! Choose A Different Email!</p>
-                </div>
-              <?php
-               unset($_SESSION['registerError']); }
-              ?>     
+              </div>    
             </form>
           </div>
         </div>

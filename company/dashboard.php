@@ -1,5 +1,10 @@
 <?php
+
+//To Handle Session Variables on This Page
 session_start();
+
+//If user Not logged in then redirect them back to homepage. 
+//This is required if user tries to manually enter dashboard.php in URL.
 if(empty($_SESSION['id_user'])) {
 	header("Location: ../index.php");
 	exit();
@@ -38,13 +43,11 @@ if(empty($_SESSION['id_user'])) {
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Job Portal</a>
+            <a class="navbar-brand" href="../index.php">Job Portal</a>
           </div>
 
-          <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">     
             <ul class="nav navbar-nav navbar-right">
-              <li><a href="profile.php">Profile</a></li>
               <li><a href="../logout.php">Logout</a></li>
             </ul>
           </div><!-- /.navbar-collapse -->
@@ -52,25 +55,31 @@ if(empty($_SESSION['id_user'])) {
       </nav>
     </header>
 
+    <!-- Job Post Created Success Message. -->
+    <!-- Todo: Remove Success Message Without Reload. -->
     <div class="container">
     <?php if(isset($_SESSION['jobPostSuccess'])) { ?>
-      <div class="row">
+      <div class="row successMessage">
         <div class="alert alert-success">
-          Job Post Creased Successfully!
+          Job Post Created Successfully!
         </div>
       </div>
     <?php unset($_SESSION['jobPostSuccess']); } ?>
-
+    
+    <!-- Job Post Updated Success Message. -->
+    <!-- Todo: Remove Success Message Without Reload. -->
     <?php if(isset($_SESSION['jobPostUpdateSuccess'])) { ?>
-      <div class="row">
+      <div class="row successMessage">
         <div class="alert alert-success">
           Job Post Updated Successfully!
         </div>
       </div>
     <?php unset($_SESSION['jobPostUpdateSuccess']); } ?>
 
+    <!-- Job Post Deleted Success Message. -->
+    <!-- Todo: Remove Success Message Without Reload. -->
     <?php if(isset($_SESSION['jobPostDeleteSuccess'])) { ?>
-      <div class="row">
+      <div class="row successMessage">
         <div class="alert alert-success">
           Job Post Deleted Successfully!
         </div>
@@ -92,5 +101,11 @@ if(empty($_SESSION['id_user'])) {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+     <script type="text/javascript">
+      $(function() {
+        $(".successMessage:visible").fadeOut(2000);
+      });
+    </script>
   </body>
 </html>
