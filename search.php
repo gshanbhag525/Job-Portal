@@ -127,6 +127,7 @@
                 <th>Maximum Salary</th>
                 <th>Experience</th>
                 <th>Qualification</th>
+                <th>Action</th>
               </thead>
               <tbody>
                 

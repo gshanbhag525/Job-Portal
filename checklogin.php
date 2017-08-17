@@ -30,9 +30,19 @@ if(isset($_POST)) {
 			$_SESSION['email'] = $row['email'];
 			$_SESSION['id_user'] = $row['id_user'];
 
+			if(isset($_SESSION['callFrom'])) {
+				$location = $_SESSION['callFrom'];
+				unset($_SESSION['callFrom']);
+				
+				header("Location: " . $location);
+				exit();
+			} else {
+				header("Location: user/dashboard.php");
+				exit();
+			}
+
 			//Redirect them to user dashboard once logged in successfully
-			header("Location: user/dashboard.php");
-			exit();
+			
 		}
  	} else {
 

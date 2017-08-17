@@ -81,7 +81,7 @@ require_once("../db.php");
           <a href="applied-jobs.php" class="btn btn-success">Applied Jobs</a>
         </div>
         <div class="col-md-2">
-          <a href="" class="btn btn-success">My Resume</a>
+          <a href="resume.php" class="btn btn-success">Resume</a>
         </div>
       </div>
 
