@@ -62,23 +62,34 @@ require_once("../db.php");
 
     <div class="container">      
       <div class="row">
-        <h2 class="text-center">Resume</h2>
-        <div class="col-md-2">
-          <a href="generate-resume.php" class="btn btn-success">Generate Resume</a>
+
+      <?php if(isset($_SESSION['uploadError'])) { ?>
+      <div class="row">
+        <div class="col-md-12 successMessage">
+          <div class="alert alert-danger">
+            <?php echo $_SESSION['uploadError']; ?>
+          </div>
         </div>
-        <div class="col-md-2">
-          <a href="resume-upload.php" class="btn btn-success">Upload Resume</a>
+      </div>
+      <?php unset($_SESSION['uploadError']); } ?>
+
+
+        <div class="col-md-4 col-md-offset-4">
+          <div class="panel panel-default">
+            <div class="panel-heading">Upload Resume</div>
+            <div class="panel-body">
+              <form action="upload-resume.php" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                  <label>Upload Resume</label>
+                  <input type="file" name="resume" class="form-control" required="">
+                </div>
+                <div class="form-group">
+                  <input type="submit" value="Upload" class="btn btn-success">
+                </div>
+              </form>
+            </div>
+          </div>
         </div>
-        <?php
-        $sql = "SELECT resume FROM users WHERE id_user='$_SESSION[id_user]' AND resume IS NOT NULL";
-        $result = $conn->query($sql);
-        if($result->num_rows > 0) {
-          $row = $result->fetch_assoc();
-          ?>
-        <div class="col-md-2">
-          <a href="../uploads/resume/<?php echo $row['resume']; ?>" class="btn btn-success" download="MyUploadedResume">Download Resume</a>
-        </div>
-        <?php }  ?>
       </div>
     </div>
 

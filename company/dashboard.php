@@ -9,6 +9,8 @@ if(empty($_SESSION['id_user'])) {
 	header("Location: ../index.php");
 	exit();
 }
+
+require_once("../db.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -94,6 +96,17 @@ if(empty($_SESSION['id_user'])) {
         <div class="col-md-2">
           <a href="view-job-post.php" class="btn btn-success btn-block btn-lg">View Job Post</a>
         </div>
+        <?php
+          $sql = "SELECT * FROM apply_job_post WHERE id_company='$_SESSION[id_user]' AND status='0'";
+          $result = $conn->query($sql);
+          if($result->num_rows > 0) {
+            ?>
+           <div class="col-md-3">
+             <a href="view-job-application.php" class="btn btn-success btn-block btn-lg">View Application <span class="badge"><?php echo $result->num_rows; ?></a>
+           </div> 
+            <?php
+          }
+        ?>
       </div>
     </div>
 

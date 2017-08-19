@@ -10,7 +10,6 @@ if(empty($_SESSION['id_user'])) {
 	exit();
 }
 
-//Including Database Connection From db.php file to avoid rewriting in all files
 require_once("../db.php");
 ?>
 <!DOCTYPE html>
@@ -49,10 +48,8 @@ require_once("../db.php");
             <a class="navbar-brand" href="../index.php">Job Portal</a>
           </div>
 
-          <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">     
             <ul class="nav navbar-nav navbar-right">
-              <li><a href="profile.php">Profile</a></li>
               <li><a href="../logout.php">Logout</a></li>
             </ul>
           </div><!-- /.navbar-collapse -->
@@ -60,25 +57,42 @@ require_once("../db.php");
       </nav>
     </header>
 
-    <div class="container">      
+    <div class="container">
       <div class="row">
-        <h2 class="text-center">Resume</h2>
-        <div class="col-md-2">
-          <a href="generate-resume.php" class="btn btn-success">Generate Resume</a>
+        <div class="panel panel-info">
+          <div class="panel-heading">User Application</div>
+          <div class="panel-body">
+            <?php
+              $sql ="SELECT * FROM apply_job_post INNER JOIN users ON apply_job_post.id_user=users.id_user WHERE apply_job_post.id_user='$_GET[id_user]' AND apply_job_post.id_jobpost='$_GET[id_jobpost]'";
+              $result=$conn->query($sql);
+
+              if($result->num_rows > 0) {
+                while($row = $result->fetch_assoc()) {
+              ?>
+                
+                <p>Name: <?php echo $row['firstname'] . " " . $row['lastname']; ?></p>
+                <p>Email: <?php echo $row['email']; ?></p>
+                <p>Address: <?php echo $row['address']; ?></p>
+                <p>City: <?php echo $row['city']; ?></p>
+                <p>State: <?php echo $row['state']; ?></p>
+                <p>Contact No: <?php echo $row['contactno']; ?></p>
+                <p>Qualification: <?php echo $row['qualification']; ?></p>
+                <p>Stream: <?php echo $row['stream']; ?></p>
+                <p>Passing Year: <?php echo $row['passingyear']; ?></p>
+                <p>Date Of Birth: <?php echo $row['dob']; ?></p>
+                <p>Designation: <?php echo $row['designation']; ?></p>
+                <?php
+                if(isset($row['resume'])) {
+                  ?>
+                  <a href="../uploads/resume/<?php echo $row['resume']; ?>" class="btn btn-success" download="<?php echo $row['firstname']; ?>">Download Resume</a>
+                  <?php
+                }
+                ?>
+                <a href="reject-user.php?id_user=<?php echo $_GET['id_user']; ?>&id_jobpost=<?php echo $row['id_jobpost']; ?>" class="btn btn-danger">Reject User</a>
+
+              <?php } } ?>
+          </div>
         </div>
-        <div class="col-md-2">
-          <a href="resume-upload.php" class="btn btn-success">Upload Resume</a>
-        </div>
-        <?php
-        $sql = "SELECT resume FROM users WHERE id_user='$_SESSION[id_user]' AND resume IS NOT NULL";
-        $result = $conn->query($sql);
-        if($result->num_rows > 0) {
-          $row = $result->fetch_assoc();
-          ?>
-        <div class="col-md-2">
-          <a href="../uploads/resume/<?php echo $row['resume']; ?>" class="btn btn-success" download="MyUploadedResume">Download Resume</a>
-        </div>
-        <?php }  ?>
       </div>
     </div>
 
@@ -87,5 +101,10 @@ require_once("../db.php");
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
+     <script type="text/javascript">
+      $(function() {
+        $(".successMessage:visible").fadeOut(2000);
+      });
+    </script>
   </body>
 </html>
