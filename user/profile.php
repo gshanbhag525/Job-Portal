@@ -117,11 +117,11 @@ require_once("../db.php");
               </div>
               <div class="form-group">
                 <label for="dob">Date of Birth</label>
-                <input type="date" class="form-control" id="dob" name="dob" placeholder="Date of Birth" value="<?php echo $row['dob']; ?>">
+                <input type="date" class="form-control" id="dob" name="dob" placeholder="Date of Birth" min="1960-01-01" max="2005-01-31" value="<?php echo $row['dob']; ?>">
               </div>
               <div class="form-group">
                 <label for="age">Age</label>
-                <input type="text" class="form-control" id="age" name="age" placeholder="Age" value="<?php echo $row['age']; ?>">
+                <input type="text" class="form-control" id="age" name="age" placeholder="Age" value="<?php echo $row['age']; ?>" readonly>
               </div>
               <div class="form-group">
                 <label for="designation">Designation</label>
@@ -144,5 +144,20 @@ require_once("../db.php");
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <script type="text/javascript">
+      $('#dob').on('change', function() {
+        var today = new Date();
+        var birthDate = new Date($(this).val());
+        var age = today.getFullYear() - birthDate.getFullYear();
+        var m = today.getMonth() - birthDate.getMonth();
+
+        if(m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+          age--;
+        }
+
+        $('#age').val(age);
+      });
+    </script>
   </body>
 </html>

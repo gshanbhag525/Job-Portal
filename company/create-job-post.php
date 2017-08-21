@@ -72,11 +72,11 @@ if(empty($_SESSION['id_user'])) {
               </div>
               <div class="form-group">
                 <label for="minimumsalary">Minimum Salary</label>
-                <input type="text" class="form-control" id="minimumsalary" name="minimumsalary" placeholder="Minimum Salary" required="">
+                <input type="number" class="form-control" id="minimumsalary" min="1000" autocomplete="off" name="minimumsalary" placeholder="Minimum Salary" required="">
               </div>
               <div class="form-group">
                 <label for="maximumsalary">Maximum Salary</label>
-                <input type="text" class="form-control" id="maximumsalary" name="maximumsalary" placeholder="Maximum Salary" required="">
+                <input type="number" class="form-control" id="maximumsalary" name="maximumsalary" placeholder="Maximum Salary" required="">
               </div>
               <div class="form-group">
                 <label for="experience">Experience Required</label>

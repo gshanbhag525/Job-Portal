@@ -9,7 +9,14 @@ require_once("../db.php");
 //if user Actually clicked Add Post Button
 if(isset($_POST)) {
 
-	//Escape Special Characters In String First
+	// New way using prepared statements. This is safe from SQL INJECTION. Should consider to update to this method when many people are using this method.
+
+
+
+	$stmt = $conn->prepare("INSERT INTO job_post(id_company, jobtitle, description, minimumsalary, maximumsalary, experience, qualification) VALUES (?,?, ?, ?, ?, ?, ?)");
+
+	$stmt->bind_param("issssss", $_SESSION['id_user'], $jobtitle, $description, $minimumsalary, $maximumsalary, $experience, $qualification);
+
 	$jobtitle = mysqli_real_escape_string($conn, $_POST['jobtitle']);
 	$description = mysqli_real_escape_string($conn, $_POST['description']);
 	$minimumsalary = mysqli_real_escape_string($conn, $_POST['minimumsalary']);
@@ -17,18 +24,33 @@ if(isset($_POST)) {
 	$experience = mysqli_real_escape_string($conn, $_POST['experience']);
 	$qualification = mysqli_real_escape_string($conn, $_POST['qualification']);
 
-	//Insert Job Post Query 
-	$sql = "INSERT INTO job_post(id_company, jobtitle, description, minimumsalary, maximumsalary, experience, qualification) VALUES ('$_SESSION[id_user]','$jobtitle', '$description', '$minimumsalary', '$maximumsalary', '$experience', '$qualification')";
 
-	if($conn->query($sql)===TRUE) {
+	if($stmt->execute()) {
 		//If data Inserted successfully then redirect to dashboard
 		$_SESSION['jobPostSuccess'] = true;
 		header("Location: dashboard.php");
 		exit();
 	} else {
 		//If data failed to insert then show that error. Note: This condition should not come unless we as a developer make mistake or someone tries to hack their way in and mess up :D
-		echo "Error " . $sql . "<br>" . $conn->error;
+		echo "Error ";
 	}
+
+	$stmt->close();
+
+	//THIS IS NOT SAFE FROM SQL INJECTION BUT OK TO USE WITH SMALL TO MEDIUM SIZE AUDIENCE
+
+	//Insert Job Post Query 
+	// $sql = "INSERT INTO job_post(id_company, jobtitle, description, minimumsalary, maximumsalary, experience, qualification) VALUES ('$_SESSION[id_user]','$jobtitle', '$description', '$minimumsalary', '$maximumsalary', '$experience', '$qualification')";
+
+	// if($conn->query($sql)===TRUE) {
+	// 	//If data Inserted successfully then redirect to dashboard
+	// 	$_SESSION['jobPostSuccess'] = true;
+	// 	header("Location: dashboard.php");
+	// 	exit();
+	// } else {
+	// 	//If data failed to insert then show that error. Note: This condition should not come unless we as a developer make mistake or someone tries to hack their way in and mess up :D
+	// 	echo "Error " . $sql . "<br>" . $conn->error;
+	// }
 
 	//Close database connection. Not compulsory but good practice.
 	$conn->close();

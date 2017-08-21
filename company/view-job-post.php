@@ -77,16 +77,46 @@ require_once("../db.php");
               </thead>
               <tbody>
                 <?php 
-                //Sql Query to show all job_post created by logged in company
-                  $sql = "SELECT * FROM job_post WHERE id_company='$_SESSION[id_user]'";
-                  $result = $conn->query($sql);
 
-                  //If Job Post exists then display details of post
-                  if($result->num_rows > 0) {
-                    while($row = $result->fetch_assoc()) 
-                    {
+                $stmt = $conn->prepare("SELECT * FROM job_post WHERE id_company=?");
+
+                $stmt->bind_param("i", $_SESSION['id_user']);
+
+                $stmt->execute();
+
+                $result = $stmt->get_result();
+
+                if($result->num_rows > 0) {
+                  while($row = $result->fetch_assoc()) 
+                  {
+                   ?>
+                    <tr>
+                      <td><?php echo $row['jobtitle']; ?></td>
+                      <td><?php echo $row['description']; ?></td>
+                      <td><?php echo $row['minimumsalary']; ?></td>
+                      <td><?php echo $row['maximumsalary']; ?></td>
+                      <td><?php echo $row['experience']; ?></td>
+                      <td><?php echo $row['qualification']; ?></td>
+                      <td><?php echo date("d-M-Y", strtotime($row['createdat'])); ?></td>
+                      <td><a href="edit-job-post.php?id=<?php echo $row['id_jobpost']; ?>">Edit</a> <a href="delete-job-post.php?id=<?php echo $row['id_jobpost']; ?>">Delete</a></td>
+                    </tr>
+                   <?php
+                 }
+               }
+
+               $stmt->close();
+
+
+                //Sql Query to show all job_post created by logged in company
+                  // $sql = "SELECT * FROM job_post WHERE id_company='$_SESSION[id_user]'";
+                  // $result = $conn->query($sql);
+
+                  // //If Job Post exists then display details of post
+                  // if($result->num_rows > 0) {
+                  //   while($row = $result->fetch_assoc()) 
+                  //   {
                      ?>
-                      <tr>
+                   <!--    <tr>
                         <td><?php echo $row['jobtitle']; ?></td>
                         <td><?php echo $row['description']; ?></td>
                         <td><?php echo $row['minimumsalary']; ?></td>
@@ -95,10 +125,10 @@ require_once("../db.php");
                         <td><?php echo $row['qualification']; ?></td>
                         <td><?php echo date("d-M-Y", strtotime($row['createdat'])); ?></td>
                         <td><a href="edit-job-post.php?id=<?php echo $row['id_jobpost']; ?>">Edit</a> <a href="delete-job-post.php?id=<?php echo $row['id_jobpost']; ?>">Delete</a></td>
-                      </tr>
+                      </tr> -->
                      <?php
-                    }
-                  }
+                  //   }
+                  // }
                   //Close database connection. Not compulsory but good practice.
                   $conn->close();
                 ?>

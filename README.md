@@ -24,3 +24,4 @@ Job Portal (PHP) - Part 10 - Admin Panel - https://youtu.be/UdLpBUR2lCs
 
 Job Portal (PHP) - Part 11 - Admin Verifying Company & User Email Verification - https://youtu.be/RwybCIHj0JE
 
+Job Portal (PHP) - Part 12 - Validations & Code Improvements - https://youtu.be/mpO1j16udzM

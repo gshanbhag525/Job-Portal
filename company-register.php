@@ -84,7 +84,7 @@ if(isset($_SESSION['id_user'])) {
               </div>              
               <div class="form-group">
                 <label for="contactno">Contact Number</label>
-                <input type="text" class="form-control" id="contactno" name="contactno" placeholder="Contact Number" required="">
+                <input type="text" class="form-control" id="contactno" name="contactno" placeholder="Contact Number" minlength="10" maxlength="10" autocomplete="off" onkeypress="return validatePhone(event);" required="">
               </div>
               <div class="form-group">
                 <label for="website">Website</label>
@@ -125,5 +125,25 @@ if(isset($_SESSION['id_user'])) {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <script type="text/javascript">
+      function validatePhone(event) {
+
+        //event.keycode will return unicode for characters and numbers like a, b, c, 5 etc.
+        //event.which will return key for mouse events and other events like ctrl alt etc. 
+        var key = window.event ? event.keyCode : event.which;
+
+        if(event.keyCode == 8 || event.keyCode == 46 || event.keyCode == 37 || event.keyCode == 39) {
+          // 8 means Backspace
+          //46 means Delete
+          // 37 means left arrow
+          // 39 means right arrow
+          return true;
+        } else if( key < 48 || key > 57 ) {
+          // 48-57 is 0-9 numbers on your keyboard.
+          return false;
+        } else return true;
+      }
+    </script>
   </body>
 </html>
