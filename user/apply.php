@@ -7,8 +7,7 @@ session_start();
 require_once("../db.php");
 
 //If user Actually clicked apply button
-//Todo: Fix This. Use Post For Safety.
-if(isset($_POST)) {
+if(isset($_GET)) {
 
 	$sql = "SELECT * FROM job_post WHERE id_jobpost='$_GET[id]'";
 	  $result = $conn->query($sql);
@@ -18,6 +17,7 @@ if(isset($_POST)) {
 	    	$id_company = $row['id_company'];
 	   }
 
+	//Check if user has applied to job post or not. If not then add his details to apply_job_post table.
 	$sql1 = "SELECT * FROM apply_job_post WHERE id_user='$_SESSION[id_user]' AND id_jobpost='$row[id_jobpost]'";
     $result1 = $conn->query($sql1);
     if($result1->num_rows == 0) {  

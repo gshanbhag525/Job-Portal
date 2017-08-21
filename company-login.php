@@ -92,7 +92,7 @@
               if(isset($_SESSION['registerCompleted'])) {
                 ?>
                 <div>
-                  <p class="text-center">You Have Registered Successfully!</p>
+                  <p class="text-center">You Have Registered Successfully! Your Account Approval Is Pending By Admin</p>
                 </div>
               <?php
                unset($_SESSION['registerCompleted']); }
@@ -106,7 +106,17 @@
                 </div>
               <?php
                unset($_SESSION['loginError']); }
-              ?>              
+              ?>   
+              <?php 
+              if(isset($_SESSION['companyLoginError'])) {
+                ?>
+                <div>
+                  <p class="text-center"><?php echo $_SESSION['companyLoginError'] ?></p>
+                </div>
+              <?php
+               unset($_SESSION['companyLoginError']); }
+              ?>            
+              
             </form>
           </div>
         </div>

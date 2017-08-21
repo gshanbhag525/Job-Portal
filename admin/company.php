@@ -72,7 +72,7 @@ require_once("../db.php");
         <div class="col-md-6">
           <div class="col-md-6">
         <?php
-          $sql = "SELECT * FROM company";
+          $sql = "SELECT * FROM company  WHERE active='1'";
           $result = $conn->query($sql);
           if($result->num_rows > 0) {
             echo '<h3>Total Companies: ' . $result->num_rows . '</h3>'; 
@@ -89,7 +89,7 @@ require_once("../db.php");
             </thead>
             <tbody>
               <?php
-                $sql = "SELECT * FROM company";
+                $sql = "SELECT * FROM company WHERE active='1'";
                 $result = $conn->query($sql);
                 if($result->num_rows > 0) {
                   $i = 0;

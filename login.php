@@ -92,7 +92,7 @@
               if(isset($_SESSION['registerCompleted'])) {
                 ?>
                 <div>
-                  <p id="successMessage" class="text-center">You Have Registered Successfully!</p>
+                  <p id="successMessage" class="text-center"><?php echo $_SESSION['registerCompleted'] ?></p>
                 </div>
               <?php
                unset($_SESSION['registerCompleted']); }
@@ -106,7 +106,29 @@
                 </div>
               <?php
                unset($_SESSION['loginError']); }
-              ?>              
+              ?>      
+
+              <?php 
+              //If User Failed To log in then show error message.
+              if(isset($_SESSION['userActivated'])) {
+                ?>
+                <div>
+                  <p class="text-center">Your Account Is Active. You Can Login</p>
+                </div>
+              <?php
+               unset($_SESSION['userActivated']); }
+              ?>    
+
+               <?php 
+              //If User Failed To log in then show error message.
+              if(isset($_SESSION['loginActiveError'])) {
+                ?>
+                <div>
+                  <p class="text-center">Your Account Is Not Active. Check Your Email.</p>
+                </div>
+              <?php
+               unset($_SESSION['loginActiveError']); }
+              ?>        
             </form>
           </div>
         </div>

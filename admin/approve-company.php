@@ -12,10 +12,10 @@ require_once("../db.php");
 
 if(isset($_GET)) {
 
-	//Delete Users data using id and redirect
-	$sql = "DELETE FROM users WHERE id_user='$_GET[id]'";
+	//Delete Company using id and redirect
+	$sql = "UPDATE company SET active='1' WHERE id_company='$_GET[id]'";
 	if($conn->query($sql)) {
-		header("Location: user.php");
+		header("Location: dashboard.php");
 		exit();
 	} else {
 		echo "Error";

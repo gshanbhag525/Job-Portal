@@ -70,6 +70,7 @@ require_once("../db.php");
           <a href="resume-upload.php" class="btn btn-success">Upload Resume</a>
         </div>
         <?php
+        //If resume is uploaded then show download link.
         $sql = "SELECT resume FROM users WHERE id_user='$_SESSION[id_user]' AND resume IS NOT NULL";
         $result = $conn->query($sql);
         if($result->num_rows > 0) {

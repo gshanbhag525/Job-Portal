@@ -17,28 +17,35 @@ if(isset($_POST)) {
 	$password = base64_encode(strrev(md5($password)));
 
 	//sql query to check user login
-	$sql = "SELECT id_user, firstname, lastname, email FROM users WHERE email='$email' AND password='$password'";
+	$sql = "SELECT id_user, firstname, lastname, email, active FROM users WHERE email='$email' AND password='$password'";
 	$result = $conn->query($sql);
 
 	//if user table has this this login details
 	if($result->num_rows > 0) {
 		//output data
 		while($row = $result->fetch_assoc()) {
-			
-			//Set some session variables for easy reference
-			$_SESSION['name'] = $row['firstname'] . " " . $row['lastname'];
-			$_SESSION['email'] = $row['email'];
-			$_SESSION['id_user'] = $row['id_user'];
 
-			if(isset($_SESSION['callFrom'])) {
-				$location = $_SESSION['callFrom'];
-				unset($_SESSION['callFrom']);
-				
-				header("Location: " . $location);
+			if($row['active'] == '0') {
+				$_SESSION['loginActiveError'] = true;
+		 		header("Location: login.php");
 				exit();
-			} else {
-				header("Location: user/dashboard.php");
-				exit();
+			} else if($row['active'] == '1') { 
+
+				//Set some session variables for easy reference
+				$_SESSION['name'] = $row['firstname'] . " " . $row['lastname'];
+				$_SESSION['email'] = $row['email'];
+				$_SESSION['id_user'] = $row['id_user'];
+
+				if(isset($_SESSION['callFrom'])) {
+					$location = $_SESSION['callFrom'];
+					unset($_SESSION['callFrom']);
+					
+					header("Location: " . $location);
+					exit();
+				} else {
+					header("Location: user/dashboard.php");
+					exit();
+				}
 			}
 
 			//Redirect them to user dashboard once logged in successfully

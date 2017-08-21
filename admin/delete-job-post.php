@@ -12,6 +12,7 @@ require_once("../db.php");
 
 if(isset($_GET)) {
 
+	//Delete job_post and apply_job_post details using specified job post id.
 	$sql = "DELETE FROM job_post WHERE id_jobpost='$_GET[id]'";
 	if($conn->query($sql)) {
 		$sql1 = "DELETE FROM apply_job_post WHERE id_jobpost='$_GET[id]'";

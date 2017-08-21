@@ -102,7 +102,8 @@
               <label>Qualification</label>
               <select id="qualification" class="form-control">
                 <option value="" selected="">Select Qualification</option>
-                <?php
+                <?php 
+                // SQL query to get all differnet qualification that has been entered in our database
                   $sql ="SELECT DISTINCT(qualification) FROM job_post WHERE qualification IS NOT NULL";
                   $result = $conn->query($sql);
                   if($result->num_rows > 0){
@@ -147,7 +148,7 @@
 
     <script type="text/javascript">
       $(function() {
-        
+        //this is how datatables are created. we are getting data from refresh_job_search page using ajax
         var oTable = $('#myTable').DataTable({
           "autoWidth": false,
           "ajax" : {
@@ -160,6 +161,7 @@
           }
         });
 
+        //We only want to reload the ajax on submit button click instead of redirecting to form post page. so we use preventDefault();
         $("#myForm").on("submit", function(e) {
           e.preventDefault();
           oTable.ajax.reload( null, false);

@@ -60,6 +60,7 @@ require_once("../db.php");
       </nav>
     </header>
 
+    <!-- I am creating this form based on template I provided. If your template looks different then these fields will change -->
     <div class="container">      
       <div class="row">
         <div class="col-md-8 col-md-offset-2">
@@ -133,6 +134,7 @@ require_once("../db.php");
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
     <script>
+    // I am adding experience section form fields to html. This is based on template I provided. If your resume template is different then edit accordingly.
       $("#experienceNo").on("change", function () {
         var numInputs = $(this).val();
         $("#experienceSection").html('');
@@ -142,8 +144,9 @@ require_once("../db.php");
         }
       });
     </script>
-
+    
     <script>
+    // After generate button is pressed redirect to resume page as resume will be downloaded by then.
       $('form').on('submit', function() {
         setTimeout(function() { window.location = 'resume.php'; }, 1000);
       });

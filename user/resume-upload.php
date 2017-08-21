@@ -62,7 +62,7 @@ require_once("../db.php");
 
     <div class="container">      
       <div class="row">
-
+      <!-- If resume not uploaded then show error message -->
       <?php if(isset($_SESSION['uploadError'])) { ?>
       <div class="row">
         <div class="col-md-12 successMessage">

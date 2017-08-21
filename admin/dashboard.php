@@ -70,7 +70,44 @@ require_once("../db.php");
           </div>
         </div>
         <div class="col-md-6">
-          <h3>Welcome To Dashboard, Admin!</h3>
+        <?php
+          $sql = "SELECT * FROM company WHERE active='2'";
+          $result = $conn->query($sql);
+          if($result->num_rows > 0) {
+            echo '<h3>Total Pending Accounts: ' . $result->num_rows . '</h3>'; 
+          }
+        ?>
+          <table class="table">
+            <thead>
+              <th>SNo</th>
+              <th>Company Name</th>
+              <th>Head Office</th>
+              <th>Contact Number</th>
+              <th>Company Type</th>
+              <th>Action</th>
+            </thead>
+            <tbody>
+              <?php
+                $sql = "SELECT * FROM company WHERE active='2'";
+                $result = $conn->query($sql);
+                if($result->num_rows > 0) {
+                  $i = 0;
+                  while($row = $result->fetch_assoc()) {
+                    ?>
+                      <tr>
+                        <td><?php echo ++$i; ?></td>
+                        <td><?php echo $row['companyname']; ?></td>
+                        <td><?php echo $row['headofficecity']; ?></td>
+                        <td><?php echo $row['contactno']; ?></td>
+                        <td><?php echo $row['companytype']; ?></td>
+                        <td><a href="reject-company.php?id=<?php echo $row['id_company']; ?>">Reject</a> <a href="approve-company.php?id=<?php echo $row['id_company']; ?>">Approve</a></td>
+                      </tr>
+                    <?php
+                  }
+                }
+              ?>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
