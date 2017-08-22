@@ -6,8 +6,8 @@ session_start();
 //If user Not logged in then redirect them back to homepage. 
 //This is required if user tries to manually enter dashboard.php in URL.
 if(empty($_SESSION['id_user'])) {
-	header("Location: ../index.php");
-	exit();
+  header("Location: ../index.php");
+  exit();
 }
 
 require_once("../db.php");
@@ -63,7 +63,7 @@ require_once("../db.php");
           <div class="panel-heading">User Application</div>
           <div class="panel-body">
             <?php
-              $sql ="SELECT * FROM apply_job_post INNER JOIN users ON apply_job_post.id_user=users.id_user WHERE apply_job_post.id_user='$_GET[id_user]' AND apply_job_post.id_jobpost='$_GET[id_jobpost]'";
+              $sql ="SELECT * FROM apply_job_post INNER JOIN users ON apply_job_post.id_user=users.id_user WHERE apply_job_post.id_user='$_GET[id_user]' AND apply_job_post.id_jobpost='$_GET[id_jobpost]' AND apply_job_post.status='0'";
               $result=$conn->query($sql);
 
               if($result->num_rows > 0) {
@@ -88,9 +88,9 @@ require_once("../db.php");
                   <?php
                 }
                 ?>
-                <a href="reject-user.php?id_user=<?php echo $_GET['id_user']; ?>&id_jobpost=<?php echo $row['id_jobpost']; ?>" class="btn btn-danger">Reject User</a>
+                <a href="reject-user.php?id_user=<?php echo $_GET['id_user']; ?>&id_jobpost=<?php echo $row['id_jobpost']; ?>&email=<?php echo $row['email']; ?>" class="btn btn-danger">Reject User</a>
 
-              <?php } } ?>
+              <?php } } else { header("Location: dashboard.php"); exit(); } ?>
           </div>
         </div>
       </div>

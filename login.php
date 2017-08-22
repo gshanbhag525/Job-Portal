@@ -92,7 +92,7 @@
               if(isset($_SESSION['registerCompleted'])) {
                 ?>
                 <div>
-                  <p id="successMessage" class="text-center"><?php echo $_SESSION['registerCompleted'] ?></p>
+                  <p id="successMessage" class="text-center">Check your email!</p>
                 </div>
               <?php
                unset($_SESSION['registerCompleted']); }

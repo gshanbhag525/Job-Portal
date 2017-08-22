@@ -9,8 +9,7 @@ require_once("db.php");
 if(isset($_GET)) {
 
 	//Escape Special Characters In String First
-	$hash =  urldecode("E5TSPQyT3IK95JCZLvqPktzomRW9uHwvHY4MYrPKUgE%3D");
-	echo $hash;
+	$hash =  mysqli_real_escape_string($conn, $_GET['token']);
 	$email = mysqli_real_escape_string($conn, $_GET['email']);
 
 	//sql query to check if email already exists or not
@@ -34,7 +33,7 @@ if(isset($_GET)) {
 		}
 
 	} else {
-		echo  urlencode("OruyWcQNI/jr/TvaEdGZ6S+5GuFoTeP3DDL/F1+EMlg=");
+		echo  "Token Mismatch";
 		//you can redirect them to homepage also.
 	}
 }

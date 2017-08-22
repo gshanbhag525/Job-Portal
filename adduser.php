@@ -25,16 +25,14 @@ if(isset($_POST)) {
 	//if email not found then we can insert new data
 	if($result->num_rows == 0) {
 
-		$bytes = openssl_random_pseudo_bytes(32); //This will generate a pseudo random string of bytes 32.
-		$hash = base64_encode($bytes);
+		$hash = md5(uniqid());
 
 
 		//sql new registration insert query
 		$sql = "INSERT INTO users(firstname, lastname, email, password, hash) VALUES ('$firstname', '$lastname', '$email', '$password', '$hash')";
 
 		if($conn->query($sql)===TRUE) {
-			//$hash = urlencode($hash);
-			//Send Email
+			// Send Email
 
 			// $to = $email;
 
@@ -47,7 +45,7 @@ if(isset($_POST)) {
 			// 	<title>Confirm Your Email</title>
 			// <body>
 			// 	<p>Click Link To Confirm</p>
-			// 	<a href="www.yourdomain.com/verify.php?token='.$hash.'&email='.$email.'">Verify Email</a>
+			// 	<a href="yourdomain.com/verify.php?token='.$hash.'&email='.$email.'">Verify Email</a>
 			// </body>
 			// </html>
 			// ';
@@ -55,10 +53,10 @@ if(isset($_POST)) {
 			// $headers[] = 'MIME-VERSION: 1.0';
 			// $headers[] = 'Content-type: text/html; charset=iso-8859-1';
 			// $headers[] = 'To: '.$to;
-			// $headers[] = 'From: yourdomain@domain.com';
+			// $headers[] = 'From: hello@yourdomain.com';
 			// //you add more headers like Cc, Bcc;
 
-			// $result = mail($to, $subject, $message, inplode("\r\n", $headers)); // \r\n will return new line. 
+			// $result = mail($to, $subject, $message, implode("\r\n", $headers)); // \r\n will return new line. 
 
 			// if($result === TRUE) {
 
@@ -69,8 +67,8 @@ if(isset($_POST)) {
 
 			// }
 
-			//If data inserted successfully then Set some session variables for easy reference and redirect to login
-			$_SESSION['registerCompleted'] = $hash = urlencode($hash);
+			// //If data inserted successfully then Set some session variables for easy reference and redirect to login
+			$_SESSION['registerCompleted'] = true;
 			header("Location: login.php");
 			exit();
 		} else {

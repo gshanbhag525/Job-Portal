@@ -5,7 +5,7 @@ session_start();
 
 //If user Not logged in then redirect them back to homepage. 
 //This is required if user tries to manually enter applied-jobs.php in URL.
-if(empty($_SESSION['id_user'])) {
+if(empty($_SESSION['id_user']) || isset($_SESSION['companyLogged'])) {
 	header("Location: ../index.php");
 	exit();
 }
