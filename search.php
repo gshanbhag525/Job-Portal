@@ -18,6 +18,8 @@
 
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
 
+    <link rel="stylesheet" href="//cdn.datatables.net/plug-ins/1.10.15/features/searchHighlight/dataTables.searchHighlight.css">
+
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -146,6 +148,10 @@
 
     <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
 
+    <script src="//bartaz.github.io/sandbox.js/jquery.highlight.js"></script>
+
+    <script src="//cdn.datatables.net/plug-ins/1.10.15/features/searchHighlight/dataTables.searchHighlight.min.js"></script>
+
     <script type="text/javascript">
       $(function() {
         //this is how datatables are created. we are getting data from refresh_job_search page using ajax
@@ -159,6 +165,16 @@
               d.qualification = $("#qualification").val();
             }
           }
+        });
+
+        oTable.on('draw', function() {
+          var body = $(oTable.table().body());
+
+          body.unhighlight();
+
+          body.highlight(oTable.search());
+
+
         });
 
         //We only want to reload the ajax on submit button click instead of redirecting to form post page. so we use preventDefault();

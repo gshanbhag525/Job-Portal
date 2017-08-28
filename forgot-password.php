@@ -73,65 +73,36 @@
       <div class="container">
         <div class="row">
           <div class="col-md-4 col-md-offset-4 well">
-          <h2 class="text-center">Login</h2>
-            <form method="post" action="checklogin.php">
+          <h2 class="text-center">Forgot Password</h2>
+            <form method="post" action="passwordreset.php">
               <div class="form-group">
                 <label for="email">Email address</label>
                 <input type="email" class="form-control" id="email" name="email" placeholder="Email" required="">
               </div>
-              <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" class="form-control" id="password" name="password" placeholder="Password" required="">
-              </div>
-              <div class="form-group">
-                <a href="forgot-password.php">Forgot Password</a>
-              </div>
               <div class="text-center">
-                <button type="submit" class="btn btn-success">Submit</button>
+                <button type="submit" class="btn btn-success">Reset Password</button>
               </div>
               <?php 
               //If User have successfully registered then show them this success message
               //Todo: Remove Success Message without reload?
-              if(isset($_SESSION['registerCompleted'])) {
+              if(isset($_SESSION['emailNotFoundError'])) {
                 ?>
                 <div>
-                  <p id="successMessage" class="text-center">Check your email!</p>
+                  <p id="successMessage" class="text-center">This Email Not Exists In Database!</p>
                 </div>
               <?php
-               unset($_SESSION['registerCompleted']); }
+               unset($_SESSION['emailNotFoundError']); }
               ?>   
               <?php 
               //If User Failed To log in then show error message.
-              if(isset($_SESSION['loginError'])) {
+              if(isset($_SESSION['passwordChanged'])) {
                 ?>
                 <div>
-                  <p class="text-center">Invalid Email/Password! Try Again!</p>
+                  <p class="text-center">Check Your Email For New Password. - <?php echo $_SESSION['passwordChanged']; ?></p>
                 </div>
               <?php
-               unset($_SESSION['loginError']); }
-              ?>      
-
-              <?php 
-              //If User Failed To log in then show error message.
-              if(isset($_SESSION['userActivated'])) {
-                ?>
-                <div>
-                  <p class="text-center">Your Account Is Active. You Can Login</p>
-                </div>
-              <?php
-               unset($_SESSION['userActivated']); }
-              ?>    
-
-               <?php 
-              //If User Failed To log in then show error message.
-              if(isset($_SESSION['loginActiveError'])) {
-                ?>
-                <div>
-                  <p class="text-center">Your Account Is Not Active. Check Your Email.</p>
-                </div>
-              <?php
-               unset($_SESSION['loginActiveError']); }
-              ?>        
+               unset($_SESSION['passwordChanged']); }
+              ?>       
             </form>
           </div>
         </div>
@@ -145,7 +116,7 @@
 
     <script type="text/javascript">
       $(function() {
-        $("#successMessage:visible").fadeOut(2000);
+        $("#successMessage:visible").fadeOut(10000);
       });
     </script>
   </body>

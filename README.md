@@ -27,3 +27,5 @@ Job Portal (PHP) - Part 11 - Admin Verifying Company & User Email Verification -
 Job Portal (PHP) - Part 12 - Validations & Code Improvements - https://youtu.be/mpO1j16udzM
 
 Job Portal (PHP) - Part 13 - Email Sending Bug Fix - https://youtu.be/5ONR88bt0bY
+
+Job Portal (PHP) - Part 14 - Search Highlighting & Forgot Password - https://youtu.be/HR7tvK5oO1g
