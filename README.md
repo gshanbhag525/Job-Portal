@@ -1,6 +1,8 @@
 # Job-Portal
 
-Job Portal Using PHP
+The online job portal application allows job seekers and recruiters to connect.The application provides the ability for job seekers to create their accounts, upload their profile and resume, search for jobs, apply for jobs, view different job openings. The application provides the ability for companies to create their accounts, search candidates, create job postings, and view candidates applications.
+
+# View Tutorials
 
 Job Portal (PHP) - Part 1 - Introduction & User Login/Registration - https://youtu.be/3VGxEEpWEaw
 
@@ -29,3 +31,8 @@ Job Portal (PHP) - Part 12 - Validations & Code Improvements - https://youtu.be/
 Job Portal (PHP) - Part 13 - Email Sending Bug Fix - https://youtu.be/5ONR88bt0bY
 
 Job Portal (PHP) - Part 14 - Search Highlighting & Forgot Password - https://youtu.be/HR7tvK5oO1g
+
+
+# Contact
+Feel free to contact me through my website http://learningfromscratch.online/ 
+>If you are following this tutorial series I would appritiate if you can subscribe and like my videos as it will keep me motivated to share my knowledge with you all!
