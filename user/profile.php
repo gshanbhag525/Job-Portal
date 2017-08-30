@@ -62,10 +62,9 @@ require_once("../db.php");
     <section>
       <div class="container">
         <div class="row">
-          <div class="col-md-6 col-md-offset-3 well">
           <h2 class="text-center">Profile</h2>
-            <form method="post" action="updateprofile.php">
-            <?php
+          <form method="post" action="updateprofile.php">
+          <?php
             //Sql to get logged in user details.
             $sql = "SELECT * FROM users WHERE id_user='$_SESSION[id_user]'";
             $result = $conn->query($sql);
@@ -75,7 +74,8 @@ require_once("../db.php");
             if($result->num_rows > 0) {
               while($row = $result->fetch_assoc()) {
             ?>
-              <div class="form-group">
+          <div class="col-md-4 well">      
+            <div class="form-group">
                 <label for="fname">First Name</label>
                 <input type="text" class="form-control" id="fname" name="fname" placeholder="First Name" value="<?php echo $row['firstname']; ?>" required="">
               </div>
@@ -87,19 +87,23 @@ require_once("../db.php");
                 <label for="email">Email address</label>
                 <input type="email" class="form-control" id="email" placeholder="Email" value="<?php echo $row['email']; ?>" readonly>
               </div>
-              <div class="form-group">
-                <label for="address">Address</label>
-                <textarea id="address" name="address" class="form-control" rows="5" placeholder="Address"><?php echo $row['address']; ?></textarea>
-              </div>
-              <div class="form-group">
-                <label for="city">City</label>
-                <input type="text" class="form-control" id="city" name="city" value="<?php echo $row['city']; ?>" placeholder="city">
-              </div>
-              <div class="form-group">
-                <label for="state">State</label>
-                <input type="text" class="form-control" id="state" name="state" placeholder="state" value="<?php echo $row['state']; ?>">
-              </div>
-              <div class="form-group">
+          </div>
+          <div class="col-md-4 well">
+            <div class="form-group">
+              <label for="address">Address</label>
+              <textarea id="address" name="address" class="form-control" rows="5" placeholder="Address"><?php echo $row['address']; ?></textarea>
+            </div>
+            <div class="form-group">
+              <label for="city">City</label>
+              <input type="text" class="form-control" id="city" name="city" value="<?php echo $row['city']; ?>" placeholder="city">
+            </div>
+            <div class="form-group">
+              <label for="state">State</label>
+              <input type="text" class="form-control" id="state" name="state" placeholder="state" value="<?php echo $row['state']; ?>">
+            </div>
+          </div>
+          <div class="col-md-4 well">
+            <div class="form-group">
                 <label for="contactno">Contact Number</label>
                 <input type="text" class="form-control" id="contactno" name="contactno" placeholder="Contact Number" value="<?php echo $row['contactno']; ?>">
               </div>
@@ -111,6 +115,9 @@ require_once("../db.php");
                 <label for="stream">Stream</label>
                 <input type="text" class="form-control" id="stream" name="stream" placeholder="stream" value="<?php echo $row['stream']; ?>">
               </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4 col-md-offset-4 well">
               <div class="form-group">
                 <label for="passingyear">Passing Year</label>
                 <input type="date" class="form-control" id="passingyear" name="passingyear" placeholder="Passing Year" value="<?php echo $row['passingyear']; ?>">
@@ -130,6 +137,10 @@ require_once("../db.php");
               <div class="text-center">
                 <button type="submit" class="btn btn-success">Update</button>
               </div>
+            </div>
+          </div>             
+              
+              
             <?php
                 }
               }

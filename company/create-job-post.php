@@ -79,8 +79,8 @@ if(empty($_SESSION['id_user'])) {
                 <input type="number" class="form-control" id="maximumsalary" name="maximumsalary" placeholder="Maximum Salary" required="">
               </div>
               <div class="form-group">
-                <label for="experience">Experience Required</label>
-                <input type="text" class="form-control" id="experience" name="experience" placeholder="Experience Required" required="">
+                <label for="experience">Experience (in Years) Required</label>
+                <input type="number" class="form-control" id="experience" autocomplete="off" name="experience" placeholder="Experience Required" required="">
               </div>
               <div class="form-group">
                 <label for="qualification">Qualification Required</label>

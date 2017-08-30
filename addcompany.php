@@ -18,6 +18,10 @@ if(isset($_POST)) {
 	$email = mysqli_real_escape_string($conn, $_POST['email']);
 	$password = mysqli_real_escape_string($conn, $_POST['password']);
 
+	$country = mysqli_real_escape_string($conn, $_POST['country']);
+	$state = mysqli_real_escape_string($conn, $_POST['state']);
+	$city = mysqli_real_escape_string($conn, $_POST['city']);
+
 	//Encrypt Password
 	$password = base64_encode(strrev(md5($password)));
 
@@ -29,7 +33,7 @@ if(isset($_POST)) {
 	if($result->num_rows == 0) {
 
 		//sql new registration insert query
-		$sql = "INSERT INTO company(companyname, headofficecity, contactno, website, companytype, email, password) VALUES ('$companyname', '$headofficecity', '$contactno', '$website', '$companytype', '$email', '$password')";
+		$sql = "INSERT INTO company(companyname, headofficecity, country, state, city, contactno, website, companytype, email, password) VALUES ('$companyname', '$headofficecity', '$country', '$state', '$city', '$contactno', '$website', '$companytype', '$email', '$password')";
 
 		if($conn->query($sql)===TRUE) {
 

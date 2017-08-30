@@ -8,6 +8,8 @@ if(isset($_SESSION['id_user'])) {
     header("Location: user/dashboard.php");
     exit();
   }
+
+require_once("db.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -81,7 +83,36 @@ if(isset($_SESSION['id_user'])) {
               <div class="form-group">
                 <label for="headofficecity">Head Office City</label>
                 <input type="text" class="form-control" id="headofficecity" name="headofficecity" placeholder="Head Office City" required="">
-              </div>              
+              </div>
+              <div class="form-group">
+                <label for="country">Country</label>
+                <select class="form-control" id="country" name="country">
+                <option selected="" value="">Select Country</option>
+                <?php
+                  $sql="SELECT * FROM countries";
+                  $result=$conn->query($sql);
+
+                  if($result->num_rows > 0) {
+                    while($row = $result->fetch_assoc()) {
+                      echo "<option value='".$row['name']."' data-id='".$row['id']."'>".$row['name']."</option>";
+                    }
+                  }
+                ?>
+                  
+                </select>
+              </div>  
+              <div id="stateDiv" class="form-group" style="display: none;">
+                <label for="state">State</label>
+                <select class="form-control" id="state" name="state">
+                  <option value="" selected="">Select State</option>
+                </select>
+              </div>   
+              <div id="cityDiv" class="form-group" style="display: none;">
+                <label for="city">City</label>
+                <select class="form-control" id="city" name="city">
+                  <option selected="">Select City</option>
+                </select>
+              </div>               
               <div class="form-group">
                 <label for="contactno">Contact Number</label>
                 <input type="text" class="form-control" id="contactno" name="contactno" placeholder="Contact Number" minlength="10" maxlength="10" autocomplete="off" onkeypress="return validatePhone(event);" required="">
@@ -144,6 +175,37 @@ if(isset($_SESSION['id_user'])) {
           return false;
         } else return true;
       }
+    </script>
+
+    <script>
+      $("#country").on("change", function() {
+        var id = $(this).find(':selected').attr("data-id");
+        $("#state").find('option:not(:first)').remove();
+        if(id != '') {
+          $.post("state.php", {id: id}).done(function(data) {
+            $("#state").append(data);
+          });
+          $('#stateDiv').show();
+        } else {
+          $('#stateDiv').hide();
+          $('#cityDiv').hide();
+        }
+      });
+    </script>
+
+    <script>
+      $("#state").on("change", function() {
+        var id = $(this).find(':selected').attr("data-id");
+        $("#city").find('option:not(:first)').remove();
+        if(id != '') {
+          $.post("city.php", {id: id}).done(function(data) {
+            $("#city").append(data);
+          });
+          $('#cityDiv').show();
+        } else {
+          $('#cityDiv').hide();
+        }
+      });
     </script>
   </body>
 </html>

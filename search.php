@@ -92,12 +92,18 @@
             <div class="form-group">
               <label>Experience</label>
               <select id="experience" class="form-control">
-                <option value="" selected="">Select Experience</option>
-                <option value="1 Year">1 Year</option>
-                <option value="2 Year">2 Year</option>
-                <option value="3 Year">3 Year</option>
-                <option value="4 Year">4 Year</option>
-                <option value="5 Year">5 Year</option>
+                <option value="" selected="">Select Experience (Years)</option>
+                 <?php 
+                // SQL query to get all differnet qualification that has been entered in our database
+                  $sql ="SELECT DISTINCT(experience) FROM job_post WHERE experience IS NOT NULL ORDER BY experience";
+                  $result = $conn->query($sql);
+                  if($result->num_rows > 0){
+                    while($row = $result->fetch_assoc()) {
+                      echo "<option value'".$row['experience']."'>".$row['experience']."</option>";
+                    }
+                  }
+                ?>
+                
               </select>
             </div>
             <div class="form-group">
