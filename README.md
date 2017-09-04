@@ -34,6 +34,10 @@ Job Portal (PHP) - Part 14 - Search Highlighting & Forgot Password - https://you
 
 Job Portal (PHP) - Part 15 - Select Company Location & Fixed Experience Filter - https://youtu.be/0mDXlpOulWc
 
+Job Portal (PHP) - Part 16 - Theme Update Introduction - https://youtu.be/Lm5I6SSgJAw
+
+Job Portal (PHP) - Part 17 - Homepage, Login & Registration Updated To New Theme - https://youtu.be/6neTJ6QRH6U
+
 
 # Contact
 Feel free to contact me through my website http://learningfromscratch.online/ 
