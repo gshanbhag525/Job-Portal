@@ -1,3 +1,14 @@
+<?php
+  //To Handle Session Variables on This Page
+  session_start(); 
+
+  //If user is already logged in then redirect them back to dashboard. 
+  //This is required if user tries to manually enter company-login.php in URL.
+  if(isset($_SESSION['id_user'])) {
+    header("Location: user/dashboard.php");
+    exit();
+  }
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -36,13 +47,13 @@
   <div class="login-box-body">
     <p class="login-box-msg">Company Login</p>
 
-    <form action="index2.html" method="post">
+    <form method="post" action="checkcompanylogin.php">
       <div class="form-group has-feedback">
-        <input type="email" class="form-control" placeholder="Email">
+        <input type="email" name="email" class="form-control" placeholder="Email">
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        <input type="password" class="form-control" placeholder="Password">
+        <input type="password" name="password" class="form-control" placeholder="Password">
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
       <div class="row">
@@ -58,6 +69,36 @@
           <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
         </div>
         <!-- /.col -->
+        <?php 
+              //If Company have successfully registered then show them this success message
+              //Todo: Remove Success Message without reload?
+              if(isset($_SESSION['registerCompleted'])) {
+                ?>
+                <div>
+                  <p class="text-center">You Have Registered Successfully! Your Account Approval Is Pending By Admin</p>
+                </div>
+              <?php
+               unset($_SESSION['registerCompleted']); }
+              ?>   
+              <?php 
+              //If Company Failed To log in then show error message.
+              if(isset($_SESSION['loginError'])) {
+                ?>
+                <div>
+                  <p class="text-center">Invalid Email/Password! Try Again!</p>
+                </div>
+              <?php
+               unset($_SESSION['loginError']); }
+              ?>   
+              <?php 
+              if(isset($_SESSION['companyLoginError'])) {
+                ?>
+                <div>
+                  <p class="text-center"><?php echo $_SESSION['companyLoginError'] ?></p>
+                </div>
+              <?php
+               unset($_SESSION['companyLoginError']); }
+              ?>            
       </div>
     </form>
 
