@@ -40,6 +40,8 @@ Job Portal (PHP) - Part 17 - Homepage, Login & Registration Updated To New Theme
 
 Job Portal (PHP) - Part 18 - Company Registration & Login Updated To New Theme - https://youtu.be/WJrQTybFQxo
 
+Job Portal (PHP) - Part 19 - Updated Create Job Post & View Company Job Post - https://youtu.be/PK3Q9aAba-0
+
 
 # Contact
 Feel free to contact me through my website http://learningfromscratch.online/ 

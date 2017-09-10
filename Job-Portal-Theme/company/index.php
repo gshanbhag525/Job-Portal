@@ -1,3 +1,16 @@
+<?php
+
+//To Handle Session Variables on This Page
+session_start();
+
+//If user Not logged in then redirect them back to homepage. 
+if(empty($_SESSION['id_user'])) {
+  header("Location: ../index.php");
+  exit();
+}
+
+require_once("../db.php");
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -67,6 +80,8 @@
                 <ul class="nav nav-pills nav-stacked">
                   <li class="active"><a href="index.php"><i class="fa fa-dashboard"></i> Dashboard</a></li>
                   <li><a href="edit-company.php"><i class="fa fa-tv"></i> My Company</a></li>
+                  <li><a href="create-job-post.php"><i class="fa fa-file-o"></i> Create Job Post</a></li>
+                  <li><a href="my-job-post.php"><i class="fa fa-file-o"></i> My Job Post</a></li>
                   <li><a href="settings.php"><i class="fa fa-gear"></i> Settings</a></li>
                   <li><a href="resume-database.php"><i class="fa fa-user"></i> Resume Database</a></li>
                   <li><a href="../logout.php"><i class="fa fa-arrow-circle-o-right"></i> Logout</a></li>
@@ -88,7 +103,14 @@
                   <span class="info-box-icon bg-red"><i class="ion ion-ios-people-outline"></i></span>
                   <div class="info-box-content">
                     <span class="info-box-text">Job Posted</span>
-                    <span class="info-box-number">4</span>
+                    <?php
+                    $sql = "SELECT * FROM job_post WHERE id_company='$_SESSION[id_user]'";
+                    $result = $conn->query($sql);
+
+                    if($result->num_rows > 0) {
+                  ?>
+                    <span class="info-box-number"><?php echo $result->num_rows; ?></span>
+                    <?php } ?>
                   </div>
                 </div>                
               </div>

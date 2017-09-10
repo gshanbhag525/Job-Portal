@@ -1,3 +1,18 @@
+<?php
+
+//To Handle Session Variables on This Page
+session_start();
+
+//If user Not logged in then redirect them back to homepage. 
+//This is required if user tries to manually enter view-job-post.php in URL.
+if(empty($_SESSION['id_user'])) {
+  header("Location: ../index.php");
+  exit();
+}
+
+//Including Database Connection From db.php file to avoid rewriting in all files  
+require_once("../db.php");
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,11 +27,14 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../css/AdminLTE.min.css">
   <link rel="stylesheet" href="../css/_all-skins.min.css">
   <!-- Custom -->
   <link rel="stylesheet" href="../css/custom.css">
+  
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -46,7 +64,7 @@
       <!-- Navbar Right Menu -->
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
-                   
+                  
         </ul>
       </div>
     </nav>
@@ -66,9 +84,9 @@
               <div class="box-body no-padding">
                 <ul class="nav nav-pills nav-stacked">
                   <li><a href="index.php"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-                  <li class="active"><a href="edit-company.php"><i class="fa fa-tv"></i> My Company</a></li>
+                  <li><a href="edit-company.php"><i class="fa fa-tv"></i> My Company</a></li>
                   <li><a href="create-job-post.php"><i class="fa fa-file-o"></i> Create Job Post</a></li>
-                  <li><a href="my-job-post.php"><i class="fa fa-file-o"></i> My Job Post</a></li>
+                  <li class="active"><a href="my-job-post.php"><i class="fa fa-file-o"></i> My Job Post</a></li>
                   <li><a href="settings.php"><i class="fa fa-gear"></i> Settings</a></li>
                   <li><a href="resume-database.php"><i class="fa fa-user"></i> Resume Database</a></li>
                   <li><a href="../logout.php"><i class="fa fa-arrow-circle-o-right"></i> Logout</a></li>
@@ -77,72 +95,45 @@
             </div>
           </div>
           <div class="col-md-9 bg-white padding-2">
-            <h2><i>My Company</i></h2>
-            <p>In this section you can change your company details</p>
-            <div class="row">
-              <form>
-                <div class="col-md-6 latest-job ">
-                  <div class="form-group">
-                    <input class="form-control input-lg" type="text" placeholder="Company Name">
-                  </div>
-                  <div class="form-group">
-                    <input class="form-control input-lg" type="text" placeholder="Website">
-                  </div>
-                  <div class="form-group">
-                    <input class="form-control input-lg" type="text" placeholder="Email">
-                  </div>
-                  <div class="form-group">
-                    <textarea class="form-control input-lg" rows="4" placeholder="Brief info about your company"></textarea>
-                  </div>
-                  <div class="form-group checkbox">
-                    <label><input type="checkbox"> I accept terms & conditions</label>
-                  </div>
-                  <div class="form-group">
-                    <button class="btn btn-flat btn-success">Register</button>
-                  </div>
+            <h2><i>My Job Posts</i></h2>
+            <p>In this section you can view all job posts created by you.</p>
+            <div class="row margin-top-20">
+              <div class="col-md-12">
+                <div class="box-body table-responsive no-padding">
+                  <table id="example2" class="table table-hover">
+                    <thead>
+                      <th>Job Title</th>
+                      <th>View</th>
+                    </thead>
+                    <tbody>
+                    <?php
+                     $sql = "SELECT * FROM job_post WHERE id_company='$_SESSION[id_user]'";
+                      $result = $conn->query($sql);
+
+                      //If Job Post exists then display details of post
+                      if($result->num_rows > 0) {
+                        while($row = $result->fetch_assoc()) 
+                        {
+                      ?>
+                      <tr>
+                        <td><?php echo $row['jobtitle']; ?></td>
+                        <td><a href="view-job-post.php?id=<?php echo $row['id_jobpost']; ?>"><i class="fa fa-address-card-o"></i></a></td>
+                      </tr>
+                      <?php
+                       }
+                     }
+                     ?>
+                    </tbody>                    
+                  </table>
                 </div>
-                <div class="col-md-6 latest-job ">
-                  <div class="form-group">
-                    <input class="form-control input-lg" type="text" placeholder="Phone Number">
-                  </div>
-                  <div class="form-group">
-                      <select class="form-control input-lg">
-                        <option>Select Country</option>
-                        <option>option 2</option>
-                        <option>option 3</option>
-                        <option>option 4</option>
-                        <option>option 5</option>
-                      </select>
-                  </div>
-                  <div class="form-group">
-                      <select class="form-control input-lg">
-                        <option>Select State</option>
-                        <option>option 2</option>
-                        <option>option 3</option>
-                        <option>option 4</option>
-                        <option>option 5</option>
-                      </select>
-                  </div>
-                  <div class="form-group">
-                      <select class="form-control input-lg">
-                        <option>Select City</option>
-                        <option>option 2</option>
-                        <option>option 3</option>
-                        <option>option 4</option>
-                        <option>option 5</option>
-                      </select>
-                  </div>
-                  <div class="form-group">
-                    <button class="btn btn-flat btn-danger">Attach Company Logo</button>
-                  </div>
-                </div>
-              </form>
+              </div>
             </div>
             
           </div>
         </div>
       </div>
     </section>
+
 
     
 
@@ -168,7 +159,23 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!-- Bootstrap 3.3.7 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!-- DataTables -->
+<script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
 <!-- AdminLTE App -->
 <script src="../js/adminlte.min.js"></script>
+
+
+<script>
+  $(function () {
+    $('#example2').DataTable({
+      'paging'      : true,
+      'lengthChange': false,
+      'searching'   : false,
+      'ordering'    : true,
+      'info'        : true,
+      'autoWidth'   : false
+    });
+  });
+</script>
 </body>
 </html>

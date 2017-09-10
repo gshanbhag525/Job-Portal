@@ -17,6 +17,12 @@
   <link rel="stylesheet" href="../css/_all-skins.min.css">
   <!-- Custom -->
   <link rel="stylesheet" href="../css/custom.css">
+
+  <script src="../js/tinymce/tinymce.min.js"></script>
+
+  <script>tinymce.init({ selector:'#description', height: 300 });</script>
+
+
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -66,8 +72,8 @@
               <div class="box-body no-padding">
                 <ul class="nav nav-pills nav-stacked">
                   <li><a href="index.php"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-                  <li class="active"><a href="edit-company.php"><i class="fa fa-tv"></i> My Company</a></li>
-                  <li><a href="create-job-post.php"><i class="fa fa-file-o"></i> Create Job Post</a></li>
+                  <li><a href="edit-company.php"><i class="fa fa-tv"></i> My Company</a></li>
+                  <li class="active"><a href="create-job-post.php"><i class="fa fa-file-o"></i> Create Job Post</a></li>
                   <li><a href="my-job-post.php"><i class="fa fa-file-o"></i> My Job Post</a></li>
                   <li><a href="settings.php"><i class="fa fa-gear"></i> Settings</a></li>
                   <li><a href="resume-database.php"><i class="fa fa-user"></i> Resume Database</a></li>
@@ -77,63 +83,30 @@
             </div>
           </div>
           <div class="col-md-9 bg-white padding-2">
-            <h2><i>My Company</i></h2>
-            <p>In this section you can change your company details</p>
+            <h2><i>Create Job Post</i></h2>
             <div class="row">
-              <form>
-                <div class="col-md-6 latest-job ">
+              <form method="post" action="addpost.php">
+                <div class="col-md-12 latest-job ">
                   <div class="form-group">
-                    <input class="form-control input-lg" type="text" placeholder="Company Name">
+                    <input class="form-control input-lg" type="text" id="jobtitle" name="jobtitle" placeholder="Job Title">
                   </div>
                   <div class="form-group">
-                    <input class="form-control input-lg" type="text" placeholder="Website">
+                    <textarea class="form-control input-lg" id="description" name="description" placeholder="Job Description"></textarea>
                   </div>
                   <div class="form-group">
-                    <input class="form-control input-lg" type="text" placeholder="Email">
+                    <input type="number" class="form-control  input-lg" id="minimumsalary" min="1000" autocomplete="off" name="minimumsalary" placeholder="Minimum Salary" required="">
                   </div>
                   <div class="form-group">
-                    <textarea class="form-control input-lg" rows="4" placeholder="Brief info about your company"></textarea>
-                  </div>
-                  <div class="form-group checkbox">
-                    <label><input type="checkbox"> I accept terms & conditions</label>
+                    <input type="number" class="form-control  input-lg" id="maximumsalary" name="maximumsalary" placeholder="Maximum Salary" required="">
                   </div>
                   <div class="form-group">
-                    <button class="btn btn-flat btn-success">Register</button>
-                  </div>
-                </div>
-                <div class="col-md-6 latest-job ">
-                  <div class="form-group">
-                    <input class="form-control input-lg" type="text" placeholder="Phone Number">
+                <input type="number" class="form-control  input-lg" id="experience" autocomplete="off" name="experience" placeholder="Experience (in Years) Required" required="">
                   </div>
                   <div class="form-group">
-                      <select class="form-control input-lg">
-                        <option>Select Country</option>
-                        <option>option 2</option>
-                        <option>option 3</option>
-                        <option>option 4</option>
-                        <option>option 5</option>
-                      </select>
+                    <input type="text" class="form-control  input-lg" id="qualification" name="qualification" placeholder="Qualification Required" required="">
                   </div>
                   <div class="form-group">
-                      <select class="form-control input-lg">
-                        <option>Select State</option>
-                        <option>option 2</option>
-                        <option>option 3</option>
-                        <option>option 4</option>
-                        <option>option 5</option>
-                      </select>
-                  </div>
-                  <div class="form-group">
-                      <select class="form-control input-lg">
-                        <option>Select City</option>
-                        <option>option 2</option>
-                        <option>option 3</option>
-                        <option>option 4</option>
-                        <option>option 5</option>
-                      </select>
-                  </div>
-                  <div class="form-group">
-                    <button class="btn btn-flat btn-danger">Attach Company Logo</button>
+                    <button type="submit" class="btn btn-flat btn-success">Create</button>
                   </div>
                 </div>
               </form>
