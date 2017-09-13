@@ -1,3 +1,12 @@
+<?php
+
+//To Handle Session Variables on This Page
+session_start();
+
+
+//Including Database Connection From db.php file to avoid rewriting in all files
+require_once("db.php");
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -94,60 +103,34 @@
             </div>
           </div>
           <div class="col-md-9">
-            <div class="attachment-block clearfix">
-              <img class="attachment-img" src="img/photo1.png" alt="Attachment Image">
-              <div class="attachment-pushed">
-                <h4 class="attachment-heading"><a href="http://www.lipsum.com/">PHP Developer</a> <span class="attachment-heading pull-right">$10,000/Month</span></h4>
-                <div class="attachment-text">
-                    <div><strong>Company Name | Location | Experience</strong></div>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Totam laudantium doloremque veniam nam magni quia, similique sapiente minus et molestias.
-                </div>
-              </div>
-            </div>
 
-            <div class="attachment-block clearfix">
-              <img class="attachment-img" src="img/photo1.png" alt="Attachment Image">
-              <div class="attachment-pushed">
-                <h4 class="attachment-heading"><a href="http://www.lipsum.com/">PHP Developer</a> <span class="attachment-heading pull-right">$10,000/Month</span></h4>
-                <div class="attachment-text">
-                    <div><strong>Company Name | Location | Experience</strong></div>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Totam laudantium doloremque veniam nam magni quia, similique sapiente minus et molestias.
-                </div>
-              </div>
-            </div>
+          <?php
 
-            <div class="attachment-block clearfix">
-              <img class="attachment-img" src="img/photo1.png" alt="Attachment Image">
-              <div class="attachment-pushed">
-                <h4 class="attachment-heading"><a href="http://www.lipsum.com/">PHP Developer</a> <span class="attachment-heading pull-right">$10,000/Month</span></h4>
-                <div class="attachment-text">
-                    <div><strong>Company Name | Location | Experience</strong></div>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Totam laudantium doloremque veniam nam magni quia, similique sapiente minus et molestias.
-                </div>
-              </div>
-            </div>
+          $limit = 4;
 
-            <div class="attachment-block clearfix">
-              <img class="attachment-img" src="img/photo1.png" alt="Attachment Image">
-              <div class="attachment-pushed">
-                <h4 class="attachment-heading"><a href="http://www.lipsum.com/">PHP Developer</a> <span class="attachment-heading pull-right">$10,000/Month</span></h4>
-                <div class="attachment-text">
-                    <div><strong>Company Name | Location | Experience</strong></div>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Totam laudantium doloremque veniam nam magni quia, similique sapiente minus et molestias.
-                </div>
-              </div>
-            </div>
+          $sql = "SELECT COUNT(id_jobpost) AS id FROM job_post";
+          $result = $conn->query($sql);
+          if($result->num_rows > 0)
+          {
+            $row = $result->fetch_assoc();
+            $total_records = $row['id'];
+            $total_pages = ceil($total_records / $limit);
+          } else {
+            $total_pages = 1;
+          }
 
-            <div class="attachment-block clearfix">
-              <img class="attachment-img" src="img/photo1.png" alt="Attachment Image">
-              <div class="attachment-pushed">
-                <h4 class="attachment-heading"><a href="http://www.lipsum.com/">PHP Developer</a> <span class="attachment-heading pull-right">$10,000/Month</span></h4>
-                <div class="attachment-text">
-                    <div><strong>Company Name | Location | Experience</strong></div>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Totam laudantium doloremque veniam nam magni quia, similique sapiente minus et molestias.
-                </div>
-              </div>
+          ?>
+
+          
+            <div id="target-content">
+              
             </div>
+            <div class="text-center">
+              <ul class="pagination text-center" id="pagination"></ul>
+            </div> 
+
+
+
           </div>
         </div>
       </div>
@@ -179,5 +162,20 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <!-- AdminLTE App -->
 <script src="js/adminlte.min.js"></script>
+<script src="js/jquery.twbsPagination.min.js"></script>
+
+<script>
+  $("#pagination").twbsPagination({
+    totalPages: <?php echo $total_pages; ?>,
+    visible: 5,
+    onPageClick: function (e, page) {
+      e.preventDefault();
+      $("#target-content").html("loading....");
+      $("#target-content").load("jobpagination.php?page="+page);
+    }
+  });
+</script>
+
+
 </body>
 </html>

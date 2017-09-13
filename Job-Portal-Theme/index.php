@@ -1,8 +1,11 @@
 <?php
-  //To Handle Session Variables on This Page
-  session_start();
-  //Including Database Connection From db.php file to avoid rewriting in all files
-  require_once("db.php");
+
+//To Handle Session Variables on This Page
+session_start();
+
+
+//Including Database Connection From db.php file to avoid rewriting in all files
+require_once("../db.php");
 ?>
 <!DOCTYPE html>
 <html>
@@ -118,7 +121,6 @@
                 <h4 class="attachment-heading"><a href="http://www.lipsum.com/"><?php echo $row['jobtitle']; ?></a> <span class="attachment-heading pull-right">$<?php echo $row['maximumsalary']; ?>/Month</span></h4>
                 <div class="attachment-text">
                     <div><strong><?php echo $row1['companyname']; ?> | <?php echo $row1['city']; ?> | Experience <?php echo $row['experience']; ?> Years</strong></div>
-                    <?php echo $row['description']; ?>
                 </div>
               </div>
             </div>

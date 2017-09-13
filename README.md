@@ -42,6 +42,8 @@ Job Portal (PHP) - Part 18 - Company Registration & Login Updated To New Theme -
 
 Job Portal (PHP) - Part 19 - Updated Create Job Post & View Company Job Post - https://youtu.be/PK3Q9aAba-0
 
+Job Portal (PHP) - Part 20 - Job Post Pagination & Apply To Job Post - https://youtu.be/Qrtnglv5N10
+
 
 # Contact
 Feel free to contact me through my website http://learningfromscratch.online/ 
