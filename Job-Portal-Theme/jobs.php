@@ -75,9 +75,9 @@ require_once("db.php");
           <div class="col-md-12 latest-job margin-top-50 margin-bottom-20">
           <h1 class="text-center">Latest Jobs</h1>  
             <div class="input-group input-group-lg">
-                <input type="text" class="form-control" placeholder="Search job, location or company">
+                <input type="text" id="searchBar" class="form-control" placeholder="Search job">
                 <span class="input-group-btn">
-                  <button type="button" class="btn btn-info btn-flat">Go!</button>
+                  <button id="searchBtn" type="button" class="btn btn-info btn-flat">Go!</button>
                 </span>
             </div>
           </div>
@@ -94,10 +94,24 @@ require_once("db.php");
                 <h3 class="box-title">Filters</h3>
               </div>
               <div class="box-body no-padding">
-                <ul class="nav nav-pills nav-stacked">
-                  <li class="treeview menu-open"><a href="#"><i class="fa fa-circle-o text-red"></i> Type</a></li>
-                  <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> Location</a></li>
-                  <li><a href="#"><i class="fa fa-circle-o text-light-blue"></i> Category</a></li>
+                <ul class="nav nav-pills nav-stacked tree" data-widget="tree">
+                  <li class="treeview menu-open">
+                    <a href="#"><i class="fa fa-plane text-red"></i> City <span class="pull-right"><i class="fa fa-angle-down pull-right"></i></span></a>
+                    <ul class="treeview-menu">
+                      <li><a href=""  class="citySearch" data-target="Delhi"><i class="fa fa-circle-o text-yellow"></i> Delhi</a></li>
+                      <li><a href="" class="citySearch" data-target="Kouba"><i class="fa fa-circle-o text-yellow"></i> Kouba</a></li>
+                    </ul>
+                  </li>
+                  <li class="treeview menu-open">
+                    <a href="#"><i class="fa fa-plane text-red"></i> Experience <span class="pull-right"><i class="fa fa-angle-down pull-right"></i></span></a>
+                    <ul class="treeview-menu">
+                      <li><a href="" class="experienceSearch" data-target='1'><i class="fa fa-circle-o text-yellow"></i> > 1 Years</a></li>
+                      <li><a href="" class="experienceSearch" data-target='2'><i class="fa fa-circle-o text-yellow"></i> > 2 Years</a></li>
+                      <li><a href="" class="experienceSearch" data-target='3'><i class="fa fa-circle-o text-yellow"></i> > 3 Years</a></li>
+                      <li><a href="" class="experienceSearch" data-target='4'><i class="fa fa-circle-o text-yellow"></i> > 4 Years</a></li>
+                      <li><a href="" class="experienceSearch" data-target='5'><i class="fa fa-circle-o text-yellow"></i> > 5 Years</a></li>
+                    </ul>
+                  </li>
                 </ul>
               </div>
             </div>
@@ -165,15 +179,82 @@ require_once("db.php");
 <script src="js/jquery.twbsPagination.min.js"></script>
 
 <script>
-  $("#pagination").twbsPagination({
-    totalPages: <?php echo $total_pages; ?>,
-    visible: 5,
-    onPageClick: function (e, page) {
-      e.preventDefault();
-      $("#target-content").html("loading....");
-      $("#target-content").load("jobpagination.php?page="+page);
+  function Pagination() {
+    $("#pagination").twbsPagination({
+      totalPages: <?php echo $total_pages; ?>,
+      visible: 5,
+      onPageClick: function (e, page) {
+        e.preventDefault();
+        $("#target-content").html("loading....");
+        $("#target-content").load("jobpagination.php?page="+page);
+      }
+    });
+  }
+</script>
+
+<script>
+  $(function () {
+      Pagination();
+  });
+</script>
+
+<script>
+  $("#searchBtn").on("click", function(e) {
+    e.preventDefault();
+    var searchResult = $("#searchBar").val();
+    var filter = "searchBar";
+    if(searchResult != "") {
+      $("#pagination").twbsPagination('destroy');
+      Search(searchResult);
+    } else {
+      $("#pagination").twbsPagination('destroy');
+      Pagination();
     }
   });
+</script>
+
+<script>
+  $(".experienceSearch").on("click", function(e) {
+    e.preventDefault();
+    var searchResult = $(this).data("target");
+    var filter = "experience";
+    if(searchResult != "") {
+      $("#pagination").twbsPagination('destroy');
+      Search(searchResult, filter);
+    } else {
+      $("#pagination").twbsPagination('destroy');
+      Pagination();
+    }
+  });
+</script>
+
+<script>
+  $(".citySearch").on("click", function(e) {
+    e.preventDefault();
+    var searchResult = $(this).data("target");
+    var filter = "city";
+    if(searchResult != "") {
+      $("#pagination").twbsPagination('destroy');
+      Search(searchResult, filter);
+    } else {
+      $("#pagination").twbsPagination('destroy');
+      Pagination();
+    }
+  });
+</script>
+
+<script>
+  function Search(val, filter) {
+    $("#pagination").twbsPagination({
+      totalPages: <?php echo $total_pages; ?>,
+      visible: 5,
+      onPageClick: function (e, page) {
+        e.preventDefault();
+        $("#target-content").html("loading....");
+        $("#target-content").load("search.php?page="+page+"&search="+val+"&filter="+filter);
+      }
+    });
+  }
 </script>
 
 
