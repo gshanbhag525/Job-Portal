@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 30, 2017 at 08:10 AM
+-- Generation Time: Sep 24, 2017 at 06:44 AM
 -- Server version: 10.1.25-MariaDB
 -- PHP Version: 5.6.31
 
@@ -60,7 +60,7 @@ CREATE TABLE `apply_job_post` (
 --
 
 INSERT INTO `apply_job_post` (`id_apply`, `id_jobpost`, `id_company`, `id_user`, `status`) VALUES
-(11, 5, 1, 1, 1);
+(13, 29, 19, 19, 2);
 
 -- --------------------------------------------------------
 
@@ -48425,16 +48425,17 @@ INSERT INTO `cities` (`id`, `name`, `state_id`) VALUES
 
 CREATE TABLE `company` (
   `id_company` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
   `companyname` varchar(255) NOT NULL,
-  `headofficecity` varchar(255) NOT NULL,
   `country` varchar(255) NOT NULL,
   `state` varchar(255) NOT NULL,
   `city` varchar(255) NOT NULL,
   `contactno` varchar(255) NOT NULL,
   `website` varchar(255) NOT NULL,
-  `companytype` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
+  `aboutme` varchar(255) DEFAULT NULL,
+  `logo` varchar(255) NOT NULL,
   `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `active` int(11) NOT NULL DEFAULT '2'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -48443,9 +48444,8 @@ CREATE TABLE `company` (
 -- Dumping data for table `company`
 --
 
-INSERT INTO `company` (`id_company`, `companyname`, `headofficecity`, `country`, `state`, `city`, `contactno`, `website`, `companytype`, `email`, `password`, `createdAt`, `active`) VALUES
-(6, 'Company Name', 'adfsafd', '3', '120', '6155', '1213211231', 'fadsadfs', 'fdsaf', 'company@test.com', 'YjdlNDhmMTk4NjFhNDNjNGM2MDdhOGFlZTBiY2M3Mjg=', '2017-08-29 07:57:49', 1),
-(7, 'fsadfsad', 'dafsdafsdfads', 'Algeria', '112', 'Awlaf', '1111111111', 'afdsfdad', 'fdsafds', 'test@test.com', 'YjdlNDhmMTk4NjFhNDNjNGM2MDdhOGFlZTBiY2M3Mjg=', '2017-08-29 08:09:51', 2);
+INSERT INTO `company` (`id_company`, `name`, `companyname`, `country`, `state`, `city`, `contactno`, `website`, `email`, `password`, `aboutme`, `logo`, `createdAt`, `active`) VALUES
+(19, 'test', 'test', 'Algeria', 'Algiers', 'Delhi', '1123333333', '', 'test@test.com', 'YjdlNDhmMTk4NjFhNDNjNGM2MDdhOGFlZTBiY2M3Mjg=', '', '59afc7f387cad.png', '2017-09-06 10:03:31', 1);
 
 -- --------------------------------------------------------
 
@@ -48735,14 +48735,16 @@ CREATE TABLE `job_post` (
 --
 
 INSERT INTO `job_post` (`id_jobpost`, `id_company`, `jobtitle`, `description`, `minimumsalary`, `maximumsalary`, `experience`, `qualification`, `createdat`) VALUES
-(11, 3, 'Staff Scientist', 'Aenean sit amet justo. Morbi ut odio. Cras mi pede, malesuada in, imperdiet et, commodo vulputate, justo. In blandit ultrices enim. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin interdum mauris non ligula pellentesque ultrices.', '8700', '178263', '2', 'Business Development', '2017-08-15 14:42:20'),
-(12, 5, 'Web Designer III', 'Curabitur convallis.', '6830', '203782', '3', 'Legal', '2017-08-15 14:42:20'),
-(13, 3, 'Budget/Accounting Analyst II', 'Pellentesque ultrices mattis odio.', '5803', '272371', '4', 'Sales', '2017-08-15 14:42:20'),
-(15, 2, 'Cost Accountant', 'Nam nulla. Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede.', '5227', '440247', '5', 'Engineering', '2017-08-15 14:42:20'),
-(17, 3, 'Human Resources Manager', 'Vivamus in felis eu sapien cursus vestibulum.', '6667', '275983', '6', 'Training', '2017-08-15 14:42:20'),
-(19, 2, 'Community Outreach Specialist', 'Aenean lectus. Pellentesque eget nunc. Donec quis orci eget orci vehicula condimentum. Curabitur in libero ut massa volutpat convallis. Morbi odio odio, elementum eu, interdum eu, tincidunt in, leo. Maecenas pulvinar lobortis est.', '6892', '175469', '4', 'Training', '2017-08-15 14:42:20'),
-(20, 2, 'Accounting Assistant III', 'Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh. Quisque id justo sit amet sapien dignissim vestibulum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est. Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros.', '7397', '376102', '2', 'Product Management', '2017-08-15 14:42:20'),
-(23, 6, 'afsd', 'afsd', '21222', '2222', '1', 'fasd', '2017-08-29 08:12:53');
+(28, 19, 'Job Post 1', '<p class=\"text-center\">Test Test</p>', '122222', '122222', '1', 'None', '2017-09-13 15:26:36'),
+(29, 19, 'Job Post 2', '<p>Test Test</p>', '122222', '122222', '3', 'None', '2017-09-13 15:26:36'),
+(30, 19, 'Job Post 3', '<p>Test Test</p>', '122222', '122222', '2', 'None', '2017-09-13 15:26:36'),
+(31, 19, 'Job Post 4', '<p>Test Test</p>', '122222', '122222', '4', 'None', '2017-09-13 15:26:36'),
+(32, 19, 'Job Post 5', '<p>Test Test</p>', '122222', '122222', '5', 'None', '2017-09-13 15:26:36'),
+(33, 19, 'Job Post 6', '<p>Test Test</p>', '122222', '122222', '2', 'None', '2017-09-13 15:26:36'),
+(34, 19, 'Job Post 7', '<p>Test Test</p>', '122222', '122222', '3', 'None', '2017-09-13 15:26:36'),
+(35, 19, 'Job Post 8', '<p>Test Test</p>', '122222', '122222', '1', 'None', '2017-09-13 15:26:36'),
+(36, 19, 'Job Post 9', '<p>Test Test</p>', '122222', '122222', '4', 'None', '2017-09-13 15:26:36'),
+(37, 19, 'Job Post 10', '<p>Test Test</p>', '122222', '122222', '5', 'None', '2017-09-13 15:26:36');
 
 -- --------------------------------------------------------
 
@@ -52907,27 +52909,17 @@ CREATE TABLE `users` (
   `designation` varchar(255) DEFAULT NULL,
   `resume` varchar(255) DEFAULT NULL,
   `hash` varchar(255) DEFAULT NULL,
-  `active` int(11) NOT NULL DEFAULT '0'
+  `active` int(11) NOT NULL DEFAULT '0',
+  `aboutme` text,
+  `skills` text
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id_user`, `firstname`, `lastname`, `email`, `password`, `address`, `city`, `state`, `contactno`, `qualification`, `stream`, `passingyear`, `dob`, `age`, `designation`, `resume`, `hash`, `active`) VALUES
-(1, 'Hilly', 'Gaspero', 'test@test.com', 'YjdlNDhmMTk4NjFhNDNjNGM2MDdhOGFlZTBiY2M3Mjg=', '3 Glacier Hill Trail', 'El Paso', 'Texas', '1-(915)210-6871', 'Human Resources', 'Support', '', '1987-05-17', '30', 'Services', '599731c7e0306.pdf', NULL, 1),
-(2, 'Bernard', 'Krauze', 'bkrauze1@webeden.co.uk', 'YjdlNDhmMTk4NjFhNDNjNGM2MDdhOGFlZTBiY2M3Mjg=', '912 Reindahl Hill', 'Santa Barbara', 'California', '1-(805)591-9713', 'Support', 'Support', '1986', '22/09/2016', '27', 'Services', NULL, NULL, 0),
-(3, 'Monty', 'Celes', 'mceles2@foxnews.com', 'YjdlNDhmMTk4NjFhNDNjNGM2MDdhOGFlZTBiY2M3Mjg=', '808 American Ash Center', 'Indianapolis', 'Indiana', '1-(317)914-8155', 'Product Management', 'Research and Development', '1998', '02/08/2017', '20', 'Training', NULL, NULL, 0),
-(4, 'Mauricio', 'Poundsford', 'mpoundsford3@moonfruit.com', 'YjdlNDhmMTk4NjFhNDNjNGM2MDdhOGFlZTBiY2M3Mjg=', '92 David Plaza', 'Fresno', 'California', '1-(559)853-5963', 'Support', 'Business Development', '2012', '19/11/2016', '27', 'Human Resources', NULL, NULL, 0),
-(5, 'Hailey', 'Worthing', 'hworthing4@booking.com', 'YjdlNDhmMTk4NjFhNDNjNGM2MDdhOGFlZTBiY2M3Mjg=', '0638 Arapahoe Drive', 'San Jose', 'California', '1-(408)522-6046', 'Engineering', 'Services', '1996', '16/01/2017', '26', 'Training', NULL, NULL, 0),
-(6, 'Lemuel', 'Koopman', 'lkoopman5@surveymonkey.com', 'YjdlNDhmMTk4NjFhNDNjNGM2MDdhOGFlZTBiY2M3Mjg=', '62013 Old Gate Road', 'Fresno', 'California', '1-(559)665-9833', 'Human Resources', 'Research and Development', '2004', '03/07/2017', '26', 'Services', NULL, NULL, 0),
-(7, 'Rriocard', 'Addis', 'raddis6@drupal.org', 'YjdlNDhmMTk4NjFhNDNjNGM2MDdhOGFlZTBiY2M3Mjg=', '71 Brentwood Center', 'Los Angeles', 'California', '1-(323)437-1102', 'Services', 'Legal', '2003', '08/07/2017', '27', 'Research and Development', NULL, NULL, 0),
-(8, 'Matty', 'Tesh', 'mtesh7@thetimes.co.uk', 'YjdlNDhmMTk4NjFhNDNjNGM2MDdhOGFlZTBiY2M3Mjg=', '60343 Havey Circle', 'New York City', 'New York', '1-(212)912-5018', 'Services', 'Support', '1991', '10/09/2016', '20', 'Accounting', NULL, NULL, 0),
-(9, 'Tadeo', 'Barrott', 'tbarrott8@irs.gov', 'YjdlNDhmMTk4NjFhNDNjNGM2MDdhOGFlZTBiY2M3Mjg=', '37 Jenifer Trail', 'Grand Junction', 'Colorado', '1-(970)541-4437', 'Legal', 'Services', '2000', '14/03/2017', '26', 'Training', NULL, NULL, 0),
-(10, 'Bond', 'Everard', 'beverard9@networkadvertising.org', 'YjdlNDhmMTk4NjFhNDNjNGM2MDdhOGFlZTBiY2M3Mjg=', '9 Golf Course Park', 'Lancaster', 'Pennsylvania', '1-(717)272-0058', 'Business Development', 'Business Development', '2000', '19/05/2017', '21', 'Marketing', NULL, NULL, 0),
-(12, 'test', 'test', 'newlogin@gmail.com', 'YjdlNDhmMTk4NjFhNDNjNGM2MDdhOGFlZTBiY2M3Mjg=', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '5sSoqCHlmoEdgMmmIQ4bzhsLvklIQs3eYlp6Zy1jTjw%3D', 0),
-(13, 'test', 'test', 'test4@test.com', 'NTUwZGUzMTM4ZGJkNjMwMDJjZDQwZDI1YmRiOWNkMTg=', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '5sSoqCHlmoEdgMmmIQ4bzhsLvklIQs3eYlp6Zy1jTjw%3D', 0),
-(14, 'test', 'test', 'test@test2.com', 'YjdlNDhmMTk4NjFhNDNjNGM2MDdhOGFlZTBiY2M3Mjg=', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1c1d3df29e5614a1ec703ea0f9dd5010', 0);
+INSERT INTO `users` (`id_user`, `firstname`, `lastname`, `email`, `password`, `address`, `city`, `state`, `contactno`, `qualification`, `stream`, `passingyear`, `dob`, `age`, `designation`, `resume`, `hash`, `active`, `aboutme`, `skills`) VALUES
+(19, 'test', 'Test', 'test@test.com', 'YjdlNDhmMTk4NjFhNDNjNGM2MDdhOGFlZTBiY2M3Mjg=', '', 'delhi', '', '', '', '', '', '', '', '', '59ac30dd967bc.pdf', '58752c191229843804adcf6643f18db7', 1, 'test', '');
 
 --
 -- Indexes for dumped tables
@@ -52996,7 +52988,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `apply_job_post`
 --
 ALTER TABLE `apply_job_post`
-  MODIFY `id_apply` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id_apply` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT for table `cities`
 --
@@ -53006,7 +52998,7 @@ ALTER TABLE `cities`
 -- AUTO_INCREMENT for table `company`
 --
 ALTER TABLE `company`
-  MODIFY `id_company` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_company` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 --
 -- AUTO_INCREMENT for table `countries`
 --
@@ -53016,7 +53008,7 @@ ALTER TABLE `countries`
 -- AUTO_INCREMENT for table `job_post`
 --
 ALTER TABLE `job_post`
-  MODIFY `id_jobpost` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id_jobpost` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 --
 -- AUTO_INCREMENT for table `states`
 --
@@ -53026,7 +53018,7 @@ ALTER TABLE `states`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;COMMIT;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

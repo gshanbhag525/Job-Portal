@@ -1,3 +1,29 @@
+<?php
+
+//To Handle Session Variables on This Page
+session_start();
+
+
+//Including Database Connection From db.php file to avoid rewriting in all files
+require_once("../db.php");
+
+$sql = "SELECT * FROM apply_job_post WHERE id_user='$_SESSION[id_user]' AND id_jobpost='$_GET[id]'";
+$result = $conn->query($sql);
+if($result->num_rows > 0) 
+{
+  
+  $sql1 = "SELECT * FROM job_post INNER JOIN company ON job_post.id_company=company.id_company WHERE id_jobpost='$_GET[id]'";
+  $result1 = $conn->query($sql1);
+  if($result1->num_rows > 0) 
+  {
+    $row = $result1->fetch_assoc();
+  }
+
+} else {
+  header("Location: index.php");
+  exit();
+}
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -62,49 +88,30 @@
         <div class="row">          
           <div class="col-md-9 bg-white padding-2">
             <div class="pull-left">
-              <h2><b><i>Job Title</i></b></h2>
+              <h2><b><i><?php echo $row['jobtitle']; ?></i></b></h2>
             </div>
             <div class="pull-right">
-              <button class="btn btn-default btn-lg btn-flat margin-top-20"><i class="fa fa-arrow-circle-left"></i> Back</button>
+              <a href="index.php" class="btn btn-default btn-lg btn-flat margin-top-20"><i class="fa fa-arrow-circle-left"></i> Back</a>
             </div>
             <div class="clearfix"></div>
             <hr>
             <div>
-              <p><span class="margin-right-10"><i class="fa fa-location-arrow text-green"></i> Location</span> <i class="fa fa-calendar text-green"></i> 31/08/2017</p>              
+              <p><span class="margin-right-10"><i class="fa fa-location-arrow text-green"></i> <?php echo $row['city']; ?></span> <i class="fa fa-calendar text-green"></i> <?php echo date("d-M-Y", strtotime($row['createdat'])); ?></p>              
             </div>
             <div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-              tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-              quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-              consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-              cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-              proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-              <br>
-              <h3>We Need</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora ab, doloremque ex quam facere. Fugiat.</p>
-              <ul>
-                <li>Lorem ipsum dolor sit amet.</li>
-                <li>Lorem ipsum dolor sit amet.</li>
-                <li>Lorem ipsum dolor sit amet.</li>
-                <li>Lorem ipsum dolor sit amet.</li>
-              </ul>
-            </div>
-            <div>
-              <a href="" class="btn btn-success btn-flat margin-top-50">Apply</a>
+              <?php echo stripcslashes($row['description']); ?>
             </div>
             
             
           </div>
           <div class="col-md-3">
             <div class="thumbnail">
-              <img src="../img/browse.jpg" alt="companylogo">
+              <img src="../uploads/logo/<?php echo $row['logo']; ?>" alt="companylogo">
               <div class="caption text-center">
-                <h3>Company Name</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem, dolores.</p>
+                <h3><?php echo $row['companyname']; ?></h3>
                 <p><a href="#" class="btn btn-primary btn-flat" role="button">More Info</a>
                 <hr>
                 <div class="row">
-                  <div class="col-md-4"><a href=""><i class="fa fa-address-card-o"></i> Apply</a></div>
                   <div class="col-md-4"><a href=""><i class="fa fa-warning"></i> Report</a></div>
                   <div class="col-md-4"><a href=""><i class="fa fa-envelope"></i> Email</a></div>
                 </div>

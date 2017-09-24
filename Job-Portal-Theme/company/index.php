@@ -82,6 +82,7 @@ require_once("../db.php");
                   <li><a href="edit-company.php"><i class="fa fa-tv"></i> My Company</a></li>
                   <li><a href="create-job-post.php"><i class="fa fa-file-o"></i> Create Job Post</a></li>
                   <li><a href="my-job-post.php"><i class="fa fa-file-o"></i> My Job Post</a></li>
+                  <li><a href="job-applications.php"><i class="fa fa-file-o"></i> Job Application</a></li>
                   <li><a href="settings.php"><i class="fa fa-gear"></i> Settings</a></li>
                   <li><a href="resume-database.php"><i class="fa fa-user"></i> Resume Database</a></li>
                   <li><a href="../logout.php"><i class="fa fa-arrow-circle-o-right"></i> Logout</a></li>
@@ -119,7 +120,14 @@ require_once("../db.php");
                   <span class="info-box-icon bg-green"><i class="ion ion-ios-browsers"></i></span>
                   <div class="info-box-content">
                     <span class="info-box-text">Application For Jobs</span>
-                    <span class="info-box-number">50</span>
+                    <?php
+                    $sql = "SELECT * FROM apply_job_post WHERE id_company='$_SESSION[id_user]'";
+                    $result = $conn->query($sql);
+
+                    if($result->num_rows > 0) {
+                  ?>
+                    <span class="info-box-number"><?php echo $result->num_rows; ?></span>
+                    <?php } ?>
                   </div>
                 </div>
               </div>
