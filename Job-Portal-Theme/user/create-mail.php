@@ -30,6 +30,11 @@ require_once("../db.php");
   <link rel="stylesheet" href="../css/_all-skins.min.css">
   <!-- Custom -->
   <link rel="stylesheet" href="../css/custom.css">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
+
+  <script src="../js/tinymce/tinymce.min.js"></script>
+  <script>tinymce.init({ selector:'#description', height: 150 });</script>
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -78,54 +83,55 @@ require_once("../db.php");
               </div>
               <div class="box-body no-padding">
                 <ul class="nav nav-pills nav-stacked">
-                  <li><a href="index.php"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-                  <li><a href="edit-company.php"><i class="fa fa-tv"></i> My Company</a></li>
-                  <li><a href="create-job-post.php"><i class="fa fa-file-o"></i> Create Job Post</a></li>
-                  <li><a href="my-job-post.php"><i class="fa fa-file-o"></i> My Job Post</a></li>
-                  <li class="active"><a href="job-applications.php"><i class="fa fa-file-o"></i> Job Application</a></li>
-                  <li><a href="mailbox.php"><i class="fa fa-envelope"></i> Mailbox</a></li>
+                  <li><a href="edit-profile.php"><i class="fa fa-user"></i> Edit Profile</a></li>
+                  <li><a href="index.php"><i class="fa fa-address-card-o"></i> My Applications</a></li>
+                  <li class="active"><a href="mailbox.php"><i class="fa fa-envelope"></i> Mailbox</a></li>
                   <li><a href="settings.php"><i class="fa fa-gear"></i> Settings</a></li>
-                  <li><a href="resume-database.php"><i class="fa fa-user"></i> Resume Database</a></li>
                   <li><a href="../logout.php"><i class="fa fa-arrow-circle-o-right"></i> Logout</a></li>
                 </ul>
               </div>
             </div>
           </div>
           <div class="col-md-9 bg-white padding-2">
-            <h2><i>Recent Applications</i></h2>
-
-            <?php
-             $sql = "SELECT * FROM job_post INNER JOIN apply_job_post ON job_post.id_jobpost=apply_job_post.id_jobpost  INNER JOIN users ON users.id_user=apply_job_post.id_user WHERE apply_job_post.id_company='$_SESSION[id_user]'";
-                  $result = $conn->query($sql);
-
-                  if($result->num_rows > 0) {
-                    while($row = $result->fetch_assoc()) 
-                    {     
-            ?>
-            <div class="attachment-block clearfix padding-2">
-                <h4 class="attachment-heading"><a href="user-application.php?id=<?php echo $row['id_user']; ?>&id_jobpost=<?php echo $row['id_jobpost']; ?>"><?php echo $row['jobtitle'].' @ ('.$row['firstname'].' '.$row['lastname'].')'; ?></a></h4>
-                <div class="attachment-text padding-2">
-                  <div class="pull-left"><i class="fa fa-calendar"></i> <?php echo $row['createdat']; ?></div>  
-                  <?php 
-
-                  if($row['status'] == 0) {
-                    echo '<div class="pull-right"><strong class="text-orange">Pending</strong></div>';
-                  } else if ($row['status'] == 1) {
-                    echo '<div class="pull-right"><strong class="text-red">Rejected</strong></div>';
-                  } else if ($row['status'] == 2) {
-                    echo '<div class="pull-right"><strong class="text-green">Under Review</strong></div> ';
-                  }
-                  ?>
-                                
+          <form action="add-mail.php" method="post">
+            <div class="box box-primary">
+              <div class="box-header with-border">
+                <h3 class="box-title">Compose New Message</h3>
+              </div>
+              <!-- /.box-header -->
+              <div class="box-body">
+                <div class="form-group">
+                  <select name="to" class="form-control">
+                    <?php 
+                    $sql = "SELECT * FROM apply_job_post INNER JOIN company ON apply_job_post.id_company=company.id_company WHERE apply_job_post.id_user='$_SESSION[id_user]' AND apply_job_post.status='2'";
+                    $result = $conn->query($sql);
+                    if($result->num_rows > 0) {
+                      while($row = $result->fetch_assoc()) {
+                        echo '<option value="'.$row['id_company'].'">'.$row['companyname'].'</option>';
+                      }
+                    }
+                    ?>
+                  </select>
                 </div>
+                <div class="form-group">
+                  <input class="form-control" name="subject" placeholder="Subject:">
+                </div>
+                <div class="form-group">
+                  <textarea class="form-control input-lg" id="description" name="description" placeholder="Job Description"></textarea>
+                </div>
+              </div>
+              <!-- /.box-body -->
+              <div class="box-footer">
+                <div class="pull-right">
+                  <button type="submit" class="btn btn-primary"><i class="fa fa-envelope-o"></i> Send</button>
+                </div>
+                <a href="mailbox.php" class="btn btn-default"><i class="fa fa-times"></i> Discard</a>
+              </div>
+              <!-- /.box-footer -->
             </div>
-
-            <?php
-              }
-            }
-            ?>
-            
+          </form>
           </div>
+        </div>
       </div>
     </section>
 
@@ -152,5 +158,13 @@ require_once("../db.php");
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <!-- AdminLTE App -->
 <script src="../js/adminlte.min.js"></script>
+<!-- DataTables -->
+<script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+<script>
+  $(function () {
+    $('#example1').DataTable();
+  })
+</script>
+
 </body>
 </html>

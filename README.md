@@ -44,6 +44,12 @@ Job Portal (PHP) - Part 19 - Updated Create Job Post & View Company Job Post - h
 
 Job Portal (PHP) - Part 20 - Job Post Pagination & Apply To Job Post - https://youtu.be/Qrtnglv5N10
 
+Job Portal (PHP) - Part 21 - Job Search Filters - https://youtu.be/upGiQeC3F9c
+
+Job Portal (PHP) - Part 22 - Company Viewing & Marking Job Applications (Under Review/Rejected) - https://youtu.be/LgMaVxdf4Zs
+
+Job Portal (PHP) - Part 23 - Company Candidate Interaction (Mailbox System) - https://youtu.be/TcouLN03LBY
+
 
 # Contact
 Feel free to contact me through my website http://learningfromscratch.online/ 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 24, 2017 at 06:44 AM
+-- Generation Time: Sep 27, 2017 at 06:47 AM
 -- Server version: 10.1.25-MariaDB
 -- PHP Version: 5.6.31
 
@@ -54,13 +54,6 @@ CREATE TABLE `apply_job_post` (
   `id_user` int(11) NOT NULL,
   `status` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `apply_job_post`
---
-
-INSERT INTO `apply_job_post` (`id_apply`, `id_jobpost`, `id_company`, `id_user`, `status`) VALUES
-(13, 29, 19, 19, 2);
 
 -- --------------------------------------------------------
 
@@ -48440,13 +48433,6 @@ CREATE TABLE `company` (
   `active` int(11) NOT NULL DEFAULT '2'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `company`
---
-
-INSERT INTO `company` (`id_company`, `name`, `companyname`, `country`, `state`, `city`, `contactno`, `website`, `email`, `password`, `aboutme`, `logo`, `createdAt`, `active`) VALUES
-(19, 'test', 'test', 'Algeria', 'Algiers', 'Delhi', '1123333333', '', 'test@test.com', 'YjdlNDhmMTk4NjFhNDNjNGM2MDdhOGFlZTBiY2M3Mjg=', '', '59afc7f387cad.png', '2017-09-06 10:03:31', 1);
-
 -- --------------------------------------------------------
 
 --
@@ -48730,21 +48716,36 @@ CREATE TABLE `job_post` (
   `createdat` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data for table `job_post`
+-- Table structure for table `mailbox`
 --
 
-INSERT INTO `job_post` (`id_jobpost`, `id_company`, `jobtitle`, `description`, `minimumsalary`, `maximumsalary`, `experience`, `qualification`, `createdat`) VALUES
-(28, 19, 'Job Post 1', '<p class=\"text-center\">Test Test</p>', '122222', '122222', '1', 'None', '2017-09-13 15:26:36'),
-(29, 19, 'Job Post 2', '<p>Test Test</p>', '122222', '122222', '3', 'None', '2017-09-13 15:26:36'),
-(30, 19, 'Job Post 3', '<p>Test Test</p>', '122222', '122222', '2', 'None', '2017-09-13 15:26:36'),
-(31, 19, 'Job Post 4', '<p>Test Test</p>', '122222', '122222', '4', 'None', '2017-09-13 15:26:36'),
-(32, 19, 'Job Post 5', '<p>Test Test</p>', '122222', '122222', '5', 'None', '2017-09-13 15:26:36'),
-(33, 19, 'Job Post 6', '<p>Test Test</p>', '122222', '122222', '2', 'None', '2017-09-13 15:26:36'),
-(34, 19, 'Job Post 7', '<p>Test Test</p>', '122222', '122222', '3', 'None', '2017-09-13 15:26:36'),
-(35, 19, 'Job Post 8', '<p>Test Test</p>', '122222', '122222', '1', 'None', '2017-09-13 15:26:36'),
-(36, 19, 'Job Post 9', '<p>Test Test</p>', '122222', '122222', '4', 'None', '2017-09-13 15:26:36'),
-(37, 19, 'Job Post 10', '<p>Test Test</p>', '122222', '122222', '5', 'None', '2017-09-13 15:26:36');
+CREATE TABLE `mailbox` (
+  `id_mailbox` int(11) NOT NULL,
+  `id_fromuser` int(11) NOT NULL,
+  `fromuser` varchar(255) NOT NULL,
+  `id_touser` int(11) NOT NULL,
+  `subject` varchar(255) NOT NULL,
+  `message` text NOT NULL,
+  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `reply_mailbox`
+--
+
+CREATE TABLE `reply_mailbox` (
+  `id_reply` int(11) NOT NULL,
+  `id_mailbox` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `usertype` varchar(255) NOT NULL,
+  `message` text NOT NULL,
+  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -52915,13 +52916,6 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `users`
---
-
-INSERT INTO `users` (`id_user`, `firstname`, `lastname`, `email`, `password`, `address`, `city`, `state`, `contactno`, `qualification`, `stream`, `passingyear`, `dob`, `age`, `designation`, `resume`, `hash`, `active`, `aboutme`, `skills`) VALUES
-(19, 'test', 'Test', 'test@test.com', 'YjdlNDhmMTk4NjFhNDNjNGM2MDdhOGFlZTBiY2M3Mjg=', '', 'delhi', '', '', '', '', '', '', '', '', '59ac30dd967bc.pdf', '58752c191229843804adcf6643f18db7', 1, 'test', '');
-
---
 -- Indexes for dumped tables
 --
 
@@ -52963,6 +52957,18 @@ ALTER TABLE `job_post`
   ADD PRIMARY KEY (`id_jobpost`);
 
 --
+-- Indexes for table `mailbox`
+--
+ALTER TABLE `mailbox`
+  ADD PRIMARY KEY (`id_mailbox`);
+
+--
+-- Indexes for table `reply_mailbox`
+--
+ALTER TABLE `reply_mailbox`
+  ADD PRIMARY KEY (`id_reply`);
+
+--
 -- Indexes for table `states`
 --
 ALTER TABLE `states`
@@ -52988,7 +52994,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `apply_job_post`
 --
 ALTER TABLE `apply_job_post`
-  MODIFY `id_apply` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id_apply` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `cities`
 --
@@ -52998,7 +53004,7 @@ ALTER TABLE `cities`
 -- AUTO_INCREMENT for table `company`
 --
 ALTER TABLE `company`
-  MODIFY `id_company` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id_company` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `countries`
 --
@@ -53008,7 +53014,17 @@ ALTER TABLE `countries`
 -- AUTO_INCREMENT for table `job_post`
 --
 ALTER TABLE `job_post`
-  MODIFY `id_jobpost` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id_jobpost` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `mailbox`
+--
+ALTER TABLE `mailbox`
+  MODIFY `id_mailbox` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `reply_mailbox`
+--
+ALTER TABLE `reply_mailbox`
+  MODIFY `id_reply` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `states`
 --
@@ -53018,7 +53034,7 @@ ALTER TABLE `states`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;COMMIT;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT;COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
