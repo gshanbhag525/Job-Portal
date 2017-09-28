@@ -1,3 +1,16 @@
+<?php
+
+//To Handle Session Variables on This Page
+session_start();
+
+//If user Not logged in then redirect them back to homepage. 
+if(empty($_SESSION['id_user'])) {
+  header("Location: ../index.php");
+  exit();
+}
+
+require_once("../db.php");
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -48,7 +61,7 @@
         <ul class="nav navbar-nav">
           <li>
             <a href="../jobs.php">Jobs</a>
-          </li>         
+          </li>
         </ul>
       </div>
     </nav>
@@ -63,62 +76,47 @@
           <div class="col-md-3">
             <div class="box box-solid">
               <div class="box-header with-border">
-                <h3 class="box-title">Welcome <b>Admin</b></h3>
+                <h3 class="box-title">Welcome <b><?php echo $_SESSION['name']; ?></b></h3>
               </div>
               <div class="box-body no-padding">
                 <ul class="nav nav-pills nav-stacked">
-                  <li class="active"><a href="dashboard.php"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-                  <li><a href="active-jobs.php"><i class="fa fa-briefcase"></i> Active Jobs</a></li>
-                  <li><a href="applications.php"><i class="fa fa-address-card-o"></i> Applications</a></li>
-                  <li><a href="candidates.php"><i class="fa fa-address-book"></i> Candidates</a></li>
-                  <li><a href="companies.php"><i class="fa fa-building"></i> Companies</a></li>
+                  <li><a href="edit-profile.php"><i class="fa fa-user"></i> Edit Profile</a></li>
+                  <li><a href="index.php"><i class="fa fa-address-card-o"></i> My Applications</a></li>
+                  <li class="active"><a href="mailbox.php"><i class="fa fa-envelope"></i> Mailbox</a></li>
+                  <li><a href="settings.php"><i class="fa fa-gear"></i> Settings</a></li>
                   <li><a href="../logout.php"><i class="fa fa-arrow-circle-o-right"></i> Logout</a></li>
                 </ul>
               </div>
             </div>
           </div>
           <div class="col-md-9 bg-white padding-2">
-
-            <h3>Job Portal Statistics</h3>
+            <h2><i>Change Password</i></h2>
+            <p>Type in new password that you want to use</p>
             <div class="row">
               <div class="col-md-6">
-                <div class="info-box bg-c-yellow">
-                  <span class="info-box-icon bg-red"><i class="ion ion-briefcase"></i></span>
-                  <div class="info-box-content">
-                    <span class="info-box-text">Company Registered</span>
-                    <span class="info-box-number">20</span>
+                <form id="changePassword" action="change-password.php" method="post">
+                  <div class="form-group">
+                    <input id="password" class="form-control input-lg" type="password" name="password" autocomplete="off" placeholder="Password" required>
                   </div>
-                </div>                
+                  <div class="form-group">
+                    <input id="cpassword" class="form-control input-lg" type="password" autocomplete="off" placeholder="Confirm Password" required>
+                  </div>
+                  <div class="form-group">
+                    <button type="submit" class="btn btn-flat btn-success">Change Password</button>
+                  </div>
+                  <div id="passwordError" class="color-red text-center hide-me">
+                    Password Mismatch!!
+                  </div>
+                </form>
               </div>
               <div class="col-md-6">
-                <div class="info-box bg-c-yellow">
-                  <span class="info-box-icon bg-green"><i class="ion ion-person-stalker"></i></span>
-                  <div class="info-box-content">
-                    <span class="info-box-text">Registered Candidates</span>
-                    <span class="info-box-number">50</span>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="info-box bg-c-yellow">
-                  <span class="info-box-icon bg-aqua"><i class="ion ion-person-add"></i></span>
-                  <div class="info-box-content">
-                    <span class="info-box-text">Total Jobs</span>
-                    <span class="info-box-number">50</span>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="info-box bg-c-yellow">
-                  <span class="info-box-icon bg-yellow"><i class="ion ion-ios-browsers"></i></span>
-                  <div class="info-box-content">
-                    <span class="info-box-text">Total Applications</span>
-                    <span class="info-box-number">50</span>
-                  </div>
-                </div>
+                <form action="deactivate-account.php" method="post">
+                  <label><input type="checkbox" required> I Want To Deactivate My Account</label>
+                  <button type="submit" class="btn btn-danger btn-flat btn-lg">Deactivate My Account</button>
+                </form>
               </div>
             </div>
-
+            
           </div>
         </div>
       </div>
@@ -150,5 +148,15 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <!-- AdminLTE App -->
 <script src="../js/adminlte.min.js"></script>
+<script>
+  $("#changePassword").on("submit", function(e) {
+    e.preventDefault();
+    if( $('#password').val() != $('#cpassword').val() ) {
+      $('#passwordError').show();
+    } else {
+      $(this).unbind('submit').submit();
+    }
+  });
+</script>
 </body>
 </html>

@@ -30,12 +30,6 @@ require_once("../db.php");
   <link rel="stylesheet" href="../css/_all-skins.min.css">
   <!-- Custom -->
   <link rel="stylesheet" href="../css/custom.css">
-
-  <script src="../js/tinymce/tinymce.min.js"></script>
-
-  <script>tinymce.init({ selector:'#description', height: 300 });</script>
-
-
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -85,8 +79,8 @@ require_once("../db.php");
               <div class="box-body no-padding">
                 <ul class="nav nav-pills nav-stacked">
                   <li><a href="index.php"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-                  <li><a href="edit-company.php"><i class="fa fa-tv"></i> My Company</a></li>
-                  <li class="active"><a href="create-job-post.php"><i class="fa fa-file-o"></i> Create Job Post</a></li>
+                  <li class="active"><a href="edit-company.php"><i class="fa fa-tv"></i> My Company</a></li>
+                  <li><a href="create-job-post.php"><i class="fa fa-file-o"></i> Create Job Post</a></li>
                   <li><a href="my-job-post.php"><i class="fa fa-file-o"></i> My Job Post</a></li>
                   <li><a href="job-applications.php"><i class="fa fa-file-o"></i> Job Application</a></li>
                   <li><a href="mailbox.php"><i class="fa fa-envelope"></i> Mailbox</a></li>
@@ -98,34 +92,72 @@ require_once("../db.php");
             </div>
           </div>
           <div class="col-md-9 bg-white padding-2">
-            <h2><i>Create Job Post</i></h2>
+            <h2><i>My Company</i></h2>
+            <p>In this section you can change your company details</p>
             <div class="row">
-              <form method="post" action="addpost.php">
-                <div class="col-md-12 latest-job ">
+              <form action="update-company.php" method="post" enctype="multipart/form-data">
+                <?php
+                $sql = "SELECT * FROM company WHERE id_company='$_SESSION[id_company]'";
+                $result = $conn->query($sql);
+
+                if($result->num_rows > 0) {
+                  while($row = $result->fetch_assoc()) {
+                ?>
+                <div class="col-md-6 latest-job ">
                   <div class="form-group">
-                    <input class="form-control input-lg" type="text" id="jobtitle" name="jobtitle" placeholder="Job Title">
+                     <label>Company Name</label>
+                    <input type="text" class="form-control input-lg" name="companyname" value="<?php echo $row['companyname']; ?>" required="">
                   </div>
                   <div class="form-group">
-                    <textarea class="form-control input-lg" id="description" name="description" placeholder="Job Description"></textarea>
+                     <label>Website</label>
+                    <input type="text" class="form-control input-lg" name="website" value="<?php echo $row['website']; ?>" required="">
                   </div>
                   <div class="form-group">
-                    <input type="number" class="form-control  input-lg" id="minimumsalary" min="1000" autocomplete="off" name="minimumsalary" placeholder="Minimum Salary" required="">
+                    <label for="email">Email address</label>
+                    <input type="email" class="form-control input-lg" id="email" placeholder="Email" value="<?php echo $row['email']; ?>" readonly>
                   </div>
                   <div class="form-group">
-                    <input type="number" class="form-control  input-lg" id="maximumsalary" name="maximumsalary" placeholder="Maximum Salary" required="">
+                    <label>About Me</label>
+                    <textarea class="form-control input-lg" rows="4" name="aboutme"><?php echo $row['aboutme']; ?></textarea>
                   </div>
                   <div class="form-group">
-                <input type="number" class="form-control  input-lg" id="experience" autocomplete="off" name="experience" placeholder="Experience (in Years) Required" required="">
-                  </div>
-                  <div class="form-group">
-                    <input type="text" class="form-control  input-lg" id="qualification" name="qualification" placeholder="Qualification Required" required="">
-                  </div>
-                  <div class="form-group">
-                    <button type="submit" class="btn btn-flat btn-success">Create</button>
+                    <button type="submit" class="btn btn-flat btn-success">Update Company Profile</button>
                   </div>
                 </div>
+                <div class="col-md-6 latest-job ">
+                  <div class="form-group">
+                    <label for="contactno">Contact Number</label>
+                    <input type="text" class="form-control input-lg" id="contactno" name="contactno" placeholder="Contact Number" value="<?php echo $row['contactno']; ?>">
+                  </div>
+                  <div class="form-group">
+                    <label for="city">City</label>
+                    <input type="text" class="form-control input-lg" id="city" name="city" value="<?php echo $row['city']; ?>" placeholder="city">
+                  </div>
+                  <div class="form-group">
+                    <label for="state">State</label>
+                    <input type="text" class="form-control input-lg" id="state" name="state" placeholder="state" value="<?php echo $row['state']; ?>">
+                  </div>
+                  <div class="form-group">
+                    <label>Change Company Logo</label>
+                    <input type="file" name="image" class="btn btn-default">
+                    <?php if($row['logo'] != "") { ?>
+                    <img src="../uploads/logo/<?php echo $row['logo']; ?>" class="img-responsive" style="max-height: 200px; max-width: 200px;">
+                    <?php } ?>
+                  </div>
+                </div>
+                    <?php
+                    }
+                  }
+                ?>  
               </form>
             </div>
+            <?php if(isset($_SESSION['uploadError'])) { ?>
+            <div class="row">
+              <div class="col-md-12 text-center">
+                <?php echo $_SESSION['uploadError']; ?>
+              </div>
+            </div>
+            <?php unset($_SESSION['uploadError']); } ?>
             
           </div>
         </div>

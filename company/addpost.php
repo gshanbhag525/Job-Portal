@@ -3,6 +3,11 @@
 //To Handle Session Variables on This Page
 session_start();
 
+if(empty($_SESSION['id_company'])) {
+  header("Location: ../index.php");
+  exit();
+}
+
 //Including Database Connection From db.php file to avoid rewriting in all files
 require_once("../db.php");
 
@@ -15,7 +20,7 @@ if(isset($_POST)) {
 
 	$stmt = $conn->prepare("INSERT INTO job_post(id_company, jobtitle, description, minimumsalary, maximumsalary, experience, qualification) VALUES (?,?, ?, ?, ?, ?, ?)");
 
-	$stmt->bind_param("issssss", $_SESSION['id_user'], $jobtitle, $description, $minimumsalary, $maximumsalary, $experience, $qualification);
+	$stmt->bind_param("issssss", $_SESSION['id_company'], $jobtitle, $description, $minimumsalary, $maximumsalary, $experience, $qualification);
 
 	$jobtitle = mysqli_real_escape_string($conn, $_POST['jobtitle']);
 	$description = mysqli_real_escape_string($conn, $_POST['description']);
@@ -28,7 +33,7 @@ if(isset($_POST)) {
 	if($stmt->execute()) {
 		//If data Inserted successfully then redirect to dashboard
 		$_SESSION['jobPostSuccess'] = true;
-		header("Location: dashboard.php");
+		header("Location: index.php");
 		exit();
 	} else {
 		//If data failed to insert then show that error. Note: This condition should not come unless we as a developer make mistake or someone tries to hack their way in and mess up :D
@@ -40,7 +45,7 @@ if(isset($_POST)) {
 	//THIS IS NOT SAFE FROM SQL INJECTION BUT OK TO USE WITH SMALL TO MEDIUM SIZE AUDIENCE
 
 	//Insert Job Post Query 
-	// $sql = "INSERT INTO job_post(id_company, jobtitle, description, minimumsalary, maximumsalary, experience, qualification) VALUES ('$_SESSION[id_user]','$jobtitle', '$description', '$minimumsalary', '$maximumsalary', '$experience', '$qualification')";
+	// $sql = "INSERT INTO job_post(id_company, jobtitle, description, minimumsalary, maximumsalary, experience, qualification) VALUES ('$_SESSION[id_company]','$jobtitle', '$description', '$minimumsalary', '$maximumsalary', '$experience', '$qualification')";
 
 	// if($conn->query($sql)===TRUE) {
 	// 	//If data Inserted successfully then redirect to dashboard
@@ -57,6 +62,6 @@ if(isset($_POST)) {
 
 } else {
 	//redirect them back to dashboard page if they didn't click Add Post button
-	header("Location: dashboard.php");
+	header("Location: create-job-post.php");
 	exit();
 }

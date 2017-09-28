@@ -1,3 +1,34 @@
+<?php
+
+//To Handle Session Variables on This Page
+session_start();
+
+if(empty($_SESSION['id_user'])) {
+  header("Location: ../index.php");
+  exit();
+}
+
+
+//Including Database Connection From db.php file to avoid rewriting in all files
+require_once("../db.php");
+
+$sql = "SELECT * FROM apply_job_post WHERE id_user='$_SESSION[id_user]' AND id_jobpost='$_GET[id]'";
+$result = $conn->query($sql);
+if($result->num_rows > 0) 
+{
+  
+  $sql1 = "SELECT * FROM job_post INNER JOIN company ON job_post.id_company=company.id_company WHERE id_jobpost='$_GET[id]'";
+  $result1 = $conn->query($sql1);
+  if($result1->num_rows > 0) 
+  {
+    $row = $result1->fetch_assoc();
+  }
+
+} else {
+  header("Location: index.php");
+  exit();
+}
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -59,66 +90,38 @@
 
     <section id="candidates" class="content-header">
       <div class="container">
-        <div class="row">
-          <div class="col-md-3">
-            <div class="box box-solid">
-              <div class="box-header with-border">
-                <h3 class="box-title">Welcome <b>Admin</b></h3>
-              </div>
-              <div class="box-body no-padding">
-                <ul class="nav nav-pills nav-stacked">
-                  <li class="active"><a href="dashboard.php"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-                  <li><a href="active-jobs.php"><i class="fa fa-briefcase"></i> Active Jobs</a></li>
-                  <li><a href="applications.php"><i class="fa fa-address-card-o"></i> Applications</a></li>
-                  <li><a href="candidates.php"><i class="fa fa-address-book"></i> Candidates</a></li>
-                  <li><a href="companies.php"><i class="fa fa-building"></i> Companies</a></li>
-                  <li><a href="../logout.php"><i class="fa fa-arrow-circle-o-right"></i> Logout</a></li>
-                </ul>
-              </div>
-            </div>
-          </div>
+        <div class="row">          
           <div class="col-md-9 bg-white padding-2">
-
-            <h3>Job Portal Statistics</h3>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="info-box bg-c-yellow">
-                  <span class="info-box-icon bg-red"><i class="ion ion-briefcase"></i></span>
-                  <div class="info-box-content">
-                    <span class="info-box-text">Company Registered</span>
-                    <span class="info-box-number">20</span>
-                  </div>
-                </div>                
-              </div>
-              <div class="col-md-6">
-                <div class="info-box bg-c-yellow">
-                  <span class="info-box-icon bg-green"><i class="ion ion-person-stalker"></i></span>
-                  <div class="info-box-content">
-                    <span class="info-box-text">Registered Candidates</span>
-                    <span class="info-box-number">50</span>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="info-box bg-c-yellow">
-                  <span class="info-box-icon bg-aqua"><i class="ion ion-person-add"></i></span>
-                  <div class="info-box-content">
-                    <span class="info-box-text">Total Jobs</span>
-                    <span class="info-box-number">50</span>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="info-box bg-c-yellow">
-                  <span class="info-box-icon bg-yellow"><i class="ion ion-ios-browsers"></i></span>
-                  <div class="info-box-content">
-                    <span class="info-box-text">Total Applications</span>
-                    <span class="info-box-number">50</span>
-                  </div>
+            <div class="pull-left">
+              <h2><b><i><?php echo $row['jobtitle']; ?></i></b></h2>
+            </div>
+            <div class="pull-right">
+              <a href="index.php" class="btn btn-default btn-lg btn-flat margin-top-20"><i class="fa fa-arrow-circle-left"></i> Back</a>
+            </div>
+            <div class="clearfix"></div>
+            <hr>
+            <div>
+              <p><span class="margin-right-10"><i class="fa fa-location-arrow text-green"></i> <?php echo $row['city']; ?></span> <i class="fa fa-calendar text-green"></i> <?php echo date("d-M-Y", strtotime($row['createdat'])); ?></p>              
+            </div>
+            <div>
+              <?php echo stripcslashes($row['description']); ?>
+            </div>
+            
+            
+          </div>
+          <div class="col-md-3">
+            <div class="thumbnail">
+              <img src="../uploads/logo/<?php echo $row['logo']; ?>" alt="companylogo">
+              <div class="caption text-center">
+                <h3><?php echo $row['companyname']; ?></h3>
+                <p><a href="#" class="btn btn-primary btn-flat" role="button">More Info</a>
+                <hr>
+                <div class="row">
+                  <div class="col-md-4"><a href=""><i class="fa fa-warning"></i> Report</a></div>
+                  <div class="col-md-4"><a href=""><i class="fa fa-envelope"></i> Email</a></div>
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       </div>

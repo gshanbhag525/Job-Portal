@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 27, 2017 at 06:47 AM
+-- Generation Time: Sep 28, 2017 at 07:34 PM
 -- Server version: 10.1.25-MariaDB
 -- PHP Version: 5.6.31
 
@@ -54,6 +54,14 @@ CREATE TABLE `apply_job_post` (
   `id_user` int(11) NOT NULL,
   `status` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `apply_job_post`
+--
+
+INSERT INTO `apply_job_post` (`id_apply`, `id_jobpost`, `id_company`, `id_user`, `status`) VALUES
+(1, 2, 1, 1, 2),
+(2, 3, 1, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -48433,6 +48441,13 @@ CREATE TABLE `company` (
   `active` int(11) NOT NULL DEFAULT '2'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `company`
+--
+
+INSERT INTO `company` (`id_company`, `name`, `companyname`, `country`, `state`, `city`, `contactno`, `website`, `email`, `password`, `aboutme`, `logo`, `createdAt`, `active`) VALUES
+(1, 'Test Test', 'Lara Berger Traders', 'Tajikistan', 'Dushanbe', 'Dushanbe', '1234567890', 'http://www.kopozavore.net', 'company@test.com', 'ZTM4OGYwMmY3NTBlNjVlYmJhOTVhYjk0OTNjZGEwMWU=', 'Eiusmod omnis ducimus vitae dolor', '59cd0fd60ae8b.png', '2017-09-28 12:37:37', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -48715,6 +48730,20 @@ CREATE TABLE `job_post` (
   `qualification` varchar(255) NOT NULL,
   `createdat` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `job_post`
+--
+
+INSERT INTO `job_post` (`id_jobpost`, `id_company`, `jobtitle`, `description`, `minimumsalary`, `maximumsalary`, `experience`, `qualification`, `createdat`) VALUES
+(1, 1, 'Job Post 1', '<p>&nbsp;</p>\\r\\n<p style=\\\"text-align: center; font-size: 15px;\\\"><img src=\\\"images/glyph-tinymce@2x.png\\\" alt=\\\"TinyMCE\\\" width=\\\"77\\\" height=\\\"70\\\" /></p>\\r\\n<p style=\\\"text-align: center; color: #666; font-size: 15px; font-family: avenir; font-weight: 200;\\\">This demo includes our most popular Premium Plugins: <a href=\\\"powerpaste\\\">PowerPaste</a>, <a href=\\\"enhanced-media-embed/\\\">Enhanced Media Embed</a>, <a href=\\\"advanced-code-editor/\\\">Advanced Code Editor</a>, <a href=\\\"link-checker/\\\">Link Checker</a>, <a href=\\\"accessibility-checker\\\">Accessibility Checker</a>, <a href=\\\"spell-checker-pro\\\">Spell Checker Pro</a> &amp; <a href=\\\"http://www.moxiemanager.com\\\">MoxieManager</a>.</p>\\r\\n<p style=\\\"text-align: center; color: #666; font-size: 15px; font-family: avenir; font-weight: 200;\\\">TinyMCE is the world\\\'s #1 web-based HTML WYSIWYG editor control.</p>\\r\\n<p style=\\\"text-align: center; color: #666; font-size: 15px; font-family: avenir; font-weight: 200;\\\">Used on more than 100 million websites and with upward of 70% market share*, <br /> TinyMCE is the first and only choice for your next project.</p>\\r\\n<p style=\\\"text-align: center; color: #666; font-size: 15px; font-family: avenir; font-weight: 200;\\\"><em>TinyMCE enables you to convert HTML textarea fields or other HTML elements to editor instances.</em><br /> * Market share stats, Wappalyzer, 2017.</p>\\r\\n<p><!-- x-tinymce/html --></p>\\r\\n<p>&nbsp;</p>', '25000', '50000', '5', 'Graduate', '2017-09-28 13:18:53'),
+(2, 1, 'Job Post 2', '<p>&nbsp;</p>\\r\\n<p style=\\\"text-align: center; font-size: 15px;\\\"><img src=\\\"images/glyph-tinymce@2x.png\\\" alt=\\\"TinyMCE\\\" width=\\\"77\\\" height=\\\"70\\\" /></p>\\r\\n<p style=\\\"text-align: center; color: #666666; font-size: 15px; font-family: avenir;\\\">This demo includes our most popular Premium Plugins:&nbsp;<a href=\\\"powerpaste\\\">PowerPaste</a>,&nbsp;<a href=\\\"enhanced-media-embed/\\\">Enhanced Media Embed</a>,&nbsp;<a href=\\\"advanced-code-editor/\\\">Advanced Code Editor</a>,&nbsp;<a href=\\\"link-checker/\\\">Link Checker</a>,&nbsp;<a href=\\\"accessibility-checker\\\">Accessibility Checker</a>,&nbsp;<a href=\\\"spell-checker-pro\\\">Spell Checker Pro</a>&nbsp;&amp;&nbsp;<a href=\\\"http://www.moxiemanager.com/\\\">MoxieManager</a>.</p>\\r\\n<p style=\\\"text-align: center; color: #666666; font-size: 15px; font-family: avenir;\\\">TinyMCE is the world\\\'s #1 web-based HTML WYSIWYG editor control.</p>\\r\\n<p style=\\\"text-align: center; color: #666666; font-size: 15px; font-family: avenir;\\\">Used on more than 100 million websites and with upward of 70% market share*,&nbsp;<br />TinyMCE is the first and only choice for your next project.</p>\\r\\n<p style=\\\"text-align: center; color: #666666; font-size: 15px; font-family: avenir;\\\"><em>TinyMCE enables you to convert HTML textarea fields or other HTML elements to editor instances.</em><br />* Market share stats, Wappalyzer, 2017.</p>\\r\\n<p>&nbsp;</p>\\r\\n<p>&nbsp;</p>', '35000', '6000000', '2', 'Graduate', '2017-09-28 13:19:19'),
+(3, 1, 'Job Post 3', '<p>&nbsp;</p>\\r\\n<p style=\\\"text-align: center; font-size: 15px;\\\"><img src=\\\"images/glyph-tinymce@2x.png\\\" alt=\\\"TinyMCE\\\" width=\\\"77\\\" height=\\\"70\\\" /></p>\\r\\n<p style=\\\"text-align: center; color: #666666; font-size: 15px; font-family: avenir;\\\">This demo includes our most popular Premium Plugins:&nbsp;<a href=\\\"powerpaste\\\">PowerPaste</a>,&nbsp;<a href=\\\"enhanced-media-embed/\\\">Enhanced Media Embed</a>,&nbsp;<a href=\\\"advanced-code-editor/\\\">Advanced Code Editor</a>,&nbsp;<a href=\\\"link-checker/\\\">Link Checker</a>,&nbsp;<a href=\\\"accessibility-checker\\\">Accessibility Checker</a>,&nbsp;<a href=\\\"spell-checker-pro\\\">Spell Checker Pro</a>&nbsp;&amp;&nbsp;<a href=\\\"http://www.moxiemanager.com/\\\">MoxieManager</a>.</p>\\r\\n<p style=\\\"text-align: center; color: #666666; font-size: 15px; font-family: avenir;\\\">TinyMCE is the world\\\'s #1 web-based HTML WYSIWYG editor control.</p>\\r\\n<p style=\\\"text-align: center; color: #666666; font-size: 15px; font-family: avenir;\\\">Used on more than 100 million websites and with upward of 70% market share*,&nbsp;<br />TinyMCE is the first and only choice for your next project.</p>\\r\\n<p style=\\\"text-align: center; color: #666666; font-size: 15px; font-family: avenir;\\\"><em>TinyMCE enables you to convert HTML textarea fields or other HTML elements to editor instances.</em><br />* Market share stats, Wappalyzer, 2017.</p>\\r\\n<p>&nbsp;</p>\\r\\n<p>&nbsp;</p>', '35000', '6000000', '2', 'Graduate', '2017-09-28 13:19:19'),
+(4, 1, 'Job Post 4', '<p>&nbsp;</p>\\r\\n<p style=\\\"text-align: center; font-size: 15px;\\\"><img src=\\\"images/glyph-tinymce@2x.png\\\" alt=\\\"TinyMCE\\\" width=\\\"77\\\" height=\\\"70\\\" /></p>\\r\\n<p style=\\\"text-align: center; color: #666666; font-size: 15px; font-family: avenir;\\\">This demo includes our most popular Premium Plugins:&nbsp;<a href=\\\"powerpaste\\\">PowerPaste</a>,&nbsp;<a href=\\\"enhanced-media-embed/\\\">Enhanced Media Embed</a>,&nbsp;<a href=\\\"advanced-code-editor/\\\">Advanced Code Editor</a>,&nbsp;<a href=\\\"link-checker/\\\">Link Checker</a>,&nbsp;<a href=\\\"accessibility-checker\\\">Accessibility Checker</a>,&nbsp;<a href=\\\"spell-checker-pro\\\">Spell Checker Pro</a>&nbsp;&amp;&nbsp;<a href=\\\"http://www.moxiemanager.com/\\\">MoxieManager</a>.</p>\\r\\n<p style=\\\"text-align: center; color: #666666; font-size: 15px; font-family: avenir;\\\">TinyMCE is the world\\\'s #1 web-based HTML WYSIWYG editor control.</p>\\r\\n<p style=\\\"text-align: center; color: #666666; font-size: 15px; font-family: avenir;\\\">Used on more than 100 million websites and with upward of 70% market share*,&nbsp;<br />TinyMCE is the first and only choice for your next project.</p>\\r\\n<p style=\\\"text-align: center; color: #666666; font-size: 15px; font-family: avenir;\\\"><em>TinyMCE enables you to convert HTML textarea fields or other HTML elements to editor instances.</em><br />* Market share stats, Wappalyzer, 2017.</p>\\r\\n<p>&nbsp;</p>\\r\\n<p>&nbsp;</p>', '35000', '6000000', '2', 'Graduate', '2017-09-28 13:19:19'),
+(5, 1, 'Job Post 5', '<p>&nbsp;</p>\\r\\n<p style=\\\"text-align: center; font-size: 15px;\\\"><img src=\\\"images/glyph-tinymce@2x.png\\\" alt=\\\"TinyMCE\\\" width=\\\"77\\\" height=\\\"70\\\" /></p>\\r\\n<p style=\\\"text-align: center; color: #666666; font-size: 15px; font-family: avenir;\\\">This demo includes our most popular Premium Plugins:&nbsp;<a href=\\\"powerpaste\\\">PowerPaste</a>,&nbsp;<a href=\\\"enhanced-media-embed/\\\">Enhanced Media Embed</a>,&nbsp;<a href=\\\"advanced-code-editor/\\\">Advanced Code Editor</a>,&nbsp;<a href=\\\"link-checker/\\\">Link Checker</a>,&nbsp;<a href=\\\"accessibility-checker\\\">Accessibility Checker</a>,&nbsp;<a href=\\\"spell-checker-pro\\\">Spell Checker Pro</a>&nbsp;&amp;&nbsp;<a href=\\\"http://www.moxiemanager.com/\\\">MoxieManager</a>.</p>\\r\\n<p style=\\\"text-align: center; color: #666666; font-size: 15px; font-family: avenir;\\\">TinyMCE is the world\\\'s #1 web-based HTML WYSIWYG editor control.</p>\\r\\n<p style=\\\"text-align: center; color: #666666; font-size: 15px; font-family: avenir;\\\">Used on more than 100 million websites and with upward of 70% market share*,&nbsp;<br />TinyMCE is the first and only choice for your next project.</p>\\r\\n<p style=\\\"text-align: center; color: #666666; font-size: 15px; font-family: avenir;\\\"><em>TinyMCE enables you to convert HTML textarea fields or other HTML elements to editor instances.</em><br />* Market share stats, Wappalyzer, 2017.</p>\\r\\n<p>&nbsp;</p>\\r\\n<p>&nbsp;</p>', '35000', '6000000', '2', 'Graduate', '2017-09-28 13:19:19'),
+(6, 1, 'Job Post 6', '<p>&nbsp;</p>\\r\\n<p style=\\\"text-align: center; font-size: 15px;\\\"><img src=\\\"images/glyph-tinymce@2x.png\\\" alt=\\\"TinyMCE\\\" width=\\\"77\\\" height=\\\"70\\\" /></p>\\r\\n<p style=\\\"text-align: center; color: #666666; font-size: 15px; font-family: avenir;\\\">This demo includes our most popular Premium Plugins:&nbsp;<a href=\\\"powerpaste\\\">PowerPaste</a>,&nbsp;<a href=\\\"enhanced-media-embed/\\\">Enhanced Media Embed</a>,&nbsp;<a href=\\\"advanced-code-editor/\\\">Advanced Code Editor</a>,&nbsp;<a href=\\\"link-checker/\\\">Link Checker</a>,&nbsp;<a href=\\\"accessibility-checker\\\">Accessibility Checker</a>,&nbsp;<a href=\\\"spell-checker-pro\\\">Spell Checker Pro</a>&nbsp;&amp;&nbsp;<a href=\\\"http://www.moxiemanager.com/\\\">MoxieManager</a>.</p>\\r\\n<p style=\\\"text-align: center; color: #666666; font-size: 15px; font-family: avenir;\\\">TinyMCE is the world\\\'s #1 web-based HTML WYSIWYG editor control.</p>\\r\\n<p style=\\\"text-align: center; color: #666666; font-size: 15px; font-family: avenir;\\\">Used on more than 100 million websites and with upward of 70% market share*,&nbsp;<br />TinyMCE is the first and only choice for your next project.</p>\\r\\n<p style=\\\"text-align: center; color: #666666; font-size: 15px; font-family: avenir;\\\"><em>TinyMCE enables you to convert HTML textarea fields or other HTML elements to editor instances.</em><br />* Market share stats, Wappalyzer, 2017.</p>\\r\\n<p>&nbsp;</p>\\r\\n<p>&nbsp;</p>', '35000', '6000000', '2', 'Graduate', '2017-09-28 13:19:19'),
+(7, 1, 'Job Post 7', '<p>&nbsp;</p>\\r\\n<p style=\\\"text-align: center; font-size: 15px;\\\"><img src=\\\"images/glyph-tinymce@2x.png\\\" alt=\\\"TinyMCE\\\" width=\\\"77\\\" height=\\\"70\\\" /></p>\\r\\n<p style=\\\"text-align: center; color: #666666; font-size: 15px; font-family: avenir;\\\">This demo includes our most popular Premium Plugins:&nbsp;<a href=\\\"powerpaste\\\">PowerPaste</a>,&nbsp;<a href=\\\"enhanced-media-embed/\\\">Enhanced Media Embed</a>,&nbsp;<a href=\\\"advanced-code-editor/\\\">Advanced Code Editor</a>,&nbsp;<a href=\\\"link-checker/\\\">Link Checker</a>,&nbsp;<a href=\\\"accessibility-checker\\\">Accessibility Checker</a>,&nbsp;<a href=\\\"spell-checker-pro\\\">Spell Checker Pro</a>&nbsp;&amp;&nbsp;<a href=\\\"http://www.moxiemanager.com/\\\">MoxieManager</a>.</p>\\r\\n<p style=\\\"text-align: center; color: #666666; font-size: 15px; font-family: avenir;\\\">TinyMCE is the world\\\'s #1 web-based HTML WYSIWYG editor control.</p>\\r\\n<p style=\\\"text-align: center; color: #666666; font-size: 15px; font-family: avenir;\\\">Used on more than 100 million websites and with upward of 70% market share*,&nbsp;<br />TinyMCE is the first and only choice for your next project.</p>\\r\\n<p style=\\\"text-align: center; color: #666666; font-size: 15px; font-family: avenir;\\\"><em>TinyMCE enables you to convert HTML textarea fields or other HTML elements to editor instances.</em><br />* Market share stats, Wappalyzer, 2017.</p>\\r\\n<p>&nbsp;</p>\\r\\n<p>&nbsp;</p>', '35000', '6000000', '2', 'Graduate', '2017-09-28 13:19:19'),
+(8, 1, 'Job Post 8', '<p>&nbsp;</p>\\r\\n<p style=\\\"text-align: center; font-size: 15px;\\\"><img src=\\\"images/glyph-tinymce@2x.png\\\" alt=\\\"TinyMCE\\\" width=\\\"77\\\" height=\\\"70\\\" /></p>\\r\\n<p style=\\\"text-align: center; color: #666666; font-size: 15px; font-family: avenir;\\\">This demo includes our most popular Premium Plugins:&nbsp;<a href=\\\"powerpaste\\\">PowerPaste</a>,&nbsp;<a href=\\\"enhanced-media-embed/\\\">Enhanced Media Embed</a>,&nbsp;<a href=\\\"advanced-code-editor/\\\">Advanced Code Editor</a>,&nbsp;<a href=\\\"link-checker/\\\">Link Checker</a>,&nbsp;<a href=\\\"accessibility-checker\\\">Accessibility Checker</a>,&nbsp;<a href=\\\"spell-checker-pro\\\">Spell Checker Pro</a>&nbsp;&amp;&nbsp;<a href=\\\"http://www.moxiemanager.com/\\\">MoxieManager</a>.</p>\\r\\n<p style=\\\"text-align: center; color: #666666; font-size: 15px; font-family: avenir;\\\">TinyMCE is the world\\\'s #1 web-based HTML WYSIWYG editor control.</p>\\r\\n<p style=\\\"text-align: center; color: #666666; font-size: 15px; font-family: avenir;\\\">Used on more than 100 million websites and with upward of 70% market share*,&nbsp;<br />TinyMCE is the first and only choice for your next project.</p>\\r\\n<p style=\\\"text-align: center; color: #666666; font-size: 15px; font-family: avenir;\\\"><em>TinyMCE enables you to convert HTML textarea fields or other HTML elements to editor instances.</em><br />* Market share stats, Wappalyzer, 2017.</p>\\r\\n<p>&nbsp;</p>\\r\\n<p>&nbsp;</p>', '35000', '6000000', '2', 'Graduate', '2017-09-28 13:19:19');
 
 -- --------------------------------------------------------
 
@@ -52916,6 +52945,13 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id_user`, `firstname`, `lastname`, `email`, `password`, `address`, `city`, `state`, `contactno`, `qualification`, `stream`, `passingyear`, `dob`, `age`, `designation`, `resume`, `hash`, `active`, `aboutme`, `skills`) VALUES
+(1, 'Hello', 'World', 'test@test.com', 'ZTM4OGYwMmY3NTBlNjVlYmJhOTVhYjk0OTNjZGEwMWU=', 'Ipsum ut deserunt reprehenderit mollitia Nam et dolore aute asperiores tempor numquam ipsa minus ut aute amet', 'ABC', 'XYZ', '1234567890', 'ABC', 'XYZ', '1984-05-28', '2005-01-13', '12', 'Ipsa illo voluptates vel maiores enim earum sunt', '59ccdd17a18df.pdf', 'e62f5f796f08347890abe4f8ecf38409', 1, 'Dolores ut quis ut mollit', 'PHP, Javascript, Web Development');
+
+--
 -- Indexes for dumped tables
 --
 
@@ -52994,7 +53030,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `apply_job_post`
 --
 ALTER TABLE `apply_job_post`
-  MODIFY `id_apply` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_apply` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `cities`
 --
@@ -53004,7 +53040,7 @@ ALTER TABLE `cities`
 -- AUTO_INCREMENT for table `company`
 --
 ALTER TABLE `company`
-  MODIFY `id_company` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_company` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `countries`
 --
@@ -53014,7 +53050,7 @@ ALTER TABLE `countries`
 -- AUTO_INCREMENT for table `job_post`
 --
 ALTER TABLE `job_post`
-  MODIFY `id_jobpost` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_jobpost` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `mailbox`
 --
@@ -53034,7 +53070,7 @@ ALTER TABLE `states`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT;COMMIT;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

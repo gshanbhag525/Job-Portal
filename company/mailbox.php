@@ -1,3 +1,16 @@
+<?php
+
+//To Handle Session Variables on This Page
+session_start();
+
+//If user Not logged in then redirect them back to homepage. 
+if(empty($_SESSION['id_company'])) {
+  header("Location: ../index.php");
+  exit();
+}
+
+require_once("../db.php");
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,6 +30,8 @@
   <link rel="stylesheet" href="../css/_all-skins.min.css">
   <!-- Custom -->
   <link rel="stylesheet" href="../css/custom.css">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -46,9 +61,7 @@
       <!-- Navbar Right Menu -->
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
-          <li>
-            <a href="../jobs.php">Jobs</a>
-          </li>         
+                  
         </ul>
       </div>
     </nav>
@@ -63,61 +76,81 @@
           <div class="col-md-3">
             <div class="box box-solid">
               <div class="box-header with-border">
-                <h3 class="box-title">Welcome <b>Admin</b></h3>
+                <h3 class="box-title">Welcome <b><?php echo $_SESSION['name']; ?></b></h3>
               </div>
               <div class="box-body no-padding">
                 <ul class="nav nav-pills nav-stacked">
-                  <li class="active"><a href="dashboard.php"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-                  <li><a href="active-jobs.php"><i class="fa fa-briefcase"></i> Active Jobs</a></li>
-                  <li><a href="applications.php"><i class="fa fa-address-card-o"></i> Applications</a></li>
-                  <li><a href="candidates.php"><i class="fa fa-address-book"></i> Candidates</a></li>
-                  <li><a href="companies.php"><i class="fa fa-building"></i> Companies</a></li>
+                  <li><a href="index.php"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+                  <li><a href="edit-company.php"><i class="fa fa-tv"></i> My Company</a></li>
+                  <li><a href="create-job-post.php"><i class="fa fa-file-o"></i> Create Job Post</a></li>
+                  <li><a href="my-job-post.php"><i class="fa fa-file-o"></i> My Job Post</a></li>
+                  <li><a href="job-applications.php"><i class="fa fa-file-o"></i> Job Application</a></li>
+                  <li class="active"><a href="mailbox.php"><i class="fa fa-envelope"></i> Mailbox</a></li>
+                  <li><a href="settings.php"><i class="fa fa-gear"></i> Settings</a></li>
+                  <li><a href="resume-database.php"><i class="fa fa-user"></i> Resume Database</a></li>
                   <li><a href="../logout.php"><i class="fa fa-arrow-circle-o-right"></i> Logout</a></li>
                 </ul>
               </div>
             </div>
           </div>
           <div class="col-md-9 bg-white padding-2">
-
-            <h3>Job Portal Statistics</h3>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="info-box bg-c-yellow">
-                  <span class="info-box-icon bg-red"><i class="ion ion-briefcase"></i></span>
-                  <div class="info-box-content">
-                    <span class="info-box-text">Company Registered</span>
-                    <span class="info-box-number">20</span>
-                  </div>
-                </div>                
+          <section class="content">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title" style="margin-bottom: 20px;">Mailbox</h3>
+              <div class="pull-right">
+                <a href="create-mail.php" class="btn btn-warning btn-flat"><i class="fa fa-envelope"></i> Create</a>
               </div>
-              <div class="col-md-6">
-                <div class="info-box bg-c-yellow">
-                  <span class="info-box-icon bg-green"><i class="ion ion-person-stalker"></i></span>
-                  <div class="info-box-content">
-                    <span class="info-box-text">Registered Candidates</span>
-                    <span class="info-box-number">50</span>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="info-box bg-c-yellow">
-                  <span class="info-box-icon bg-aqua"><i class="ion ion-person-add"></i></span>
-                  <div class="info-box-content">
-                    <span class="info-box-text">Total Jobs</span>
-                    <span class="info-box-number">50</span>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="info-box bg-c-yellow">
-                  <span class="info-box-icon bg-yellow"><i class="ion ion-ios-browsers"></i></span>
-                  <div class="info-box-content">
-                    <span class="info-box-text">Total Applications</span>
-                    <span class="info-box-number">50</span>
-                  </div>
-                </div>
-              </div>
+              <!-- /.box-tools -->
             </div>
+            <!-- /.box-header -->
+            <div class="box-body no-padding">
+              <div class="table-responsive mailbox-messages">
+                <table id="example1" class="table table-hover table-striped">
+                  <thead>
+                    <tr>
+                      <th>Subject</th>
+                      <th>Date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  <?php
+                    $sql = "SELECT * FROM mailbox WHERE id_fromuser='$_SESSION[id_company]' OR id_touser='$_SESSION[id_company]'";
+                    $result = $conn->query($sql);
+                    if($result->num_rows >  0 ){
+                        while($row = $result->fetch_assoc()) {
+                  ?>
+                  <tr>
+                    <td class="mailbox-subject"><a href="read-mail.php?id_mail=<?php echo $row['id_mailbox']; ?>"><?php echo $row['subject']; ?></a></td>
+                    <td class="mailbox-date"><?php echo date("d-M-Y h:i a", strtotime($row['createdAt'])); ?></td>
+                  </tr>
+                  <?php
+                      }
+                    }
+                  ?>
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <th>Subject</th>
+                      <th>Date</th>
+                    </tr>
+                  </tfoot>
+                </table>
+                <!-- /.table -->
+              </div>
+              <!-- /.mail-box-messages -->
+            </div>
+            <!-- /.box-body -->
+            
+          </div>
+          <!-- /. box -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </section>
 
           </div>
         </div>
@@ -136,10 +169,7 @@
     </div>
   </footer>
 
-  <!-- /.control-sidebar -->
-  <!-- Add the sidebar's background. This div must be placed
-       immediately after the control sidebar -->
-  <div class="control-sidebar-bg"></div>
+
 
 </div>
 <!-- ./wrapper -->
@@ -150,5 +180,13 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <!-- AdminLTE App -->
 <script src="../js/adminlte.min.js"></script>
+<!-- DataTables -->
+<script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+<script>
+  $(function () {
+    $('#example1').DataTable();
+  })
+</script>
+
 </body>
 </html>

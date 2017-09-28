@@ -1,3 +1,26 @@
+<?php
+
+//To Handle Session Variables on This Page
+session_start();
+
+//If user Not logged in then redirect them back to homepage. 
+//This is required if user tries to manually enter view-job-post.php in URL.
+if(empty($_SESSION['id_company'])) {
+  header("Location: ../index.php");
+  exit();
+}
+
+//Including Database Connection From db.php file to avoid rewriting in all files  
+require_once("../db.php");
+
+$sql = "SELECT * FROM apply_job_post WHERE id_company='$_SESSION[id_company]' AND id_user='$_GET[id]'";
+$result = $conn->query($sql);
+if($result->num_rows == 0) 
+{
+  header("Location: index.php");
+  exit();
+}
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,11 +35,14 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../css/AdminLTE.min.css">
   <link rel="stylesheet" href="../css/_all-skins.min.css">
   <!-- Custom -->
   <link rel="stylesheet" href="../css/custom.css">
+  
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -46,9 +72,7 @@
       <!-- Navbar Right Menu -->
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
-          <li>
-            <a href="../jobs.php">Jobs</a>
-          </li>         
+                  
         </ul>
       </div>
     </nav>
@@ -63,66 +87,81 @@
           <div class="col-md-3">
             <div class="box box-solid">
               <div class="box-header with-border">
-                <h3 class="box-title">Welcome <b>Admin</b></h3>
+                <h3 class="box-title">Welcome <b><?php echo $_SESSION['name']; ?></b></h3>
               </div>
               <div class="box-body no-padding">
                 <ul class="nav nav-pills nav-stacked">
-                  <li class="active"><a href="dashboard.php"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-                  <li><a href="active-jobs.php"><i class="fa fa-briefcase"></i> Active Jobs</a></li>
-                  <li><a href="applications.php"><i class="fa fa-address-card-o"></i> Applications</a></li>
-                  <li><a href="candidates.php"><i class="fa fa-address-book"></i> Candidates</a></li>
-                  <li><a href="companies.php"><i class="fa fa-building"></i> Companies</a></li>
+                  <li><a href="index.php"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+                  <li><a href="edit-company.php"><i class="fa fa-tv"></i> My Company</a></li>
+                  <li><a href="create-job-post.php"><i class="fa fa-file-o"></i> Create Job Post</a></li>
+                  <li class="active"><a href="my-job-post.php"><i class="fa fa-file-o"></i> My Job Post</a></li>
+                  <li><a href="job-applications.php"><i class="fa fa-file-o"></i> Job Application</a></li>
+                  <li><a href="mailbox.php"><i class="fa fa-envelope"></i> Mailbox</a></li>
+                  <li><a href="settings.php"><i class="fa fa-gear"></i> Settings</a></li>
+                  <li><a href="resume-database.php"><i class="fa fa-user"></i> Resume Database</a></li>
                   <li><a href="../logout.php"><i class="fa fa-arrow-circle-o-right"></i> Logout</a></li>
                 </ul>
               </div>
             </div>
           </div>
           <div class="col-md-9 bg-white padding-2">
+            <div class="row margin-top-20">
+              <div class="col-md-12">
+              <?php
+               $sql = "SELECT * FROM users WHERE id_user='$_GET[id]'";
+                $result = $conn->query($sql);
 
-            <h3>Job Portal Statistics</h3>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="info-box bg-c-yellow">
-                  <span class="info-box-icon bg-red"><i class="ion ion-briefcase"></i></span>
-                  <div class="info-box-content">
-                    <span class="info-box-text">Company Registered</span>
-                    <span class="info-box-number">20</span>
-                  </div>
-                </div>                
-              </div>
-              <div class="col-md-6">
-                <div class="info-box bg-c-yellow">
-                  <span class="info-box-icon bg-green"><i class="ion ion-person-stalker"></i></span>
-                  <div class="info-box-content">
-                    <span class="info-box-text">Registered Candidates</span>
-                    <span class="info-box-number">50</span>
+                //If Job Post exists then display details of post
+                if($result->num_rows > 0) {
+                  while($row = $result->fetch_assoc()) 
+                  {
+                ?>
+                <div class="pull-left">
+                  <h2><b><i><?php echo $row['firstname']. ' '.$row['lastname']; ?></i></b></h2>
+                </div>
+                <div class="pull-right">
+                  <a href="job-applications.php" class="btn btn-default btn-lg btn-flat margin-top-20"><i class="fa fa-arrow-circle-left"></i> Back</a>
+                </div>
+                <div class="clearfix"></div>
+                <hr>
+                <div>
+                  <?php
+                    echo 'Email: '.$row['email'];
+                    echo '<br>';
+                    echo 'City: '.$row['city'];
+                    echo '<br>';
+                    if($row['resume'] != "") {
+                      echo '<a href="../uploads/resume/'.$row['resume'].'" class="btn btn-info" download="Resume">Download Resume</a>';
+                    }
+                    echo '<br>';
+                    echo '<br>';
+                    echo '<br>';
+                    echo '<br>';
+                  ?>
+                  <div class="row">
+                    <div class="col-md-3 pull-left">
+                      <a href="under-review.php?id=<?php echo $row['id_user']; ?>&id_jobpost=<?php echo $_GET['id_jobpost']; ?>" class="btn btn-success">Mark Under Review</a>
+                    </div>
+                    <div class="col-md-3 pull-right">
+                      <a href="reject.php?id=<?php echo $row['id_user']; ?>&id_jobpost=<?php echo $_GET['id_jobpost']; ?>" class="btn btn-danger">Reject Application</a>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="col-md-6">
-                <div class="info-box bg-c-yellow">
-                  <span class="info-box-icon bg-aqua"><i class="ion ion-person-add"></i></span>
-                  <div class="info-box-content">
-                    <span class="info-box-text">Total Jobs</span>
-                    <span class="info-box-number">50</span>
-                  </div>
+
+                <div>
                 </div>
-              </div>
-              <div class="col-md-6">
-                <div class="info-box bg-c-yellow">
-                  <span class="info-box-icon bg-yellow"><i class="ion ion-ios-browsers"></i></span>
-                  <div class="info-box-content">
-                    <span class="info-box-text">Total Applications</span>
-                    <span class="info-box-number">50</span>
-                  </div>
-                </div>
+                <?php
+                  }
+                }
+                ?>
               </div>
             </div>
-
+            
           </div>
         </div>
       </div>
     </section>
+
 
     
 
@@ -148,7 +187,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!-- Bootstrap 3.3.7 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!-- DataTables -->
+<script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
 <!-- AdminLTE App -->
 <script src="../js/adminlte.min.js"></script>
+
 </body>
 </html>

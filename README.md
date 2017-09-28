@@ -50,6 +50,8 @@ Job Portal (PHP) - Part 22 - Company Viewing & Marking Job Applications (Under R
 
 Job Portal (PHP) - Part 23 - Company Candidate Interaction (Mailbox System) - https://youtu.be/TcouLN03LBY
 
+Job Portal (PHP) - Part 24 - Bug Fix & Finishing Company & User Dashboard - https://youtu.be/GirgTCEilg8
+
 
 # Contact
 Feel free to contact me through my website http://learningfromscratch.online/ 
