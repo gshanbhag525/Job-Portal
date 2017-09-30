@@ -9,7 +9,7 @@ if(empty($_SESSION['id_user'])) {
 }
 
 //Including Database Connection From db.php file to avoid rewriting in all files
-require_once("../db.php");
+require_once("db.php");
 
 //If user Actually clicked apply button
 if(isset($_GET)) {

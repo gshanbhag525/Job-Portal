@@ -5,7 +5,7 @@ session_start();
 
 
 //Including Database Connection From db.php file to avoid rewriting in all files
-require_once("../db.php");
+require_once("db.php");
 ?>
 <!DOCTYPE html>
 <html>
