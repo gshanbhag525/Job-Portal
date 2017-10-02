@@ -1,3 +1,13 @@
+<?php
+
+session_start();
+
+if(isset($_SESSION['id_admin'])) {
+  header("Location: dashboard.php");
+  exit();
+}
+
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,19 +40,19 @@
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-    <a href="index2.html"><b>Job</b> Portal</a>
+    <a href="../index.php"><b>Job</b> Portal</a>
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
     <p class="login-box-msg">Admin Login</p>
 
-    <form action="index2.html" method="post">
+    <form action="checklogin.php" method="post">
       <div class="form-group has-feedback">
-        <input type="email" class="form-control" placeholder="Email">
+        <input type="text" class="form-control" name="username" placeholder="Username">
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        <input type="password" class="form-control" placeholder="Password">
+        <input type="password" class="form-control" name="password" placeholder="Password">
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
       <div class="row">
@@ -52,11 +62,23 @@
         </div>
         <!-- /.col -->
       </div>
+      <?php 
+//If User Failed To log in then show error message.
+if(isset($_SESSION['loginError'])) {
+  ?>
+  <div>
+    <p class="text-center">Invalid Email/Password! Try Again!</p>
+  </div>
+<?php
+ unset($_SESSION['loginError']); }
+?>
+
     </form>
   </div>
   <!-- /.login-box-body -->
 </div>
 <!-- /.login-box -->
+
 
 <!-- jQuery 3 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -66,14 +88,6 @@
 <script src="../js/adminlte.min.js"></script>
 <!-- iCheck -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/iCheck/1.0.2/icheck.min.js"></script>
-<script>
-  $(function () {
-    $('input').iCheck({
-      checkboxClass: 'icheckbox_square-blue',
-      radioClass: 'iradio_square-blue',
-      increaseArea: '20%' // optional
-    });
-  });
-</script>
+
 </body>
 </html>

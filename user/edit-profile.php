@@ -91,7 +91,7 @@ require_once("../db.php");
           </div>
           <div class="col-md-9 bg-white padding-2">
             <h2><i>Edit Profile</i></h2>
-            <form action="update-profile.php" method="post">
+            <form action="update-profile.php" method="post" enctype="multipart/form-data">
             <?php
             //Sql to get logged in user details.
             $sql = "SELECT * FROM users WHERE id_user='$_SESSION[id_user]'";
@@ -152,6 +152,10 @@ require_once("../db.php");
                     <label>About Me</label>
                     <textarea class="form-control input-lg" rows="4" name="aboutme"><?php echo $row['aboutme']; ?></textarea>
                   </div>
+                  <div class="form-group">
+                    <label>Upload/Change Resume</label>
+                    <input type="file" name="resume" class="btn btn-default">
+                  </div>
                 </div>
               </div>
               <?php
@@ -159,6 +163,13 @@ require_once("../db.php");
               }
             ?>   
             </form>
+            <?php if(isset($_SESSION['uploadError'])) { ?>
+            <div class="row">
+              <div class="col-md-12 text-center">
+                <?php echo $_SESSION['uploadError']; ?>
+              </div>
+            </div>
+            <?php } ?>
           </div>
         </div>
       </div>

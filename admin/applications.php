@@ -1,3 +1,14 @@
+<?php
+
+session_start();
+
+if(empty($_SESSION['id_admin'])) {
+  header("Location: index.php");
+  exit();
+}
+
+require_once("../db.php");
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -48,9 +59,7 @@
       <!-- Navbar Right Menu -->
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
-          <li>
-            <a href="../jobs.php">Jobs</a>
-          </li>          
+                   
         </ul>
       </div>
     </nav>
@@ -71,8 +80,7 @@
                 <ul class="nav nav-pills nav-stacked">
                   <li><a href="dashboard.php"><i class="fa fa-dashboard"></i> Dashboard</a></li>
                   <li><a href="active-jobs.php"><i class="fa fa-briefcase"></i> Active Jobs</a></li>
-                  <li class="active"><a href="applications.php"><i class="fa fa-address-card-o"></i> Applications</a></li>
-                  <li><a href="candidates.php"><i class="fa fa-address-book"></i> Candidates</a></li>
+                  <li class="active"><a href="applications.php"><i class="fa fa-address-card-o"></i> Candidates</a></li>
                   <li><a href="companies.php"><i class="fa fa-building"></i> Companies</a></li>
                   <li><a href="../logout.php"><i class="fa fa-arrow-circle-o-right"></i> Logout</a></li>
                 </ul>
@@ -81,356 +89,56 @@
           </div>
           <div class="col-md-9 bg-white padding-2">
 
-            <h3>Application Database</h3>
+            <h3>Candidates Database</h3>
             <div class="row margin-top-20">
               <div class="col-md-12">
                 <div class="box-body table-responsive no-padding">
                   <table id="example2" class="table table-hover">
                     <thead>
                       <th>Candidate</th>
-                      <th>Occupation</th>
+                      <th>Highest Qualification</th>
                       <th>Skills</th>
-                      <th>Location</th>
-                      <th>Resume</th>
-                      <th>About</th>
+                      <th>City</th>
+                      <th>State</th>
+                      <th>Download Resume</th>
                     </thead>
                     <tbody>
+                      <?php
+                       $sql = "SELECT * FROM users";
+                            $result = $conn->query($sql);
+
+                            if($result->num_rows > 0) {
+                              while($row = $result->fetch_assoc()) 
+                              {     
+
+                                $skills = $row['skills'];
+                                $skills = explode(',', $skills);
+                      ?>
                       <tr>
-                        <td>John Doe</td>
-                        <td>PHP Developer</td>
-                        <td><span class="label label-success">PHP</span> <span class="label label-success">HTML</span> <span class="label label-success">CSS</span></td>
-                        <td>India</td>
-                        <td><i class="fa fa-file-pdf-o"></i></td>
-                        <td><a href="" data-toggle="modal" data-target="#modal-success"><i class="fa fa-address-card-o"></i></a></td>
+                        <td><?php echo $row['firstname'].' '.$row['lastname']; ?></td>
+                        <td><?php echo $row['qualification']; ?></td>
+                        <td>
+                          <?php
+                          foreach ($skills as $value) {
+                            echo ' <span class="label label-success">'.$value.'</span>';
+                          }
+                          ?>
+                        </td>
+                        <td><?php echo $row['city']; ?></td>
+                        <td><?php echo $row['state']; ?></td>
+                        <?php if($row['resume'] != '') { ?>
+                        <td><a href="../uploads/resume/<?php echo $row['resume']; ?>" download="<?php echo $row['firstname'].' Resume'; ?>"><i class="fa fa-file-pdf-o"></i></a></td>
+                        <?php } else { ?>
+                        <td>No Resume Uploaded</td>
+                        <?php } ?>
                       </tr>
-                      <tr>
-                        <td>John Doe</td>
-                        <td>PHP Developer</td>
-                        <td><span class="label label-success">PHP</span> <span class="label label-success">HTML</span> <span class="label label-success">CSS</span></td>
-                        <td>India</td>
-                        <td><i class="fa fa-file-pdf-o"></i></td>
-                        <td><a href="" data-toggle="modal" data-target="#modal-success"><i class="fa fa-address-card-o"></i></a></td>
-                      </tr>
-                      <tr>
-                        <td>John Doe</td>
-                        <td>PHP Developer</td>
-                        <td><span class="label label-success">PHP</span> <span class="label label-success">HTML</span> <span class="label label-success">CSS</span></td>
-                        <td>India</td>
-                        <td><i class="fa fa-file-pdf-o"></i></td>
-                        <td><a href="" data-toggle="modal" data-target="#modal-success"><i class="fa fa-address-card-o"></i></a></td>
-                      </tr>
-                      <tr>
-                        <td>John Doe</td>
-                        <td>PHP Developer</td>
-                        <td><span class="label label-success">PHP</span> <span class="label label-success">HTML</span> <span class="label label-success">CSS</span></td>
-                        <td>India</td>
-                        <td><i class="fa fa-file-pdf-o"></i></td>
-                        <td><a href="" data-toggle="modal" data-target="#modal-success"><i class="fa fa-address-card-o"></i></a></td>
-                      </tr>
-                      <tr>
-                        <td>John Doe</td>
-                        <td>PHP Developer</td>
-                        <td><span class="label label-success">PHP</span> <span class="label label-success">HTML</span> <span class="label label-success">CSS</span></td>
-                        <td>India</td>
-                        <td><i class="fa fa-file-pdf-o"></i></td>
-                        <td><a href="" data-toggle="modal" data-target="#modal-success"><i class="fa fa-address-card-o"></i></a></td>
-                      </tr>
-                      <tr>
-                        <td>John Doe</td>
-                        <td>PHP Developer</td>
-                        <td><span class="label label-success">PHP</span> <span class="label label-success">HTML</span> <span class="label label-success">CSS</span></td>
-                        <td>India</td>
-                        <td><i class="fa fa-file-pdf-o"></i></td>
-                        <td><a href="" data-toggle="modal" data-target="#modal-success"><i class="fa fa-address-card-o"></i></a></td>
-                      </tr>
-                      <tr>
-                        <td>John Doe</td>
-                        <td>PHP Developer</td>
-                        <td><span class="label label-success">PHP</span> <span class="label label-success">HTML</span> <span class="label label-success">CSS</span></td>
-                        <td>India</td>
-                        <td><i class="fa fa-file-pdf-o"></i></td>
-                        <td><a href="" data-toggle="modal" data-target="#modal-success"><i class="fa fa-address-card-o"></i></a></td>
-                      </tr>
-                      <tr>
-                        <td>John Doe</td>
-                        <td>PHP Developer</td>
-                        <td><span class="label label-success">PHP</span> <span class="label label-success">HTML</span> <span class="label label-success">CSS</span></td>
-                        <td>India</td>
-                        <td><i class="fa fa-file-pdf-o"></i></td>
-                        <td><a href="" data-toggle="modal" data-target="#modal-success"><i class="fa fa-address-card-o"></i></a></td>
-                      </tr>
-                      <tr>
-                        <td>John Doe</td>
-                        <td>PHP Developer</td>
-                        <td><span class="label label-success">PHP</span> <span class="label label-success">HTML</span> <span class="label label-success">CSS</span></td>
-                        <td>India</td>
-                        <td><i class="fa fa-file-pdf-o"></i></td>
-                        <td><a href="" data-toggle="modal" data-target="#modal-success"><i class="fa fa-address-card-o"></i></a></td>
-                      </tr>
-                      <tr>
-                        <td>John Doe</td>
-                        <td>PHP Developer</td>
-                        <td><span class="label label-success">PHP</span> <span class="label label-success">HTML</span> <span class="label label-success">CSS</span></td>
-                        <td>India</td>
-                        <td><i class="fa fa-file-pdf-o"></i></td>
-                        <td><a href="" data-toggle="modal" data-target="#modal-success"><i class="fa fa-address-card-o"></i></a></td>
-                      </tr>
-                      <tr>
-                        <td>John Doe</td>
-                        <td>PHP Developer</td>
-                        <td><span class="label label-success">PHP</span> <span class="label label-success">HTML</span> <span class="label label-success">CSS</span></td>
-                        <td>India</td>
-                        <td><i class="fa fa-file-pdf-o"></i></td>
-                        <td><a href="" data-toggle="modal" data-target="#modal-success"><i class="fa fa-address-card-o"></i></a></td>
-                      </tr>
-                      <tr>
-                        <td>John Doe</td>
-                        <td>PHP Developer</td>
-                        <td><span class="label label-success">PHP</span> <span class="label label-success">HTML</span> <span class="label label-success">CSS</span></td>
-                        <td>India</td>
-                        <td><i class="fa fa-file-pdf-o"></i></td>
-                        <td><a href="" data-toggle="modal" data-target="#modal-success"><i class="fa fa-address-card-o"></i></a></td>
-                      </tr>
-                      <tr>
-                        <td>John Doe</td>
-                        <td>PHP Developer</td>
-                        <td><span class="label label-success">PHP</span> <span class="label label-success">HTML</span> <span class="label label-success">CSS</span></td>
-                        <td>India</td>
-                        <td><i class="fa fa-file-pdf-o"></i></td>
-                        <td><a href="" data-toggle="modal" data-target="#modal-success"><i class="fa fa-address-card-o"></i></a></td>
-                      </tr>
-                      <tr>
-                        <td>John Doe</td>
-                        <td>PHP Developer</td>
-                        <td><span class="label label-success">PHP</span> <span class="label label-success">HTML</span> <span class="label label-success">CSS</span></td>
-                        <td>India</td>
-                        <td><i class="fa fa-file-pdf-o"></i></td>
-                        <td><a href="" data-toggle="modal" data-target="#modal-success"><i class="fa fa-address-card-o"></i></a></td>
-                      </tr>
-                      <tr>
-                        <td>John Doe</td>
-                        <td>PHP Developer</td>
-                        <td><span class="label label-success">PHP</span> <span class="label label-success">HTML</span> <span class="label label-success">CSS</span></td>
-                        <td>India</td>
-                        <td><i class="fa fa-file-pdf-o"></i></td>
-                        <td><a href="" data-toggle="modal" data-target="#modal-success"><i class="fa fa-address-card-o"></i></a></td>
-                      </tr>
-                      <tr>
-                        <td>John Doe</td>
-                        <td>PHP Developer</td>
-                        <td><span class="label label-success">PHP</span> <span class="label label-success">HTML</span> <span class="label label-success">CSS</span></td>
-                        <td>India</td>
-                        <td><i class="fa fa-file-pdf-o"></i></td>
-                        <td><a href="" data-toggle="modal" data-target="#modal-success"><i class="fa fa-address-card-o"></i></a></td>
-                      </tr>
-                      <tr>
-                        <td>John Doe</td>
-                        <td>PHP Developer</td>
-                        <td><span class="label label-success">PHP</span> <span class="label label-success">HTML</span> <span class="label label-success">CSS</span></td>
-                        <td>India</td>
-                        <td><i class="fa fa-file-pdf-o"></i></td>
-                        <td><a href="" data-toggle="modal" data-target="#modal-success"><i class="fa fa-address-card-o"></i></a></td>
-                      </tr>
-                      <tr>
-                        <td>John Doe</td>
-                        <td>PHP Developer</td>
-                        <td><span class="label label-success">PHP</span> <span class="label label-success">HTML</span> <span class="label label-success">CSS</span></td>
-                        <td>India</td>
-                        <td><i class="fa fa-file-pdf-o"></i></td>
-                        <td><a href="" data-toggle="modal" data-target="#modal-success"><i class="fa fa-address-card-o"></i></a></td>
-                      </tr>
-                      <tr>
-                        <td>John Doe</td>
-                        <td>PHP Developer</td>
-                        <td><span class="label label-success">PHP</span> <span class="label label-success">HTML</span> <span class="label label-success">CSS</span></td>
-                        <td>India</td>
-                        <td><i class="fa fa-file-pdf-o"></i></td>
-                        <td><a href="" data-toggle="modal" data-target="#modal-success"><i class="fa fa-address-card-o"></i></a></td>
-                      </tr>
-                      <tr>
-                        <td>John Doe</td>
-                        <td>PHP Developer</td>
-                        <td><span class="label label-success">PHP</span> <span class="label label-success">HTML</span> <span class="label label-success">CSS</span></td>
-                        <td>India</td>
-                        <td><i class="fa fa-file-pdf-o"></i></td>
-                        <td><a href="" data-toggle="modal" data-target="#modal-success"><i class="fa fa-address-card-o"></i></a></td>
-                      </tr>
-                      <tr>
-                        <td>John Doe</td>
-                        <td>PHP Developer</td>
-                        <td><span class="label label-success">PHP</span> <span class="label label-success">HTML</span> <span class="label label-success">CSS</span></td>
-                        <td>India</td>
-                        <td><i class="fa fa-file-pdf-o"></i></td>
-                        <td><a href="" data-toggle="modal" data-target="#modal-success"><i class="fa fa-address-card-o"></i></a></td>
-                      </tr>
-                      <tr>
-                        <td>John Doe</td>
-                        <td>PHP Developer</td>
-                        <td><span class="label label-success">PHP</span> <span class="label label-success">HTML</span> <span class="label label-success">CSS</span></td>
-                        <td>India</td>
-                        <td><i class="fa fa-file-pdf-o"></i></td>
-                        <td><a href="" data-toggle="modal" data-target="#modal-success"><i class="fa fa-address-card-o"></i></a></td>
-                      </tr>
-                      <tr>
-                        <td>John Doe</td>
-                        <td>PHP Developer</td>
-                        <td><span class="label label-success">PHP</span> <span class="label label-success">HTML</span> <span class="label label-success">CSS</span></td>
-                        <td>India</td>
-                        <td><i class="fa fa-file-pdf-o"></i></td>
-                        <td><a href="" data-toggle="modal" data-target="#modal-success"><i class="fa fa-address-card-o"></i></a></td>
-                      </tr>
-                      <tr>
-                        <td>John Doe</td>
-                        <td>PHP Developer</td>
-                        <td><span class="label label-success">PHP</span> <span class="label label-success">HTML</span> <span class="label label-success">CSS</span></td>
-                        <td>India</td>
-                        <td><i class="fa fa-file-pdf-o"></i></td>
-                        <td><a href="" data-toggle="modal" data-target="#modal-success"><i class="fa fa-address-card-o"></i></a></td>
-                      </tr>
-                      <tr>
-                        <td>John Doe</td>
-                        <td>PHP Developer</td>
-                        <td><span class="label label-success">PHP</span> <span class="label label-success">HTML</span> <span class="label label-success">CSS</span></td>
-                        <td>India</td>
-                        <td><i class="fa fa-file-pdf-o"></i></td>
-                        <td><a href="" data-toggle="modal" data-target="#modal-success"><i class="fa fa-address-card-o"></i></a></td>
-                      </tr>
-                      <tr>
-                        <td>John Doe</td>
-                        <td>PHP Developer</td>
-                        <td><span class="label label-success">PHP</span> <span class="label label-success">HTML</span> <span class="label label-success">CSS</span></td>
-                        <td>India</td>
-                        <td><i class="fa fa-file-pdf-o"></i></td>
-                        <td><a href="" data-toggle="modal" data-target="#modal-success"><i class="fa fa-address-card-o"></i></a></td>
-                      </tr>
-                      <tr>
-                        <td>John Doe</td>
-                        <td>PHP Developer</td>
-                        <td><span class="label label-success">PHP</span> <span class="label label-success">HTML</span> <span class="label label-success">CSS</span></td>
-                        <td>India</td>
-                        <td><i class="fa fa-file-pdf-o"></i></td>
-                        <td><a href="" data-toggle="modal" data-target="#modal-success"><i class="fa fa-address-card-o"></i></a></td>
-                      </tr>
-                      <tr>
-                        <td>John Doe</td>
-                        <td>PHP Developer</td>
-                        <td><span class="label label-success">PHP</span> <span class="label label-success">HTML</span> <span class="label label-success">CSS</span></td>
-                        <td>India</td>
-                        <td><i class="fa fa-file-pdf-o"></i></td>
-                        <td><a href="" data-toggle="modal" data-target="#modal-success"><i class="fa fa-address-card-o"></i></a></td>
-                      </tr>
-                      <tr>
-                        <td>John Doe</td>
-                        <td>PHP Developer</td>
-                        <td><span class="label label-success">PHP</span> <span class="label label-success">HTML</span> <span class="label label-success">CSS</span></td>
-                        <td>India</td>
-                        <td><i class="fa fa-file-pdf-o"></i></td>
-                        <td><a href="" data-toggle="modal" data-target="#modal-success"><i class="fa fa-address-card-o"></i></a></td>
-                      </tr>
-                      <tr>
-                        <td>John Doe</td>
-                        <td>PHP Developer</td>
-                        <td><span class="label label-success">PHP</span> <span class="label label-success">HTML</span> <span class="label label-success">CSS</span></td>
-                        <td>India</td>
-                        <td><i class="fa fa-file-pdf-o"></i></td>
-                        <td><a href="" data-toggle="modal" data-target="#modal-success"><i class="fa fa-address-card-o"></i></a></td>
-                      </tr>
-                      <tr>
-                        <td>John Doe</td>
-                        <td>PHP Developer</td>
-                        <td><span class="label label-success">PHP</span> <span class="label label-success">HTML</span> <span class="label label-success">CSS</span></td>
-                        <td>India</td>
-                        <td><i class="fa fa-file-pdf-o"></i></td>
-                        <td><a href="" data-toggle="modal" data-target="#modal-success"><i class="fa fa-address-card-o"></i></a></td>
-                      </tr>
-                      <tr>
-                        <td>John Doe</td>
-                        <td>PHP Developer</td>
-                        <td><span class="label label-success">PHP</span> <span class="label label-success">HTML</span> <span class="label label-success">CSS</span></td>
-                        <td>India</td>
-                        <td><i class="fa fa-file-pdf-o"></i></td>
-                        <td><a href="" data-toggle="modal" data-target="#modal-success"><i class="fa fa-address-card-o"></i></a></td>
-                      </tr>
-                      <tr>
-                        <td>John Doe</td>
-                        <td>PHP Developer</td>
-                        <td><span class="label label-success">PHP</span> <span class="label label-success">HTML</span> <span class="label label-success">CSS</span></td>
-                        <td>India</td>
-                        <td><i class="fa fa-file-pdf-o"></i></td>
-                        <td><a href="" data-toggle="modal" data-target="#modal-success"><i class="fa fa-address-card-o"></i></a></td>
-                      </tr>
-                      <tr>
-                        <td>John Doe</td>
-                        <td>PHP Developer</td>
-                        <td><span class="label label-success">PHP</span> <span class="label label-success">HTML</span> <span class="label label-success">CSS</span></td>
-                        <td>India</td>
-                        <td><i class="fa fa-file-pdf-o"></i></td>
-                        <td><a href="" data-toggle="modal" data-target="#modal-success"><i class="fa fa-address-card-o"></i></a></td>
-                      </tr>
-                      <tr>
-                        <td>John Doe</td>
-                        <td>PHP Developer</td>
-                        <td><span class="label label-success">PHP</span> <span class="label label-success">HTML</span> <span class="label label-success">CSS</span></td>
-                        <td>India</td>
-                        <td><i class="fa fa-file-pdf-o"></i></td>
-                        <td><a href="" data-toggle="modal" data-target="#modal-success"><i class="fa fa-address-card-o"></i></a></td>
-                      </tr>
-                      <tr>
-                        <td>John Doe</td>
-                        <td>PHP Developer</td>
-                        <td><span class="label label-success">PHP</span> <span class="label label-success">HTML</span> <span class="label label-success">CSS</span></td>
-                        <td>India</td>
-                        <td><i class="fa fa-file-pdf-o"></i></td>
-                        <td><a href="" data-toggle="modal" data-target="#modal-success"><i class="fa fa-address-card-o"></i></a></td>
-                      </tr>
-                      <tr>
-                        <td>John Doe</td>
-                        <td>PHP Developer</td>
-                        <td><span class="label label-success">PHP</span> <span class="label label-success">HTML</span> <span class="label label-success">CSS</span></td>
-                        <td>India</td>
-                        <td><i class="fa fa-file-pdf-o"></i></td>
-                        <td><a href="" data-toggle="modal" data-target="#modal-success"><i class="fa fa-address-card-o"></i></a></td>
-                      </tr>
-                      <tr>
-                        <td>John Doe</td>
-                        <td>PHP Developer</td>
-                        <td><span class="label label-success">PHP</span> <span class="label label-success">HTML</span> <span class="label label-success">CSS</span></td>
-                        <td>India</td>
-                        <td><i class="fa fa-file-pdf-o"></i></td>
-                        <td><a href="" data-toggle="modal" data-target="#modal-success"><i class="fa fa-address-card-o"></i></a></td>
-                      </tr>
-                      <tr>
-                        <td>John Doe</td>
-                        <td>PHP Developer</td>
-                        <td><span class="label label-success">PHP</span> <span class="label label-success">HTML</span> <span class="label label-success">CSS</span></td>
-                        <td>India</td>
-                        <td><i class="fa fa-file-pdf-o"></i></td>
-                        <td><a href="" data-toggle="modal" data-target="#modal-success"><i class="fa fa-address-card-o"></i></a></td>
-                      </tr>
-                      <tr>
-                        <td>John Doe</td>
-                        <td>PHP Developer</td>
-                        <td><span class="label label-success">PHP</span> <span class="label label-success">HTML</span> <span class="label label-success">CSS</span></td>
-                        <td>India</td>
-                        <td><i class="fa fa-file-pdf-o"></i></td>
-                        <td><a href="" data-toggle="modal" data-target="#modal-success"><i class="fa fa-address-card-o"></i></a></td>
-                      </tr>
-                      <tr>
-                        <td>John Doe</td>
-                        <td>PHP Developer</td>
-                        <td><span class="label label-success">PHP</span> <span class="label label-success">HTML</span> <span class="label label-success">CSS</span></td>
-                        <td>India</td>
-                        <td><i class="fa fa-file-pdf-o"></i></td>
-                        <td><a href="" data-toggle="modal" data-target="#modal-success"><i class="fa fa-address-card-o"></i></a></td>
-                      </tr>
-                      <tr>
-                        <td>John Doe</td>
-                        <td>PHP Developer</td>
-                        <td><span class="label label-success">PHP</span> <span class="label label-success">HTML</span> <span class="label label-success">CSS</span></td>
-                        <td>India</td>
-                        <td><i class="fa fa-file-pdf-o"></i></td>
-                        <td><a href="" data-toggle="modal" data-target="#modal-success"><i class="fa fa-address-card-o"></i></a></td>
-                      </tr>                   
+
+                      <?php
+
+                        }
+                      }
+                      ?>
+                      
                     </tbody>                    
                   </table>
                 </div>
