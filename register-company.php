@@ -92,11 +92,11 @@ require_once("db.php");
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper" style="margin-left: 0px;">
 
-    <section class="content-header">
+   <section class="content-header">
       <div class="container">
         <div class="row latest-job margin-top-50 margin-bottom-20 bg-white">
           <h1 class="text-center margin-bottom-20">CREATE COMPANY PROFILE</h1>
-          <form method="post" action="addcompany.php" enctype="multipart/form-data">
+          <form method="post" id="registerCompanies" action="addcompany.php" enctype="multipart/form-data">
             <div class="col-md-6 latest-job ">
               <div class="form-group">
                 <input class="form-control input-lg" type="text" name="name" placeholder="Full Name" required>
@@ -146,6 +146,9 @@ require_once("db.php");
               <div class="form-group">
                 <input class="form-control input-lg" type="password" name="cpassword" placeholder="Confirm Password" required>
               </div>
+               <div id="passwordError" class="btn btn-flat btn-danger hide-me" >
+                    Password Mismatch!! 
+                  </div>
               <div class="form-group">
                 <input class="form-control input-lg" type="text" name="contactno" placeholder="Phone Number" minlength="10" maxlength="10" autocomplete="off" onkeypress="return validatePhone(event);" required>
               </div>
@@ -214,55 +217,64 @@ require_once("db.php");
 <script src="js/adminlte.min.js"></script>
 
 <script type="text/javascript">
-      function validatePhone(event) {
+  function validatePhone(event) {
 
-        //event.keycode will return unicode for characters and numbers like a, b, c, 5 etc.
-        //event.which will return key for mouse events and other events like ctrl alt etc. 
-        var key = window.event ? event.keyCode : event.which;
+    //event.keycode will return unicode for characters and numbers like a, b, c, 5 etc.
+    //event.which will return key for mouse events and other events like ctrl alt etc. 
+    var key = window.event ? event.keyCode : event.which;
 
-        if(event.keyCode == 8 || event.keyCode == 46 || event.keyCode == 37 || event.keyCode == 39) {
-          // 8 means Backspace
-          //46 means Delete
-          // 37 means left arrow
-          // 39 means right arrow
-          return true;
-        } else if( key < 48 || key > 57 ) {
-          // 48-57 is 0-9 numbers on your keyboard.
-          return false;
-        } else return true;
-      }
-    </script>
+    if(event.keyCode == 8 || event.keyCode == 46 || event.keyCode == 37 || event.keyCode == 39) {
+      // 8 means Backspace
+      //46 means Delete
+      // 37 means left arrow
+      // 39 means right arrow
+      return true;
+    } else if( key < 48 || key > 57 ) {
+      // 48-57 is 0-9 numbers on your keyboard.
+      return false;
+    } else return true;
+  }
+</script>
 
-    <script>
-      $("#country").on("change", function() {
-        var id = $(this).find(':selected').attr("data-id");
-        $("#state").find('option:not(:first)').remove();
-        if(id != '') {
-          $.post("state.php", {id: id}).done(function(data) {
-            $("#state").append(data);
-          });
-          $('#stateDiv').show();
-        } else {
-          $('#stateDiv').hide();
-          $('#cityDiv').hide();
-        }
+<script>
+  $("#country").on("change", function() {
+    var id = $(this).find(':selected').attr("data-id");
+    $("#state").find('option:not(:first)').remove();
+    if(id != '') {
+      $.post("state.php", {id: id}).done(function(data) {
+        $("#state").append(data);
       });
-    </script>
+      $('#stateDiv').show();
+    } else {
+      $('#stateDiv').hide();
+      $('#cityDiv').hide();
+    }
+  });
+</script>
 
-    <script>
-      $("#state").on("change", function() {
-        var id = $(this).find(':selected').attr("data-id");
-        $("#city").find('option:not(:first)').remove();
-        if(id != '') {
-          $.post("city.php", {id: id}).done(function(data) {
-            $("#city").append(data);
-          });
-          $('#cityDiv').show();
-        } else {
-          $('#cityDiv').hide();
-        }
+<script>
+  $("#state").on("change", function() {
+    var id = $(this).find(':selected').attr("data-id");
+    $("#city").find('option:not(:first)').remove();
+    if(id != '') {
+      $.post("city.php", {id: id}).done(function(data) {
+        $("#city").append(data);
       });
-    </script>
-
+      $('#cityDiv').show();
+    } else {
+      $('#cityDiv').hide();
+    }
+  });
+</script>
+<script>
+  $("#registerCompanies").on("submit", function(e) {
+    e.preventDefault();
+    if( $('#password').val() != $('#cpassword').val() ) {
+      $('#passwordError').show();
+    } else {
+      $(this).unbind('submit').submit();
+    }
+  });
+</script>
 </body>
 </html>

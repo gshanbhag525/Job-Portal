@@ -128,6 +128,10 @@ require_once("../db.php");
                             ?>
                             <a href="reject-company.php?id=<?php echo $row['id_company']; ?>">Reject</a> <a href="approve-company.php?id=<?php echo $row['id_company']; ?>">Approve</a>
                             <?php
+                          } else if ($row['active'] == '3') {
+                            ?>
+                              <a href="approve-company.php?id=<?php echo $row['id_company']; ?>">Reactivate</a>
+                            <?php
                           } else if($row['active'] == '0') {
                             echo "Rejected";
                           }

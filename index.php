@@ -241,7 +241,16 @@ require_once("db.php");
           <!-- small box -->
           <div class="small-box bg-aqua">
             <div class="inner">
-              <h3>1000</h3>
+             <?php
+                      $sql = "SELECT * FROM job_post";
+                      $result = $conn->query($sql);
+                      if($result->num_rows > 0) {
+                        $totalno = $result->num_rows;
+                      } else {
+                        $totalno = 0;
+                      }
+                    ?>
+              <h3><?php echo $totalno; ?></h3>
 
               <p>Job Offers</p>
             </div>
@@ -255,7 +264,16 @@ require_once("db.php");
           <!-- small box -->
           <div class="small-box bg-green">
             <div class="inner">
-              <h3>150</h3>
+                  <?php
+                      $sql = "SELECT * FROM company WHERE active='1'";
+                      $result = $conn->query($sql);
+                      if($result->num_rows > 0) {
+                        $totalno = $result->num_rows;
+                      } else {
+                        $totalno = 0;
+                      }
+                    ?>
+              <h3><?php echo $totalno; ?></h3>
 
               <p>Registered Company</p>
             </div>
@@ -269,7 +287,16 @@ require_once("db.php");
           <!-- small box -->
           <div class="small-box bg-yellow">
             <div class="inner">
-              <h3>5000+</h3>
+             <?php
+                      $sql = "SELECT * FROM users WHERE resume!=''";
+                      $result = $conn->query($sql);
+                      if($result->num_rows > 0) {
+                        $totalno = $result->num_rows;
+                      } else {
+                        $totalno = 0;
+                      }
+                    ?>
+              <h3><?php echo $totalno; ?></h3>
 
               <p>CV'S/Resume</p>
             </div>
@@ -283,7 +310,16 @@ require_once("db.php");
           <!-- small box -->
           <div class="small-box bg-red">
             <div class="inner">
-              <h3>15000+</h3>
+               <?php
+                      $sql = "SELECT * FROM users WHERE active='1'";
+                      $result = $conn->query($sql);
+                      if($result->num_rows > 0) {
+                        $totalno = $result->num_rows;
+                      } else {
+                        $totalno = 0;
+                      }
+                    ?>
+              <h3><?php echo $totalno; ?></h3>
 
               <p>Daily Users</p>
             </div>
@@ -309,19 +345,13 @@ require_once("db.php");
             <img src="img/browse.jpg" class="img-responsive">
           </div>
           <div class="col-md-6 about-text margin-bottom-20">
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing <p>The online job portal application allows job seekers and recruiters to connect.The application provides the ability for job seekers to create their accounts, upload their profile and resume, search for jobs, apply for jobs, view different job openings. The application provides the ability for companies to create their accounts, search candidates, create job postings, and view candidates applications.
+            </p>
+            <p>
+              This website is used to provide a platform for potential candidates to get their dream job and excel in yheir career.
+              This site can be used as a paving path for both companies and job-seekers for a better life .
+              
+            </p>
           </div>
         </div>
       </div>

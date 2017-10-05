@@ -96,7 +96,7 @@ if(isset($_SESSION['id_user']) || isset($_SESSION['id_company'])) {
       <div class="container">
         <div class="row latest-job margin-top-50 margin-bottom-20 bg-white">
           <h1 class="text-center margin-bottom-20">CREATE YOUR PROFILE</h1>
-          <form method="post" action="adduser.php" enctype="multipart/form-data">
+          <form method="post" id="registerCandidates" action="adduser.php" enctype="multipart/form-data">
             <div class="col-md-6 latest-job ">
               <div class="form-group">
                 <input class="form-control input-lg" type="text" id="fname" name="fname" placeholder="First Name *" required>
@@ -112,7 +112,7 @@ if(isset($_SESSION['id_user']) || isset($_SESSION['id_company'])) {
               </div>
               <div class="form-group">
                 <label>Date Of Birth</label>
-                <input class="form-control input-lg" type="date" id="dob" min="1960-01-01" max="2005-01-31" name="dob" placeholder="Date Of Birth">
+                <input class="form-control input-lg" type="date" id="dob" min="1960-01-01" max="1999-01-31" name="dob" placeholder="Date Of Birth">
               </div>
               <div class="form-group">
                 <input class="form-control input-lg" type="text" id="age" name="age" placeholder="Age" readonly>
@@ -158,8 +158,11 @@ if(isset($_SESSION['id_user']) || isset($_SESSION['id_company'])) {
               <div class="form-group">
                 <input class="form-control input-lg" type="password" id="cpassword" name="cpassword" placeholder="Confirm Password *" required>
               </div>
+              <div id="passwordError" class="btn btn-flat btn-danger hide-me" >
+                    Password Mismatch!! 
+                  </div>
               <div class="form-group">
-                <input class="form-control input-lg" type="text" id="contactno" name="contactno" placeholder="Phone Number">
+                <input class="form-control input-lg" type="text" id="contactno" name="contactno" minlength="10" maxlength="10" onkeypress="return validatePhone(event);" placeholder="Phone Number">
               </div>
               <div class="form-group">
                 <textarea class="form-control input-lg" rows="4" id="address" name="address" placeholder="Address"></textarea>
@@ -178,6 +181,7 @@ if(isset($_SESSION['id_user']) || isset($_SESSION['id_company'])) {
               </div>
 
               <div class="form-group">
+                <label style="color: red;">File Format PDF Only!</label>
                 <input type="file" name="resume" class="btn btn-flat btn-danger" required>
               </div>
             </div>
@@ -215,6 +219,26 @@ if(isset($_SESSION['id_user']) || isset($_SESSION['id_company'])) {
 <script src="js/adminlte.min.js"></script>
 
 <script type="text/javascript">
+      function validatePhone(event) {
+
+        //event.keycode will return unicode for characters and numbers like a, b, c, 5 etc.
+        //event.which will return key for mouse events and other events like ctrl alt etc. 
+        var key = window.event ? event.keyCode : event.which;
+
+        if(event.keyCode == 8 || event.keyCode == 46 || event.keyCode == 37 || event.keyCode == 39) {
+          // 8 means Backspace
+          //46 means Delete
+          // 37 means left arrow
+          // 39 means right arrow
+          return true;
+        } else if( key < 48 || key > 57 ) {
+          // 48-57 is 0-9 numbers on your keyboard.
+          return false;
+        } else return true;
+      }
+</script>
+
+<script type="text/javascript">
   $('#dob').on('change', function() {
     var today = new Date();
     var birthDate = new Date($(this).val());
@@ -226,6 +250,16 @@ if(isset($_SESSION['id_user']) || isset($_SESSION['id_company'])) {
     }
 
     $('#age').val(age);
+  });
+</script>
+<script>
+  $("#registerCandidates").on("submit", function(e) {
+    e.preventDefault();
+    if( $('#password').val() != $('#cpassword').val() ) {
+      $('#passwordError').show();
+    } else {
+      $(this).unbind('submit').submit();
+    }
   });
 </script>
 </body>
