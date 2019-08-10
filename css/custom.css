@@ -1,0 +1,88 @@
+.bg-main {
+	background: linear-gradient(0deg,rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url(../img/job-search.jpg) no-repeat center center fixed !important; 
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover !important;
+}
+.index-head {
+	padding: 10%;
+	color: #fff;
+	line-height: 150%;
+}
+
+.index-head > h1 {
+	font-size: 60px;
+}
+.logo-bg {
+	background-color: #00A65A !important;
+}
+
+.index-head > p {
+	font-size: 32px;
+}
+
+.index-head > p > a {
+	margin-top: 20px;
+}
+
+.latest-job {
+	line-height: 150%;
+}
+
+.latest-job > h1 {
+	font-size: 60px;
+}
+
+.candidate-img > img {
+	width: 350px;
+	height: 175px;
+}
+
+.company-img > img {
+	width: 350px;
+	height: 200px;
+}
+
+.about-text > p {
+	font-size: 17px;
+	line-height: 150%;
+}
+
+.margin-bottom-20 {
+	margin-bottom: 20px;
+}
+
+.margin-top-50 {
+	margin-top: 50px;
+}
+
+.margin-top-20 {
+	margin-top: 20px;
+}
+
+.padding-5 {
+	padding: 5%;
+}
+
+.padding-2 {
+	padding: 2%;
+}
+.bg-white {
+	background-color: #fff;
+}
+.margin-right-10 {
+	margin-right: 10px;
+}
+
+.bg-c-yellow {
+	background-color: #FFC;
+}
+
+.color-red {
+	color: red;
+}
+
+.hide-me {
+	display: none;
+}
