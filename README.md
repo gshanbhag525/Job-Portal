@@ -8,10 +8,10 @@ core php with bootstrap
 #### Home Page
 ![](screenshots/homepage.jpg)
 #### Companies can register on this portal as well as the candidates.
-![](screenshots/)
+![](screenshots/signup.jpg)
 #### Admin will approve the join request then user can login.
 #### Companies can post jobs , Email candidates, Reject candidates resumes, Approve or Put Under Reviews candidates resmes,
-![](screenshots/)
+![](screenshots/joblisting.jpg)
 #### Companies can download the candidates resumes.
 #### Companies can update their information.
 
