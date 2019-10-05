@@ -14,7 +14,7 @@ core php with bootstrap
 ![](screenshots/joblisting.jpg)
 #### Companies can download the candidates resumes.
 #### Companies can update their information.
-
+![](screenshots/companypage.jpg)
 #### Candidates can login and apply for various jobs, Update their information, Email recruiters etc.
 
 #### These website use session cookies for proper account management and provides security for the portal
