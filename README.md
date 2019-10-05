@@ -6,7 +6,7 @@ core php with bootstrap
 #### Put the job portal code in htdocs folder.
 #### Run the website, Admin login credentials are username: admin  password: 12345
 #### Home Page
-![](screenshots/)
+![](screenshots/homepage.jpg)
 #### Companies can register on this portal as well as the candidates.
 ![](screenshots/)
 #### Admin will approve the join request then user can login.
