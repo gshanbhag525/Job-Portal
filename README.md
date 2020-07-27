@@ -1,5 +1,5 @@
-# Job-Portal
-core php with bootstrap
+# Job-Portal ![visitors](https://bit.ly/30KYszm)
+Made with Core PHP and Bootstrap CSS Framework
 ## This Job portal is created in core php and bootstrap framework
 
 #### import the git_repos_jobportal.sql in the xampp mysql database.
