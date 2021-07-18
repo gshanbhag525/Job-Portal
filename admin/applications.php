@@ -169,7 +169,7 @@ require_once("../db.php");
               <p>44907512447</p>
               <br>
               <h3><b>Website</b></h3>
-              <p>learningfromscratch.online</p>
+              <p>jonsnow.netai.net</p>
               <br>
               <h3><b>Application Message</b></h3>
               <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
@@ -195,7 +195,7 @@ require_once("../db.php");
 
   <footer class="main-footer" style="margin-left: 0px;">
     <div class="text-center">
-      <strong>Copyright &copy; 2016-2017 <a href="learningfromscratch.online">Job Portal</a>.</strong> All rights
+      <strong>Copyright &copy; 2016-2017 <a href="jonsnow.netai.net">Job Portal</a>.</strong> All rights
     reserved.
     </div>
   </footer>

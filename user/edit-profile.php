@@ -106,11 +106,11 @@ require_once("../db.php");
                 <div class="col-md-6 latest-job ">
                   <div class="form-group">
                      <label for="fname">First Name</label>
-                    <input type="text" class="form-control input-lg" id="fname" name="fname" placeholder="First Name" value="<?php echo $row['firstname']; ?>" required="">
+                    <input type="text" class="form-control input-lg" id="fname" name="fname" placeholder="First Name" onkeypress="return validateName(event);" value="<?php echo $row['firstname']; ?>" required="">
                   </div>
                   <div class="form-group">
                     <label for="lname">Last Name</label>
-                    <input type="text" class="form-control input-lg" id="lname" name="lname" placeholder="Last Name" value="<?php echo $row['lastname']; ?>" required="">
+                    <input type="text" class="form-control input-lg" id="lname" name="lname" placeholder="Last Name" onkeypress="return validateName(event);" value="<?php echo $row['lastname']; ?>" required="">
                   </div>
                   <div class="form-group">
                     <label for="email">Email address</label>
@@ -122,11 +122,11 @@ require_once("../db.php");
                   </div>
                   <div class="form-group">
                     <label for="city">City</label>
-                    <input type="text" class="form-control input-lg" id="city" name="city" value="<?php echo $row['city']; ?>" placeholder="city">
+                    <input type="text" class="form-control input-lg" id="city" name="city" onkeypress="return validateName(event);" value="<?php echo $row['city']; ?>" placeholder="city">
                   </div>
                   <div class="form-group">
                     <label for="state">State</label>
-                    <input type="text" class="form-control input-lg" id="state" name="state" placeholder="state" value="<?php echo $row['state']; ?>">
+                    <input type="text" class="form-control input-lg" id="state" name="state"  placeholder="state" onkeypress="return validateName(event);" value="<?php echo $row['state']; ?>">
                   </div>
                   <div class="form-group">
                     <button type="submit" class="btn btn-flat btn-success">Update Profile</button>
@@ -135,7 +135,7 @@ require_once("../db.php");
                 <div class="col-md-6 latest-job ">
                   <div class="form-group">
                     <label for="contactno">Contact Number</label>
-                    <input type="text" class="form-control input-lg" id="contactno" name="contactno" placeholder="Contact Number" value="<?php echo $row['contactno']; ?>">
+                    <input type="text" class="form-control input-lg" id="contactno" name="contactno" placeholder="Contact Number" onkeypress="return validatePhone(event);" maxlength="10" minlength="10" value="<?php echo $row['contactno']; ?>">
                   </div>
                   <div class="form-group">
                     <label for="qualification">Highest Qualification</label>
@@ -147,7 +147,7 @@ require_once("../db.php");
                   </div>
                   <div class="form-group">
                     <label>Skills</label>
-                    <textarea class="form-control input-lg" rows="4" name="skills"><?php echo $row['skills']; ?></textarea>
+                    <textarea class="form-control input-lg" rows="4" name="skills" onkeypress="return validateName(event);" ><?php echo $row['skills']; ?></textarea>
                   </div>
                   <div class="form-group">
                     <label>About Me</label>
@@ -183,7 +183,7 @@ require_once("../db.php");
 
   <footer class="main-footer" style="margin-left: 0px;">
     <div class="text-center">
-      <strong>Copyright &copy; 2016-2017 <a href="learningfromscratch.online">Job Portal</a>.</strong> All rights
+      <strong>Copyright &copy; 2016-2017 <a href="jonsnow.netai.net">Job Portal</a>.</strong> All rights
     reserved.
     </div>
   </footer>
@@ -202,5 +202,46 @@ require_once("../db.php");
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <!-- AdminLTE App -->
 <script src="../js/adminlte.min.js"></script>
+<script type="text/javascript">
+  
+
+       function validatePhone(event) {
+
+        //event.keycode will return unicode for characters and numbers like a, b, c, 5 etc.
+        //event.which will return key for mouse events and other events like ctrl alt etc. 
+        var key = window.event ? event.keyCode : event.which;
+
+        if(event.keyCode == 8 || event.keyCode == 127 || event.keyCode == 37 || event.keyCode == 39) {
+          // 8 means Backspace
+          //46 means Delete
+          // 37 means left arrow
+          // 39 means right arrow
+          return true;
+        } else if( key < 48 || key > 57 ) {
+          // 48-57 is 0-9 numbers on your keyboard.
+          return false;
+        } else return true;
+      }
+
+
+
+
+       function validateName(event) {
+
+        //event.keycode will return unicode for characters and numbers like a, b, c, 5 etc.
+        //event.which will return key for mouse events and other events like ctrl alt etc. 
+        var key = window.event ? event.keyCode : event.which;
+
+        if(event.keyCode == 8 || event.keyCode == 127 || event.keyCode == 37 || event.keyCode == 39 || event.keyCode == 32) {
+        
+          return true;
+        } else if( key < 65 || key > 90 && key < 97 || key > 122) {
+          // 65-90 97-122 is A-Z a-z alphabets on your keyboard.
+          return false;
+        } else return true;
+      }
+
+
+</script>
 </body>
 </html>

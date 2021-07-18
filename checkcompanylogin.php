@@ -26,11 +26,11 @@ if(isset($_POST)) {
 		while($row = $result->fetch_assoc()) {
 
 			if($row['active'] == '2') {
-				$_SESSION['companyLoginError'] = "Your Account Is Still Pending Approval.";
+				$_SESSION['companyLoginError'] = "Your Account Is Still Pending Approval By Admin.";
 				header("Location: login-company.php");
 				exit();
 			} else if($row['active'] == '0') {
-				$_SESSION['companyLoginError'] = "Your Account Is Rejected. Please Contact For More Info.";
+				$_SESSION['companyLoginError'] = "Your Account Is Rejected. Please Contact Admin For More Info.";
 				header("Location: login-company.php");
 				exit();
 			} else if($row['active'] == '1') {

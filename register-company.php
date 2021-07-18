@@ -92,7 +92,7 @@ require_once("db.php");
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper" style="margin-left: 0px;">
 
-   <section class="content-header">
+    <section class="content-header">
       <div class="container">
         <div class="row latest-job margin-top-50 margin-bottom-20 bg-white">
           <h1 class="text-center margin-bottom-20">CREATE COMPANY PROFILE</h1>
@@ -196,7 +196,7 @@ require_once("db.php");
 
   <footer class="main-footer" style="margin-left: 0px;">
     <div class="text-center">
-      <strong>Copyright &copy; 2016-2017 <a href="learningfromscratch.online">Job Portal</a>.</strong> All rights
+      <strong>Copyright &copy; 2016-2017 <a href="jonsnow.netai.net">Job Portal</a>.</strong> All rights
     reserved.
     </div>
   </footer>
@@ -217,23 +217,23 @@ require_once("db.php");
 <script src="js/adminlte.min.js"></script>
 
 <script type="text/javascript">
-  function validatePhone(event) {
+      function validatePhone(event) {
 
-    //event.keycode will return unicode for characters and numbers like a, b, c, 5 etc.
-    //event.which will return key for mouse events and other events like ctrl alt etc. 
-    var key = window.event ? event.keyCode : event.which;
+        //event.keycode will return unicode for characters and numbers like a, b, c, 5 etc.
+        //event.which will return key for mouse events and other events like ctrl alt etc. 
+        var key = window.event ? event.keyCode : event.which;
 
-    if(event.keyCode == 8 || event.keyCode == 46 || event.keyCode == 37 || event.keyCode == 39) {
-      // 8 means Backspace
-      //46 means Delete
-      // 37 means left arrow
-      // 39 means right arrow
-      return true;
-    } else if( key < 48 || key > 57 ) {
-      // 48-57 is 0-9 numbers on your keyboard.
-      return false;
-    } else return true;
-  }
+        if(event.keyCode == 8 || event.keyCode == 46 || event.keyCode == 37 || event.keyCode == 39) {
+          // 8 means Backspace
+          //46 means Delete
+          // 37 means left arrow
+          // 39 means right arrow
+          return true;
+        } else if( key < 48 || key > 57 ) {
+          // 48-57 is 0-9 numbers on your keyboard.
+          return false;
+        } else return true;
+      }
 </script>
 
 <script>

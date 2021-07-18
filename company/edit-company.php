@@ -127,15 +127,16 @@ require_once("../db.php");
                 <div class="col-md-6 latest-job ">
                   <div class="form-group">
                     <label for="contactno">Contact Number</label>
-                    <input type="text" class="form-control input-lg" id="contactno" name="contactno" placeholder="Contact Number" value="<?php echo $row['contactno']; ?>">
+                    <input type="text" class="form-control input-lg" id="contactno" name="contactno" placeholder="Contact Number" onkeypress="return validatePhone(event);" minlength="10" maxlength="10" value="<?php echo $row['contactno']; ?>">
                   </div>
                   <div class="form-group">
                     <label for="city">City</label>
-                    <input type="text" class="form-control input-lg" id="city" name="city" value="<?php echo $row['city']; ?>" placeholder="city">
+                    <input type="text" class="form-control input-lg" id="city" name="city"
+                    onkeypress="return validateName(event);" value="<?php echo $row['city']; ?>" placeholder="city">
                   </div>
                   <div class="form-group">
                     <label for="state">State</label>
-                    <input type="text" class="form-control input-lg" id="state" name="state" placeholder="state" value="<?php echo $row['state']; ?>">
+                    <input type="text" class="form-control input-lg" id="state" onkeypress="return validateName(event);" name="state" placeholder="state" value="<?php echo $row['state']; ?>">
                   </div>
                   <div class="form-group">
                     <label>Change Company Logo</label>
@@ -171,7 +172,7 @@ require_once("../db.php");
 
   <footer class="main-footer" style="margin-left: 0px;">
     <div class="text-center">
-      <strong>Copyright &copy; 2016-2017 <a href="learningfromscratch.online">Job Portal</a>.</strong> All rights
+      <strong>Copyright &copy; 2016-2017 <a href="jonsnow.netai.net">Job Portal</a>.</strong> All rights
     reserved.
     </div>
   </footer>
@@ -190,5 +191,40 @@ require_once("../db.php");
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <!-- AdminLTE App -->
 <script src="../js/adminlte.min.js"></script>
+<script type="text/javascript">
+   function validatePhone(event) {
+
+        //event.keycode will return unicode for characters and numbers like a, b, c, 5 etc.
+        //event.which will return key for mouse events and other events like ctrl alt etc. 
+        var key = window.event ? event.keyCode : event.which;
+
+        if(event.keyCode == 8 || event.keyCode == 46 || event.keyCode == 37 || event.keyCode == 39) {
+          // 8 means Backspace
+          //46 means Delete
+          // 37 means left arrow
+          // 39 means right arrow
+          return true;
+        } else if( key < 48 || key > 57 ) {
+          // 48-57 is 0-9 numbers on your keyboard.
+          return false;
+        } else return true;
+      }
+
+       function validateName(event) {
+
+        //event.keycode will return unicode for characters and numbers like a, b, c, 5 etc.
+        //event.which will return key for mouse events and other events like ctrl alt etc. 
+        var key = window.event ? event.keyCode : event.which;
+
+        if(event.keyCode == 8 || event.keyCode == 127 || event.keyCode == 37 || event.keyCode == 39 || event.keyCode == 32) {
+        
+          return true;
+        } else if( key < 65 || key > 90 && key < 97 || key > 122) {
+          // 65-90 97-122 is A-Z a-z alphabets on your keyboard.
+          return false;
+        } else return true;
+      }
+
+</script>
 </body>
 </html>

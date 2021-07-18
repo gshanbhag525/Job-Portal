@@ -117,8 +117,8 @@ require_once("db.php");
                   <li class="treeview menu-open">
                     <a href="#"><i class="fa fa-plane text-red"></i> City <span class="pull-right"><i class="fa fa-angle-down pull-right"></i></span></a>
                     <ul class="treeview-menu">
-                      <li><a href=""  class="citySearch" data-target="Delhi"><i class="fa fa-circle-o text-yellow"></i> Delhi</a></li>
-                      <li><a href="" class="citySearch" data-target="Kouba"><i class="fa fa-circle-o text-yellow"></i> Kouba</a></li>
+                      <li><a href=""  class="citySearch" data-target="Bengaluru"><i class="fa fa-circle-o text-yellow"></i> Bengaluru</a></li>
+                      <li><a href="" class="citySearch" data-target="Navi Mumbai"><i class="fa fa-circle-o text-yellow"></i> Navi Mumbai</a></li>
                     </ul>
                   </li>
                   <li class="treeview menu-open">
@@ -135,6 +135,8 @@ require_once("db.php");
               </div>
             </div>
           </div>
+
+         
           <div class="col-md-9">
 
           <?php
@@ -162,8 +164,6 @@ require_once("db.php");
               <ul class="pagination text-center" id="pagination"></ul>
             </div> 
 
-
-
           </div>
         </div>
       </div>
@@ -176,7 +176,7 @@ require_once("db.php");
 
   <footer class="main-footer" style="margin-left: 0px;">
     <div class="text-center">
-      <strong>Copyright &copy; 2016-2017 <a href="learningfromscratch.online">Job Portal</a>.</strong> All rights
+      <strong>Copyright &copy; 2016-2017 <a href="jonsnow.netai.net">Job Portal</a>.</strong> All rights
     reserved.
     </div>
   </footer>

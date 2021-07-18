@@ -241,7 +241,7 @@ require_once("db.php");
           <!-- small box -->
           <div class="small-box bg-aqua">
             <div class="inner">
-             <?php
+               <?php
                       $sql = "SELECT * FROM job_post";
                       $result = $conn->query($sql);
                       if($result->num_rows > 0) {
@@ -264,7 +264,7 @@ require_once("db.php");
           <!-- small box -->
           <div class="small-box bg-green">
             <div class="inner">
-                  <?php
+               <?php
                       $sql = "SELECT * FROM company WHERE active='1'";
                       $result = $conn->query($sql);
                       if($result->num_rows > 0) {
@@ -287,7 +287,7 @@ require_once("db.php");
           <!-- small box -->
           <div class="small-box bg-yellow">
             <div class="inner">
-             <?php
+              <?php
                       $sql = "SELECT * FROM users WHERE resume!=''";
                       $result = $conn->query($sql);
                       if($result->num_rows > 0) {
@@ -345,13 +345,14 @@ require_once("db.php");
             <img src="img/browse.jpg" class="img-responsive">
           </div>
           <div class="col-md-6 about-text margin-bottom-20">
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing <p>The online job portal application allows job seekers and recruiters to connect.The application provides the ability for job seekers to create their accounts, upload their profile and resume, search for jobs, apply for jobs, view different job openings. The application provides the ability for companies to create their accounts, search candidates, create job postings, and view candidates applications.
+            <p>The online job portal application allows job seekers and recruiters to connect.The application provides the ability for job seekers to create their accounts, upload their profile and resume, search for jobs, apply for jobs, view different job openings. The application provides the ability for companies to create their accounts, search candidates, create job postings, and view candidates applications.
             </p>
             <p>
               This website is used to provide a platform for potential candidates to get their dream job and excel in yheir career.
               This site can be used as a paving path for both companies and job-seekers for a better life .
               
             </p>
+
           </div>
         </div>
       </div>
@@ -362,7 +363,7 @@ require_once("db.php");
 
   <footer class="main-footer" style="margin-left: 0px;">
     <div class="text-center">
-      <strong>Copyright &copy; 2016-2017 <a href="learningfromscratch.online">Job Portal</a>.</strong> All rights
+      <strong>Copyright &copy; 2016-2017 <a href="jonsnow.netai.net">Job Portal</a>.</strong> All rights
     reserved.
     </div>
   </footer>
