@@ -1,5 +1,8 @@
-# Job-Portal ![visitors](https://bit.ly/30KYszm)
+# Job-Portal by Gunesh Shanbhag
+
 Made with Core PHP and Bootstrap CSS Framework. 🤍
+
+![visitors](https://bit.ly/30KYszm)
 
 ## Run Locally
 
