@@ -134,7 +134,7 @@ if(isset($_SESSION['id_user']) || isset($_SESSION['id_company'])) {
 
   <!-- /.control-sidebar -->
   <!-- Add the sidebar's background. This div must be placed
-       immediately after the control sidebar -->
+  <!-- immediately after the control sidebar --> -->
   <div class="control-sidebar-bg"></div>
 
 </div>
